@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">TaxReliefGuide social cover</title>
+  <desc id="desc">Social sharing image for TaxReliefGuide</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#12355b"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.14)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.05)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1060" cy="120" r="180" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="180" cy="520" r="220" fill="rgba(22,163,74,0.15)"/>
+  <rect x="70" y="70" width="1060" height="490" rx="34" fill="url(#card)" stroke="rgba(255,255,255,0.18)"/>
+  <text x="120" y="210" fill="#ffffff" font-size="34" font-family="Avenir Next, Trebuchet MS, sans-serif" font-weight="700" letter-spacing="4">TAXRELIEFGUIDE</text>
+  <text x="120" y="305" fill="#ffffff" font-size="70" font-family="Avenir Next, Trebuchet MS, sans-serif" font-weight="800">IRS relief, deductions,</text>
+  <text x="120" y="385" fill="#ffffff" font-size="70" font-family="Avenir Next, Trebuchet MS, sans-serif" font-weight="800">business tax, and payroll guides</text>
+  <text x="120" y="460" fill="rgba(255,255,255,0.9)" font-size="30" font-family="Georgia, serif">Premium U.S. tax content built for SEO, AdSense, and practical reader utility.</text>
+  <g transform="translate(885 360)">
+    <rect x="0" y="0" width="170" height="170" rx="34" fill="rgba(255,255,255,0.16)"/>
+    <path d="M85 34c19 15 36 19 46 21v35c0 31-19 51-46 60-27-9-46-29-46-60V55c10-2 27-6 46-21Z" fill="rgba(255,255,255,0.18)"/>
+    <path d="M58 90l15 15 31-38" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="11"/>
+  </g>
+</svg>

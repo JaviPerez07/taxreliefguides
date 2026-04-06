@@ -1,0 +1,3 @@
+# TaxReliefGuides ads.txt
+# Add your approved AdSense publisher record before launch, for example:
+# google.com, pub-your-publisher-id, DIRECT, f08c47fec0942fa0
