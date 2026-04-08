@@ -4,6 +4,7 @@ import path from "node:path";
 const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const domain = "https://taxreliefguides.com";
 const lastmod = "2026-04-06";
+const adsenseScript = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>`;
 
 const site = {
   name: "TaxReliefGuide",
@@ -779,6 +780,7 @@ function pageHead(page) {
     <link rel="shortcut icon" href="${assetPrefix}assets/favicon.ico">
     <meta name="theme-color" content="#12355b">
     <link rel="stylesheet" href="${assetPrefix}styles.css">
+    ${adsenseScript}
     <script src="${assetPrefix}main.js" defer></script>
   `;
 }
@@ -1121,6 +1123,102 @@ function renderPage(page, allPages) {
     ${renderSchemaHolder(page)}
   </body>
 </html>`;
+}
+
+function render404Page() {
+  const page = withDefaults({
+    path: "404.html",
+    title: normalizeTitle("Page Not Found | TaxReliefGuide"),
+    description: normalizeDescription("Use the TaxReliefGuide navigation to return to IRS relief, tax debt, deductions, payroll, business tax, and calculator resources after a missing-page error."),
+    robots: "noindex, follow",
+    template: "article",
+    badge: "Error Page",
+    h1: "Page Not Found",
+    hero: "The page you requested could not be found. Use the guided links below to jump back into the main tax relief, calculator, and compliance resources.",
+    sections: [
+      {
+        id: "recover",
+        eyebrow: "Next step",
+        title: "Return to the main tax research paths",
+        intro: "TaxReliefGuide keeps the highest-value routes one click away.",
+        paragraphs: [
+          "If you landed on an outdated or mistyped URL, the fastest path is to return to the homepage, one of the core IRS relief hubs, or a calculator that matches the tax question you were trying to solve.",
+          "This page is intentionally excluded from search indexing, but it still keeps the same navigation, footer, privacy access, and editorial context as the rest of the site so users are never stranded.",
+        ],
+        list: [
+          "Go back to the homepage for the main tax topic map.",
+          "Open a pillar guide if you were researching IRS debt, payroll, deductions, credits, or business taxes.",
+          "Use a calculator if you were trying to estimate refunds, self-employment tax, paycheck tax, or business tax exposure.",
+        ],
+      },
+    ],
+    stats: [
+      { value: "1 click", label: "Back to home", note: "Return to the main hub instantly" },
+      { value: "8 guides", label: "Pillar topics", note: "Jump into IRS relief and tax planning" },
+      { value: "5 tools", label: "Calculators", note: "Estimate key tax scenarios quickly" },
+      { value: "40 pages", label: "Site coverage", note: "Browse the full guide library" },
+    ],
+    takeaways: [
+      "Use the homepage to regain the main site structure quickly.",
+      "Extensionless public URLs are now the canonical version across the site.",
+      "This page stays available for users but excluded from indexing signals.",
+    ],
+    faq: [
+      {
+        q: "Why am I seeing a 404 page?",
+        a: "You likely followed an outdated link, entered a mistyped URL, or requested a page that has moved to a newer extensionless path.",
+      },
+      {
+        q: "Can I still access the main site sections from here?",
+        a: "Yes. The same primary navigation, footer, and internal links remain available so you can continue browsing without starting over.",
+      },
+      {
+        q: "Is this page indexed by search engines?",
+        a: "No. It is marked noindex so it can help users recover from bad URLs without creating low-value indexing signals.",
+      },
+      {
+        q: "Where should I go next?",
+        a: "Start with the homepage or one of the pillar guides if you were researching IRS relief, tax debt, payroll tax, deductions, credits, or business taxes.",
+      },
+    ],
+    related: [
+      "pages/irs-tax-relief-guide.html",
+      "pages/tax-debt-guide.html",
+      "pages/tax-refund-calculator.html",
+    ],
+    cta: { label: "Go to homepage", href: `${domain}/` },
+    secondaryCta: { label: "Explore IRS relief", href: `${domain}/pages/irs-tax-relief-guide` },
+    visual: heroVisual(
+      "Recovery tools",
+      [
+        { label: "Best first click", value: "Homepage" },
+        { label: "Popular destination", value: "IRS relief hub" },
+        { label: "Fastest utility path", value: "Tax calculator" },
+      ],
+      [
+        { label: "Home", width: 96 },
+        { label: "Guides", width: 88 },
+        { label: "Calculators", width: 74 },
+        { label: "Support", width: 64 },
+      ]
+    ),
+    chart: chartFromStats({
+      shortLabel: "404 recovery",
+      chartBars: [
+        { label: "Homepage recovery", width: 94, value: "Fastest" },
+        { label: "Guide depth", width: 82, value: "High" },
+        { label: "Calculator access", width: 72, value: "Immediate" },
+        { label: "Search visibility", width: 12, value: "Noindex" },
+      ],
+    }),
+    breadcrumbs: [
+      { label: "Home", href: `${domain}/` },
+      { label: "404", href: `${domain}/404` },
+    ],
+    image: `${domain}/assets/social-cover.svg`,
+  });
+
+  return renderPage(page, allPages);
 }
 
 function ensureWordCount(page, allPages, minimum, tone) {
@@ -2360,6 +2458,9 @@ async function main() {
     rendered.set(page.path, html);
     await fs.writeFile(outputPath, html);
   }
+  const page404 = render404Page();
+  rendered.set("404.html", page404);
+  await fs.writeFile(path.join(root, "404.html"), page404);
   await fs.writeFile(path.join(root, "sitemap.xml"), buildSitemap(allPages));
   await fs.writeFile(path.join(root, "robots.txt"), buildRobots());
   await fs.writeFile(path.join(root, "_redirects"), buildRedirects(allPages));
