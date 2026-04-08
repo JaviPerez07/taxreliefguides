@@ -2,7 +2,7 @@
 
 ## Summary
 
-- Files scanned: 73
+- Files scanned: 148
 - HTML files scanned: 40
 - Remaining references to the legacy domain: 0
 - Broken local links: 0

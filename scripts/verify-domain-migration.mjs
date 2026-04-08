@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
 
-const root = "/Users/javiperezz7/Documents/New project";
+const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const oldDomain = ["https://", "taxreliefguide", ".com"].join("");
 const newDomain = "https://taxreliefguides.com";
 
@@ -28,6 +28,14 @@ function resolveLocalRef(file, ref) {
   const clean = ref.split("#")[0].split("?")[0];
   if (!clean) return null;
   return path.normalize(path.resolve(path.dirname(file), clean));
+}
+
+function resolveLocalTargets(file, ref) {
+  const clean = ref.split("#")[0].split("?")[0];
+  if (!clean) return [];
+  const resolved = path.normalize(path.resolve(path.dirname(file), clean));
+  if (path.extname(resolved)) return [resolved];
+  return [`${resolved}.html`, path.join(resolved, "index.html"), resolved];
 }
 
 function expectedLocalAssetRef(file, target) {
@@ -108,8 +116,8 @@ for (const file of htmlFiles) {
 
     if (ref.startsWith("#") || ref.startsWith("mailto:") || ref.startsWith("tel:") || ref.startsWith("data:")) continue;
 
-    const resolved = resolveLocalRef(file, ref);
-    if (!resolved || !fsSync.existsSync(resolved)) {
+    const candidates = resolveLocalTargets(file, ref);
+    if (!candidates.length || !candidates.some((candidate) => fsSync.existsSync(candidate))) {
       const bucket = tag === "img" || tag === "script" || tag === "link" ? report.missingAssets : report.brokenLocalLinks;
       bucket.push(`${fileRel}: ${ref}`);
     }

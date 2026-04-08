@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
 
-const root = "/Users/javiperezz7/Documents/New project";
+const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const domain = "https://taxreliefguides.com";
 
 async function collectHtml(dir) {
@@ -39,6 +39,14 @@ const report = {
 const seenTitles = new Map();
 const seenDescriptions = new Map();
 const seenCanonicals = new Map();
+
+function resolveCandidates(file, ref) {
+  const clean = ref.split("#")[0].split("?")[0];
+  if (!clean) return [];
+  const resolved = path.normalize(path.resolve(path.dirname(file), clean));
+  if (path.extname(resolved)) return [resolved];
+  return [`${resolved}.html`, path.join(resolved, "index.html"), resolved];
+}
 
 for (const file of htmlFiles) {
   const content = await fs.readFile(file, "utf8");
@@ -87,8 +95,8 @@ for (const file of htmlFiles) {
       continue;
     }
     if (ref.startsWith("#") || ref.startsWith("mailto:") || ref.startsWith("tel:") || ref.startsWith("data:")) continue;
-    const resolved = path.normalize(path.resolve(path.dirname(file), ref.split("#")[0].split("?")[0]));
-    if (!fsSync.existsSync(resolved)) {
+    const candidates = resolveCandidates(file, ref);
+    if (!candidates.some((candidate) => fsSync.existsSync(candidate))) {
       report.brokenLinks.push({ file: rel, href: ref });
     }
   }

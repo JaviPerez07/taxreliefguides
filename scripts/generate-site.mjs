@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const root = "/Users/javiperezz7/Documents/New project";
+const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const domain = "https://taxreliefguides.com";
 const lastmod = "2026-04-06";
 
@@ -14,9 +14,9 @@ const site = {
     url: domain,
     logo: `${domain}/assets/logo-mark.svg`,
     sameAs: [
-      `${domain}/about.html`,
-      `${domain}/how-we-research.html`,
-      `${domain}/contact.html`,
+      `${domain}/about`,
+      `${domain}/how-we-research`,
+      `${domain}/contact`,
     ],
   },
   author: {
@@ -30,13 +30,13 @@ const site = {
 };
 
 const navGroups = [
-  { label: "IRS Relief", href: `${domain}/pages/irs-tax-relief-guide.html` },
-  { label: "Tax Debt", href: `${domain}/pages/tax-debt-guide.html` },
-  { label: "Deductions", href: `${domain}/pages/tax-deductions-guide.html` },
-  { label: "Business Taxes", href: `${domain}/pages/business-tax-guide.html` },
-  { label: "Payroll Taxes", href: `${domain}/pages/payroll-tax-guide.html` },
-  { label: "Tax Credits", href: `${domain}/pages/tax-credits-guide.html` },
-  { label: "Calculators", href: `${domain}/pages/tax-refund-calculator.html` },
+  { label: "IRS Relief", href: `${domain}/pages/irs-tax-relief-guide` },
+  { label: "Tax Debt", href: `${domain}/pages/tax-debt-guide` },
+  { label: "Deductions", href: `${domain}/pages/tax-deductions-guide` },
+  { label: "Business Taxes", href: `${domain}/pages/business-tax-guide` },
+  { label: "Payroll Taxes", href: `${domain}/pages/payroll-tax-guide` },
+  { label: "Tax Credits", href: `${domain}/pages/tax-credits-guide` },
+  { label: "Calculators", href: `${domain}/pages/tax-refund-calculator` },
 ];
 
 function escapeHtml(value) {
@@ -144,6 +144,12 @@ function localHref(fromPath, target) {
   const fromDir = fromPath.includes("/") ? path.posix.dirname(fromPath) : ".";
   let relative = path.posix.relative(fromDir, targetPath);
   if (!relative) relative = path.posix.basename(targetPath);
+  relative = relative.replace(/\\/g, "/");
+  if (relative === "index.html") return "./";
+  if (relative.endsWith("/index.html")) relative = relative.slice(0, -"index.html".length);
+  else relative = relative.replace(/\.html$/, "");
+  if (relative === ".") return "./";
+  if (relative === "..") return "../";
   if (!relative.startsWith(".")) relative = `./${relative}`;
   return relative;
 }
@@ -161,7 +167,7 @@ function withDefaults(config) {
 function makeBreadcrumbs(pathname, label, groupLabel = "Guides") {
   return [
     { label: "Home", href: `${domain}/` },
-    { label: groupLabel, href: `${domain}/pages/irs-tax-relief-guide.html` },
+    { label: groupLabel, href: `${domain}/pages/irs-tax-relief-guide` },
     { label, href: urlFor(pathname) },
   ];
 }
@@ -1678,7 +1684,7 @@ const rootPages = [
     ],
     breadcrumbs: [
       { label: "Home", href: `${domain}/` },
-      { label: "About", href: `${domain}/about.html` },
+      { label: "About", href: `${domain}/about` },
     ],
   }),
   withDefaults({
@@ -1712,7 +1718,7 @@ const rootPages = [
     ],
     breadcrumbs: [
       { label: "Home", href: `${domain}/` },
-      { label: "Contact", href: `${domain}/contact.html` },
+      { label: "Contact", href: `${domain}/contact` },
     ],
   }),
   withDefaults({
@@ -1746,7 +1752,7 @@ const rootPages = [
     ],
     breadcrumbs: [
       { label: "Home", href: `${domain}/` },
-      { label: "How We Research", href: `${domain}/how-we-research.html` },
+      { label: "How We Research", href: `${domain}/how-we-research` },
     ],
   }),
   withDefaults({
@@ -1781,7 +1787,7 @@ const rootPages = [
     ],
     breadcrumbs: [
       { label: "Home", href: `${domain}/` },
-      { label: "Privacy Policy", href: `${domain}/privacy-policy.html` },
+      { label: "Privacy Policy", href: `${domain}/privacy-policy` },
     ],
   }),
   withDefaults({
@@ -1816,7 +1822,7 @@ const rootPages = [
     ],
     breadcrumbs: [
       { label: "Home", href: `${domain}/` },
-      { label: "Terms", href: `${domain}/terms.html` },
+      { label: "Terms", href: `${domain}/terms` },
     ],
   }),
   withDefaults({
@@ -1851,7 +1857,7 @@ const rootPages = [
     ],
     breadcrumbs: [
       { label: "Home", href: `${domain}/` },
-      { label: "Disclaimer", href: `${domain}/disclaimer.html` },
+      { label: "Disclaimer", href: `${domain}/disclaimer` },
     ],
   }),
 ];
@@ -2001,7 +2007,7 @@ for (const config of supportConfigs) {
     takeaways: makeKeyTakeaways(config),
     faq: makeFaqs(config),
     chart: chartFromStats(config),
-    cta: { label: "Read the IRS relief hub", href: `${domain}/pages/irs-tax-relief-guide.html` },
+    cta: { label: "Read the IRS relief hub", href: `${domain}/pages/irs-tax-relief-guide` },
     secondaryCta: { label: "Use a calculator", href: `${domain}/pages/tax-refund-calculator.html` },
     visual: heroVisual("Tax topic snapshot", [
       { label: "Intent", value: "Research before action" },
@@ -2048,7 +2054,7 @@ for (const config of calculatorConfigs) {
     takeaways: makeKeyTakeaways(config),
     faq: makeFaqs(config),
     chart: chartFromStats(config),
-    cta: { label: "Read the main guide", href: `${domain}/pages/irs-tax-relief-guide.html` },
+    cta: { label: "Read the main guide", href: `${domain}/pages/irs-tax-relief-guide` },
     secondaryCta: { label: "Compare calculators", href: `${domain}/pages/business-tax-estimator.html` },
     visual: heroVisual("Calculator planning view", [
       { label: "Output type", value: "Directional estimate" },
@@ -2094,7 +2100,7 @@ for (const config of rootPages) {
     ] : legalFaq(config),
     chart: chartFromStats(config),
     cta: config.path === "index.html"
-      ? { label: "Explore IRS tax relief", href: `${domain}/pages/irs-tax-relief-guide.html` }
+      ? { label: "Explore IRS tax relief", href: `${domain}/pages/irs-tax-relief-guide` }
       : { label: "Explore the main hub", href: `${domain}/` },
     secondaryCta: config.path === "index.html"
       ? { label: "Try a calculator", href: `${domain}/pages/tax-refund-calculator.html` }
@@ -2167,6 +2173,36 @@ function buildRobots() {
 Allow: /
 Disallow: /404.html
 Sitemap: https://taxreliefguides.com/sitemap.xml
+`;
+}
+
+function buildRedirects(pages) {
+  const redirects = [
+    "http://taxreliefguides.com/* https://taxreliefguides.com/:splat 301",
+    "http://www.taxreliefguides.com/* https://taxreliefguides.com/:splat 301",
+    "https://www.taxreliefguides.com/* https://taxreliefguides.com/:splat 301",
+  ];
+
+  for (const page of pages) {
+    const cleanPath = urlFor(page.path).replace(domain, "") || "/";
+    const htmlPath = page.path === "index.html" ? "/index.html" : `/${page.path}`;
+    redirects.push(`${htmlPath} ${cleanPath} 301`);
+  }
+
+  return `${redirects.join("\n")}\n`;
+}
+
+function buildHeaders() {
+  return `/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/index.html
+  X-Robots-Tag: noindex, nofollow
+
+/*.html
+  X-Robots-Tag: noindex
 `;
 }
 
@@ -2326,6 +2362,8 @@ async function main() {
   }
   await fs.writeFile(path.join(root, "sitemap.xml"), buildSitemap(allPages));
   await fs.writeFile(path.join(root, "robots.txt"), buildRobots());
+  await fs.writeFile(path.join(root, "_redirects"), buildRedirects(allPages));
+  await fs.writeFile(path.join(root, "_headers"), buildHeaders());
   const audit = auditSite(allPages, rendered);
   await fs.writeFile(path.join(root, "walkthrough.md"), buildWalkthrough(audit, allPages));
   console.log(JSON.stringify({

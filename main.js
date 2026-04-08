@@ -20,11 +20,6 @@ function injectSchema() {
       "@type": "WebSite",
       name: data.siteName,
       url: "https://taxreliefguides.com/",
-      potentialAction: {
-        "@type": "SearchAction",
-        target: "https://taxreliefguides.com/?q={search_term_string}",
-        "query-input": "required name=search_term_string",
-      },
     },
     {
       "@context": "https://schema.org",
@@ -105,6 +100,63 @@ function injectSchema() {
   script.id = "dynamic-schema";
   script.textContent = JSON.stringify(graph);
   document.head.appendChild(script);
+}
+
+function upsertHeadTag(selector, build) {
+  const existing = document.head.querySelector(selector);
+  if (existing) {
+    build(existing);
+    return existing;
+  }
+  const node = build(document.createElement(selector.startsWith("link") ? "link" : "meta"));
+  document.head.appendChild(node);
+  return node;
+}
+
+function cleanCanonicalPath(pathname) {
+  if (!pathname || pathname === "/index.html") return "/";
+  return pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "").replace(/\/{2,}/g, "/");
+}
+
+function handleSearchQuerySignals() {
+  const params = new URLSearchParams(window.location.search);
+  if (!params.has("q")) return;
+
+  upsertHeadTag('meta[name="robots"]', (node) => {
+    node.setAttribute("name", "robots");
+    node.setAttribute("content", "noindex, follow");
+    return node;
+  });
+
+  upsertHeadTag('link[rel="canonical"]', (node) => {
+    node.setAttribute("rel", "canonical");
+    node.setAttribute("href", `https://taxreliefguides.com${cleanCanonicalPath(window.location.pathname)}`);
+    return node;
+  });
+}
+
+function setupFilePreviewLinks() {
+  if (window.location.protocol !== "file:") return;
+
+  document.querySelectorAll("a[href]").forEach((anchor) => {
+    const rawHref = anchor.getAttribute("href");
+    if (!rawHref || rawHref.startsWith("#") || /^[a-z]+:/i.test(rawHref)) return;
+    if (rawHref.includes("?") || rawHref.includes("#")) return;
+    if (/\/assets\/|\.css$|\.js$|\.svg$|\.png$|\.jpg$|\.jpeg$|\.webp$|\.ico$/i.test(rawHref)) return;
+
+    if (rawHref === "./" || rawHref === ".") {
+      anchor.setAttribute("href", "./index.html");
+      return;
+    }
+
+    if (rawHref === "../" || rawHref === "..") {
+      anchor.setAttribute("href", "../index.html");
+      return;
+    }
+
+    if (/\.[a-z0-9]+$/i.test(rawHref)) return;
+    anchor.setAttribute("href", `${rawHref}.html`);
+  });
 }
 
 function setupMenu() {
@@ -303,6 +355,8 @@ function setupCalculators() {
   });
 }
 
+handleSearchQuerySignals();
+setupFilePreviewLinks();
 injectSchema();
 setupMenu();
 setupCookieBanner();
