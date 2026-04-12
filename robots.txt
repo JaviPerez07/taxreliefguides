@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /404.html
+Disallow: /*?q=*
+Disallow: /*?s=*
 Sitemap: https://taxreliefguides.com/sitemap.xml
