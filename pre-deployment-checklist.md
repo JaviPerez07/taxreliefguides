@@ -57,3 +57,4 @@
 ## Deployment Verdict
 
 - Ready for Cloudflare, Search Console, and AdSense pre-approval review.
+- [ ] favicon referenciado como ../favicon.ico en todas las páginas de pages/
