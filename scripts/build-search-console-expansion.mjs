@@ -6,6 +6,7 @@ const pagesDir = path.join(root, "pages");
 const domain = "https://taxreliefguides.com";
 const modifiedDate = "2026-04-18";
 const adsenseScript = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>';
+const contactEmail = "javiperezguides@gmail.com";
 const disclaimer = "This content is for informational purposes only and does not constitute tax, legal, or financial advice.";
 
 const navLinks = [
@@ -687,7 +688,7 @@ const pageSpecs = [
     hero: "Small business tax credits can reduce tax more directly than deductions, but only when the business knows which forms, wage rules, and timing windows apply.",
     audience: "small-business owners and advisors looking for a practical shortlist of credits that still matter in 2025 and 2026",
     thesis: "The best business credit strategy is selective, not encyclopedic. Most small businesses do not need every possible credit; they need the few credits that fit their hiring, payroll, research, or benefit structure and can be documented properly.",
-    whyNow: "This topic has strong monetization value because it often sits upstream of tax software, CPA selection, payroll services, and entity planning decisions.",
+    whyNow: "This topic often sits upstream of tax software, CPA selection, payroll services, and entity planning decisions, so readers need clear eligibility limits and recordkeeping context before acting.",
     rulesIntro: "Business credits usually flow through specific forms and often feed into Form 3800, General Business Credit. Some credits offset income tax, while others, such as the research payroll tax election for qualified small businesses, can reach payroll tax instead.",
     fit: "This guide is useful for employers hiring from targeted groups, startups doing qualified research, and small employers offering SHOP-based health coverage while staying within employee and wage limits.",
     process: "The safest approach is to identify the business activity that could trigger the credit, confirm the form and timing rules, and build records before the return is prepared.",
@@ -996,15 +997,11 @@ function articleSchema(page) {
     "@type": "Article",
     headline: page.h1,
     description: page.description,
-    author: {
-      "@type": "Person",
-      name: "Rachel Morgan",
-      jobTitle: "IRS Tax Relief Specialist",
-    },
     publisher: {
       "@type": "Organization",
       name: "TaxReliefGuides",
       url: `${domain}/`,
+      email: contactEmail,
     },
     url: canonicalFor(page.slug),
     dateModified: modifiedDate,
@@ -1127,16 +1124,13 @@ function cookieBanner() {
     </div>`;
 }
 
-function authorBox() {
+function editorialBlock() {
   return `
-    <section class="author-box">
-      <div class="author-avatar" aria-hidden="true">RM</div>
-      <div>
-        <p class="eyebrow">Reviewed by Rachel Morgan</p>
-        <h2>IRS Tax Relief Specialist</h2>
-        <p>Rachel covers IRS payment options, payroll tax enforcement, tax-credit planning, and small-business compliance for U.S. readers who need practical decisions, not vague tax marketing.</p>
-      </div>
-    </section>`;
+    <div class="editorial-block">
+      <strong>Editorial Team</strong>
+      <p>Last reviewed: April 2026</p>
+      <p>This guide compiles information from official IRS publications, state Department of Revenue resources, and other public sources. Content is reviewed quarterly against updated references.</p>
+    </div>`;
 }
 
 function heroCard(page) {
@@ -1377,7 +1371,7 @@ ${statsMarkup(page)}
         <div class="content-column">
 ${keyTakeaways(page)}
 ${bodySections(page)}
-${authorBox()}
+${editorialBlock()}
           <section class="disclaimer-box"><strong>Disclaimer:</strong> ${esc(disclaimer)}</section>
 ${faqMarkup(page)}
 ${relatedMarkup(page)}

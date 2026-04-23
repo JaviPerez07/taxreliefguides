@@ -3,10 +3,10 @@
 ## Site Summary
 
 - Domain placeholder: https://taxreliefguides.com
-- Total HTML pages: 40
-- Indexable pages: 37
+- Total HTML pages: 51
+- Indexable pages: 48
 - Non-indexable legal pages: 3
-- Total estimated words: 89871
+- Total estimated words: 121715
 - Pillar pages: 8
 - Supporting articles: 20
 - Calculators: 5
@@ -35,36 +35,36 @@
 ## Content Depth Checks
 
 ### Pillar Page Word Counts
-- pages/irs-tax-relief-guide.html: 3197 words
-- pages/tax-debt-guide.html: 3164 words
-- pages/tax-deductions-guide.html: 3146 words
-- pages/business-tax-guide.html: 3136 words
-- pages/payroll-tax-guide.html: 3145 words
-- pages/tax-credits-guide.html: 3155 words
-- pages/self-employed-tax-guide.html: 3118 words
-- pages/irs-payment-plans-guide.html: 3194 words
+- pages/irs-tax-relief-guide.html: 3182 words
+- pages/tax-debt-guide.html: 3149 words
+- pages/tax-deductions-guide.html: 3131 words
+- pages/business-tax-guide.html: 3121 words
+- pages/payroll-tax-guide.html: 3130 words
+- pages/tax-credits-guide.html: 3140 words
+- pages/self-employed-tax-guide.html: 3103 words
+- pages/irs-payment-plans-guide.html: 3179 words
 
 ### Supporting Article Word Counts
-- pages/what-is-offer-in-compromise.html: 2318 words
-- pages/how-to-set-up-an-irs-payment-plan.html: 2380 words
-- pages/tax-debt-forgiveness-options.html: 2301 words
-- pages/common-tax-deductions-for-small-businesses.html: 2297 words
-- pages/self-employed-tax-deductions.html: 2296 words
-- pages/how-payroll-taxes-work.html: 2326 words
-- pages/best-tax-software-for-small-business.html: 2361 words
-- pages/how-to-lower-taxable-income.html: 2309 words
-- pages/tax-credits-vs-tax-deductions.html: 2344 words
-- pages/how-to-file-back-taxes.html: 2302 words
-- pages/what-happens-if-you-dont-pay-taxes.html: 2392 words
-- pages/estimated-tax-payments-guide.html: 2301 words
-- pages/child-tax-credit-guide.html: 2301 words
-- pages/home-office-deduction-guide.html: 2326 words
-- pages/section-179-deduction-guide.html: 2292 words
-- pages/irs-penalties-explained.html: 2309 words
-- pages/when-to-hire-a-tax-attorney.html: 2341 words
-- pages/tax-audit-guide.html: 2314 words
-- pages/how-to-stop-irs-wage-garnishment.html: 2336 words
-- pages/best-states-for-low-taxes.html: 2340 words
+- pages/what-is-offer-in-compromise.html: 2303 words
+- pages/how-to-set-up-an-irs-payment-plan.html: 2365 words
+- pages/tax-debt-forgiveness-options.html: 2286 words
+- pages/common-tax-deductions-for-small-businesses.html: 2282 words
+- pages/self-employed-tax-deductions.html: 2281 words
+- pages/how-payroll-taxes-work.html: 2311 words
+- pages/best-tax-software-for-small-business.html: 2346 words
+- pages/how-to-lower-taxable-income.html: 2294 words
+- pages/tax-credits-vs-tax-deductions.html: 2329 words
+- pages/how-to-file-back-taxes.html: 2287 words
+- pages/what-happens-if-you-dont-pay-taxes.html: 2377 words
+- pages/estimated-tax-payments-guide.html: 2286 words
+- pages/child-tax-credit-guide.html: 2286 words
+- pages/home-office-deduction-guide.html: 2311 words
+- pages/section-179-deduction-guide.html: 2277 words
+- pages/irs-penalties-explained.html: 2294 words
+- pages/when-to-hire-a-tax-attorney.html: 2326 words
+- pages/tax-audit-guide.html: 2299 words
+- pages/how-to-stop-irs-wage-garnishment.html: 2321 words
+- pages/best-states-for-low-taxes.html: 2325 words
 
 ## Technical Audit Results
 

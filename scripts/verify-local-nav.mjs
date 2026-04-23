@@ -70,7 +70,7 @@ for (const file of htmlFiles) {
   if (!content.includes("<header class=\"site-header\">")) report.structureIssues.push({ file: rel, issue: "Missing header" });
   if (!content.includes("<footer class=\"site-footer\">")) report.structureIssues.push({ file: rel, issue: "Missing footer" });
   if (rel !== "index.html" && !content.includes("aria-label=\"Breadcrumb\"")) report.structureIssues.push({ file: rel, issue: "Missing breadcrumbs" });
-  if (!content.includes("class=\"author-box\"")) report.structureIssues.push({ file: rel, issue: "Missing author box" });
+  if (!content.includes("class=\"editorial-block\"")) report.structureIssues.push({ file: rel, issue: "Missing editorial block" });
   if (!content.includes("class=\"related-section\"")) report.structureIssues.push({ file: rel, issue: "Missing related section" });
   if (!content.includes("This content is for informational purposes only and does not constitute tax, legal, or financial advice.")) {
     report.structureIssues.push({ file: rel, issue: "Missing disclaimer" });

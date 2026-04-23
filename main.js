@@ -27,6 +27,7 @@ function injectSchema() {
       name: data.organizationName,
       url: data.organizationUrl,
       logo: data.organizationLogo,
+      ...(data.organizationEmail ? { email: data.organizationEmail } : {}),
     },
   ];
 
@@ -66,10 +67,6 @@ function injectSchema() {
       description: data.description,
       datePublished: data.published,
       dateModified: data.modified,
-      author: {
-        "@type": "Person",
-        name: data.author,
-      },
       publisher: {
         "@type": "Organization",
         name: data.organizationName,

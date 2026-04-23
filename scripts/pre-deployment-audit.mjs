@@ -67,7 +67,7 @@ for (const file of htmlFiles) {
   if (!twitterUrl.startsWith(domain)) issues.push(`${fileRel}: twitter:url not on final domain`);
   if (canonical !== `${domain}/` && canonical.endsWith(".html")) issues.push(`${fileRel}: canonical still ends with .html`);
   if (/http:\/\//.test(content) || /www\./.test(content)) issues.push(`${fileRel}: mixed content or www reference found`);
-  if (!content.includes("class=\"author-box\"")) issues.push(`${fileRel}: missing author box`);
+  if (!content.includes("class=\"editorial-block\"")) issues.push(`${fileRel}: missing editorial block`);
   if (!content.includes("class=\"site-footer\"")) issues.push(`${fileRel}: missing footer`);
   if (!content.includes("class=\"faq-section\"")) issues.push(`${fileRel}: missing visible FAQ section`);
   if (/#"|javascript:void\(0\)|ADVERTISEMENT|Lorem ipsum|TODO/i.test(content)) issues.push(`${fileRel}: placeholder content found`);

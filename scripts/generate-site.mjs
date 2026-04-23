@@ -1,10 +1,12 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { stateTaxReliefConfigs } from "./state-tax-relief-data.mjs";
 
 const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const domain = "https://taxreliefguides.com";
 const lastmod = "2026-04-06";
 const adsenseScript = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>`;
+const contactEmail = "javiperezguides@gmail.com";
 
 const site = {
   name: "TaxReliefGuide",
@@ -20,12 +22,6 @@ const site = {
       `${domain}/contact`,
     ],
   },
-  author: {
-    name: "Maya R. Coleman, EA",
-    role: "Lead Tax Policy Editor",
-    initials: "MC",
-    bio: "Maya covers IRS collections, small-business tax compliance, credits, deductions, and payroll rules for U.S. households and founders. She focuses on translating tax procedure into plain-English decisions readers can actually use before speaking with a CPA, enrolled agent, or tax attorney.",
-  },
   disclaimer:
     "This content is for informational purposes only and does not constitute tax, legal, or financial advice.",
 };
@@ -37,6 +33,7 @@ const navGroups = [
   { label: "Business Taxes", href: `${domain}/pages/business-tax-guide` },
   { label: "Payroll Taxes", href: `${domain}/pages/payroll-tax-guide` },
   { label: "Tax Credits", href: `${domain}/pages/tax-credits-guide` },
+  { label: "State Relief", href: `${domain}/states/` },
   { label: "Calculators", href: `${domain}/pages/tax-refund-calculator` },
 ];
 
@@ -127,6 +124,7 @@ function wordCountFromHtml(html) {
 
 function urlFor(filePath) {
   if (filePath === "index.html") return `${domain}/`;
+  if (filePath.endsWith("/index.html")) return `${domain}/${filePath.slice(0, -"index.html".length)}`;
   return `${domain}/${filePath.replace(/\.html$/, "")}`;
 }
 
@@ -135,6 +133,7 @@ function pathForTarget(target) {
   if (target === `${domain}/`) return "index.html";
   const raw = target.startsWith(`${domain}/`) ? target.replace(`${domain}/`, "") : target;
   if (!raw) return "index.html";
+  if (raw.endsWith("/")) return `${raw}index.html`;
   if (raw.endsWith(".html") || path.posix.extname(raw)) return raw;
   return `${raw}.html`;
 }
@@ -516,6 +515,7 @@ function renderFooter(page) {
           <h2>Core Guides</h2>
           <a href="${localHref(page.path, "pages/irs-tax-relief-guide.html")}">IRS Tax Relief Guide</a>
           <a href="${localHref(page.path, "pages/tax-debt-guide.html")}">Tax Debt Guide</a>
+          <a href="${localHref(page.path, "states/index.html")}">State Tax Relief Guides</a>
           <a href="${localHref(page.path, "pages/business-tax-guide.html")}">Business Tax Guide</a>
           <a href="${localHref(page.path, "pages/payroll-tax-guide.html")}">Payroll Tax Guide</a>
         </section>
@@ -672,16 +672,13 @@ function renderSections(sections) {
     .join("");
 }
 
-function renderAuthorBox() {
+function renderEditorialBlock() {
   return `
-    <section class="author-box">
-      <div class="author-avatar" aria-hidden="true">${site.author.initials}</div>
-      <div>
-        <p class="eyebrow">Reviewed by ${site.author.name}</p>
-        <h2>${site.author.role}</h2>
-        <p>${site.author.bio}</p>
-      </div>
-    </section>
+    <div class="editorial-block">
+      <strong>Editorial Team</strong>
+      <p>Last reviewed: April 2026</p>
+      <p>This guide compiles information from official IRS publications, state Department of Revenue resources, and other public sources. Content is reviewed quarterly against updated references.</p>
+    </div>
   `;
 }
 
@@ -796,11 +793,11 @@ function renderSchemaHolder(page) {
     faqs: page.faq ?? [],
     published: "2026-04-04",
     modified: lastmod,
-    author: site.author.name,
     siteName: site.name,
     organizationName: site.organization.legalName,
     organizationUrl: site.organization.url,
     organizationLogo: site.organization.logo,
+    organizationEmail: contactEmail,
   };
   return `<div id="schema-data" hidden data-schema='${escapeAttr(JSON.stringify(payload))}'></div>`;
 }
@@ -864,9 +861,6 @@ function homeVisual() {
           <div style="height:58%"><span>Credits</span></div>
         </div>
       </div>
-      <div class="dashboard-panel dashboard-note">
-        <p><strong>Built for U.S. intent:</strong> tax debt, payroll exposure, deductions, refunds, credits, compliance, and entity planning.</p>
-      </div>
     </div>
   `;
 }
@@ -898,6 +892,7 @@ function featureGrid(title, eyebrow, pages, labelFor) {
 function homeLead(allPages) {
   const pillarPages = allPages.filter((page) => page.category === "pillar");
   const calcPages = allPages.filter((page) => page.template === "calculator");
+  const statePages = allPages.filter((page) => page.category === "state");
   const popularPages = allPages.filter((page) =>
     [
       "pages/what-is-offer-in-compromise.html",
@@ -919,15 +914,9 @@ function homeLead(allPages) {
     ].includes(page.path)
   );
   return `
-    <section class="feature-section intro-callout">
-      <div class="callout">
-        <span class="eyebrow">Why this site exists</span>
-        <h2>Premium tax guidance built for commercial U.S. search intent</h2>
-        <p>TaxReliefGuide is structured around the questions that usually carry the highest stakes and the highest CPC: IRS relief, tax debt, deductions, payroll obligations, business compliance, credits, refund planning, and legal risk. We combine long-form guides, calculators, tables, FAQs, and clear interlinking so readers can move from discovery to action without hitting thin content or dead ends.</p>
-      </div>
-    </section>
     ${featureGrid("Pillar Guides", "Core hubs", pillarPages, () => "Pillar")}
     ${featureGrid("Calculators", "Planning tools", calcPages, () => "Calculator")}
+    ${featureGrid("State Tax Relief Guides", "State tax relief", statePages, (page) => page.stateData?.state ?? "State")}
     ${featureGrid("Popular Tax Topics", "Popular tax topics", popularPages, () => "Guide")}
     ${featureGrid("Latest Guides", "Latest guides", latestPages, () => "Latest")}
   `;
@@ -1079,7 +1068,305 @@ function calculatorForm(type) {
   return forms[type];
 }
 
+function stateCanonical(state) {
+  return `${domain}/states/${state.slug}`;
+}
+
+function stateTitle(state) {
+  return `${state.state} State Tax Relief: Programs, Payment Plans & Debt Options (2026) | TaxReliefGuides`;
+}
+
+function stateFaqs(state) {
+  return [
+    [
+      `How do I apply for a payment plan with the ${state.agency}?`,
+      `${state.paymentPlan} Start by reading the official ${state.agency} page linked in the resources section, because state payment plans are more procedural than marketing language suggests. Gather the notice number, tax period, balance, filing status, and a realistic monthly budget before requesting terms. If the account is already in collection, respond through the channel on the notice rather than submitting a generic payment. If the published page does not give a minimum payment, do not guess; ask the agency to confirm the amount it will accept.`,
+    ],
+    [
+      `What is the minimum monthly payment for a ${state.state} payment plan?`,
+      `${state.paymentMinimum} The practical minimum is not only a dollar figure. The payment must be high enough to fit the state's maximum term, keep the account from defaulting, and leave room for current-year tax obligations. If the agency requires financial disclosure, monthly income, necessary expenses, assets, and bank information can matter as much as the balance. A plan that looks affordable but causes new tax debt is usually a weak plan.`,
+    ],
+    [
+      `How long does ${state.state} have to collect unpaid taxes?`,
+      `${state.sol} State collection limitation rules are separate from the IRS ten-year collection statute, and they can pause, restart, or change when appeals, bankruptcy, amended assessments, payment agreements, or litigation are involved. Treat the statute issue as a legal research item rather than a shortcut. If a collection period is central to your decision, verify it directly with ${state.agency} or a qualified tax professional before relying on the clock.`,
+    ],
+    [
+      `Can ${state.state} garnish my wages for state tax debt?`,
+      `${state.garnishment} Wage garnishment rules differ by state and by tax type. Some agencies use wage withholding orders, income executions, attachments, or levies, and the employer may have strict duties after receiving the order. The fastest way to stop or reduce the damage is usually to contact the agency before the employer begins remitting funds. If the notice already reached payroll, ask whether a payment agreement, hardship review, or release procedure is available.`,
+    ],
+    [
+      `Does filing for bankruptcy eliminate ${state.state} tax debt?`,
+      `Bankruptcy can affect some tax debts, but it is not a blanket solution and state tax rules do not automatically mirror IRS outcomes. Income tax debt, trust-fund taxes, sales tax collected from customers, withholding taxes, fraud penalties, and newer assessments can be treated differently. A bankruptcy filing can also pause some collection activity while leaving liens or priority debts unresolved. Anyone considering bankruptcy should compare state tax debt, IRS debt, and local property or business liabilities before filing.`,
+    ],
+    [
+      `What happens if I ignore a ${state.state} tax lien or warrant?`,
+      `${state.lien} Ignoring a lien, warrant, tax execution, or certified collection account usually makes the file harder to resolve because the state may move from billing to enforcement. Public records can affect financing, property transfers, business licensing, entity standing, and negotiations with other creditors. If the liability is wrong, dispute it quickly with evidence. If the liability is correct, ask about release, withdrawal, payment plan, compromise, or hardship procedures before additional enforcement begins.`,
+    ],
+    [
+      `Is ${state.state} tax debt relief the same as IRS relief?`,
+      `No. IRS relief is federal, while ${state.state} tax relief is administered by ${state.agency}${state.secondaryAgency ? ` and sometimes ${state.secondaryAgency}` : ""}. Program names may sound similar, but forms, deadlines, collection powers, lien processes, lookback periods, and hardship standards can differ significantly. A taxpayer can be in good standing with the IRS and still have a state problem, or vice versa. The safest approach is to map federal and state balances separately before deciding which agency to contact first.`,
+    ],
+    [
+      `Can I qualify for a ${state.state} Offer in Compromise if I already have an IRS OIC?`,
+      `${state.oicForm} An accepted IRS offer may help tell the financial story, but it does not automatically bind a state revenue agency unless that state's program specifically recognizes federal acceptance. Some states require their own forms, financial statements, application fees, tax-period review, and proof that the proposed settlement is in the state's best interest. If both federal and state balances exist, compare the cash needed for each program before submitting either offer. A state may also expect current compliance while the compromise is reviewed.`,
+    ],
+  ];
+}
+
+function stateProgramTable(state) {
+  return `
+    <div class="table-shell">
+      <table>
+        <caption>${escapeHtml(state.state)} state tax relief programs and official starting points</caption>
+        <thead><tr><th scope="col">Program</th><th scope="col">Who qualifies</th><th scope="col">Requirement key</th><th scope="col">Official link</th></tr></thead>
+        <tbody>
+          ${state.programs.map(([program, qualifies, requirement, link]) => `<tr><th scope="row">${escapeHtml(program)}</th><td>${escapeHtml(qualifies)}</td><td>${requirement}</td><td><a href="${link}">${escapeHtml(new URL(link).hostname)}</a></td></tr>`).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function stateResources(state) {
+  return `
+    <ul>
+      ${state.officialLinks.map(([label, link]) => `<li><a href="${link}">${escapeHtml(label)}</a></li>`).join("")}
+      <li>Official phone reference: ${escapeHtml(state.phone)}</li>
+    </ul>
+  `;
+}
+
+function stateRelatedLinks(page, allPages) {
+  const state = page.stateData;
+  const cards = [
+    ["../pages/irs-tax-relief-guide", "IRS tax relief guide"],
+    ["../pages/tax-debt-guide", "Tax debt guide"],
+    ["../pages/offer-in-compromise-guide", "Offer in Compromise guide"],
+    ["../pages/penalty-abatement-guide", "Penalty abatement guide"],
+    ["./", "State tax relief hub"],
+    ...state.neighbors.map((slug) => [`./${slug}`, `${stateTaxReliefConfigs.find((item) => item.slug === slug)?.state ?? slug} state tax relief`]),
+  ];
+  return `
+    <section class="related-section">
+      <div class="section-heading">
+        <span class="eyebrow">Related guides</span>
+        <h2>Related federal and state tax relief guides</h2>
+      </div>
+      <div class="related-grid">
+        ${cards.map(([href, label]) => `<a class="related-card" href="${href}"><span>${escapeHtml(label)}</span><strong>Read guide</strong></a>`).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function jsonLdScript(payload) {
+  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+}
+
+function stateHead(page) {
+  const state = page.stateData;
+  const canonical = stateCanonical(state);
+  const faq = stateFaqs(state);
+  const article = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: page.h1,
+    description: page.description,
+    dateModified: "2026-04-23",
+    publisher: {
+      "@type": "Organization",
+      name: "TaxReliefGuides",
+      url: domain,
+    },
+    url: canonical,
+  };
+  const breadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${domain}/` },
+      { "@type": "ListItem", position: 2, name: "States", item: `${domain}/states/` },
+      { "@type": "ListItem", position: 3, name: state.state, item: canonical },
+    ],
+  };
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map(([q, a]) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: stripTags(a) },
+    })),
+  };
+  return `
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeHtml(page.title)}</title>
+    <meta name="description" content="${escapeAttr(page.description)}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="${canonical}">
+    <meta property="og:title" content="${escapeAttr(page.title)}">
+    <meta property="og:description" content="${escapeAttr(page.description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="${site.name}">
+    <meta property="og:image" content="${domain}/assets/social-cover.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeAttr(page.title)}">
+    <meta name="twitter:description" content="${escapeAttr(page.description)}">
+    <meta name="twitter:url" content="${canonical}">
+    <meta name="twitter:image" content="${domain}/assets/social-cover.svg">
+    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles.css">
+    ${adsenseScript}
+    ${jsonLdScript(article)}
+    ${jsonLdScript(breadcrumbs)}
+    ${jsonLdScript(faqSchema)}
+    <script src="../main.js" defer></script>`;
+}
+
+function renderStatePage(page, allPages) {
+  const state = page.stateData;
+  const faq = stateFaqs(state);
+  const introNote = state.noIncomeTaxNote ? `<div class="callout-box"><strong>Important ${escapeHtml(state.state)} context:</strong> ${escapeHtml(state.noIncomeTaxNote)}</div>` : "";
+  const neighborLinks = state.neighbors.map((slug) => {
+    const neighbor = stateTaxReliefConfigs.find((item) => item.slug === slug);
+    return `<a href="./${slug}">${escapeHtml(neighbor?.state ?? slug)} state tax relief</a>`;
+  }).join(", ");
+  const sections = [
+    "understanding",
+    "programs",
+    "payment-plan-details",
+    "wage-garnishment",
+    "liens-levies",
+    "statute-limitations",
+    "professional-help",
+    "prepare-file",
+    "faq",
+    "official-resources",
+  ].map((id) => ({ id, title: id.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") }));
+
+  return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    ${stateHead(page)}
+  </head>
+  <body class="content-page">
+    ${renderHeader(page)}
+    <main>
+      <section class="hero hero-inner">
+        <div class="container hero-grid">
+          <div>
+            <span class="badge badge-hero">State Guide</span>
+            ${renderBreadcrumbs(page)}
+            <h1>${escapeHtml(page.h1)}</h1>
+            <p class="hero-copy">State tax debt is not the same as IRS debt. This ${escapeHtml(state.state)} guide explains the official agency, relief programs, payment plan paths, liens, garnishments, and documentation steps to verify before acting.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#programs">Compare programs</a>
+              <a class="button button-secondary" href="#official-resources">Official resources</a>
+            </div>
+          </div>
+          <div class="hero-visual">${heroVisual(`${state.state} agency map`, [
+            { label: "Main agency", value: state.agency },
+            { label: "Payment path", value: state.paymentMaxTerm.replace(/<[^>]*>/g, "Pending official detail") },
+            { label: "OIC form", value: state.oicForm.replace(/<[^>]*>/g, "Pending official detail").slice(0, 58) },
+          ], [
+            { label: "Agency", width: 92 },
+            { label: "Payment plan", width: 84 },
+            { label: "Compromise", width: 72 },
+            { label: "Collections", width: 78 },
+          ])}</div>
+        </div>
+      </section>
+      <div class="container main-grid">
+        <div class="content-column">
+          ${renderEditorialBlock()}
+          <div class="key-takeaways">
+            <span class="eyebrow">Key takeaways</span>
+            <ul>
+              <li>${escapeHtml(state.taxFocus)}</li>
+              <li>${escapeHtml(state.paymentPlan)}</li>
+              <li>${escapeHtml(state.lien)}</li>
+            </ul>
+          </div>
+          ${introNote}
+          <section id="understanding" class="content-section">
+            <div class="section-heading"><span class="eyebrow">State tax debt</span><h2>Understanding ${escapeHtml(state.state)} Tax Debt</h2></div>
+            <p>${escapeHtml(state.taxFocus)}</p>
+            <p>Federal IRS balances and state tax balances should be mapped separately. The IRS controls federal income tax, payroll tax, federal liens, federal levies, and federal installment agreements. ${escapeHtml(state.agency)} controls the state programs described on this page, and the agency's notices, forms, deadlines, and collection tools can differ from the IRS even when the words sound similar.</p>
+            <p>That difference matters because a taxpayer can solve one side and still have the other side unresolved. A federal payment plan does not automatically stop a state warrant, and a state payment plan does not automatically protect a taxpayer from an IRS levy. Before calling either agency, list each tax year or period, each notice number, each balance, and the agency that issued it.</p>
+            <p>The official agency for this guide is <a href="${state.agencyUrl}">${escapeHtml(state.agency)}</a>${state.secondaryAgency ? `, with related issues sometimes handled by <a href="${state.secondaryAgencyUrl}">${escapeHtml(state.secondaryAgency)}</a>` : ""}. Use those official pages as the source of truth if a notice, payment-plan term, or form instruction conflicts with a third-party summary.</p>
+          </section>
+          <section id="programs" class="content-section">
+            <div class="section-heading"><span class="eyebrow">Program matrix</span><h2>${escapeHtml(state.state)} State Tax Relief Programs</h2></div>
+            <p>The table below organizes the public relief paths verified from official agency sources in this pass. It is not a guarantee of eligibility. State agencies usually review filing status, tax period, prior compliance, financial capacity, collection risk, and whether the taxpayer has already been contacted before approving relief.</p>
+            ${stateProgramTable(state)}
+            <p>The strongest applications usually have three things in common: all required state returns are filed, current-year compliance is fixed, and the taxpayer can explain why the requested option is more realistic than full immediate payment. If any of those pieces are missing, the first step is often filing or reconstruction rather than negotiation.</p>
+          </section>
+          <section id="payment-plan-details" class="content-section">
+            <div class="section-heading"><span class="eyebrow">Installments</span><h2>${escapeHtml(state.state)} Payment Plan Details</h2></div>
+            <p>${state.paymentPlan}</p>
+            <p><strong>Maximum term:</strong> ${state.paymentMaxTerm}</p>
+            <p><strong>Minimum payment:</strong> ${state.paymentMinimum}</p>
+            <p><strong>Forms and application path:</strong> ${state.paymentForm}</p>
+            <p>A payment plan should be based on the full cost of the debt, not only the first monthly payment. State balances can continue to accrue interest, penalties, collection fees, lien costs, or other charges while a plan is active. A taxpayer who agrees to a payment that is too high may default, while a payment that is too low may not fit agency standards. The practical target is a plan that can survive current taxes, normal living or operating costs, and seasonal income swings.</p>
+            <p>Before applying, gather the state notice, account ID, Social Security number or FEIN, bank information if direct debit is required, recent returns, proof of income, and a monthly expense summary. Business taxpayers should also gather sales tax returns, withholding returns, payroll reports, bank statements, owner compensation details, and proof that current deposits or filings are no longer falling behind.</p>
+          </section>
+          <section id="wage-garnishment" class="content-section">
+            <div class="section-heading"><span class="eyebrow">Collection pressure</span><h2>Wage Garnishment Laws in ${escapeHtml(state.state)}</h2></div>
+            <p>${state.garnishment}</p>
+            <p>Wage garnishment is often the point where a tax problem becomes visible to an employer, which is why fast response matters. If a garnishment or withholding order has already been issued, the taxpayer should read the order, identify the issuing agency, and call the official contact listed on the notice. Do not assume that an IRS rule or a federal wage formula controls a state order. State rules and employer instructions can be different.</p>
+            <p>Common ways to reduce or stop wage collection include full payment, a formal payment agreement, hardship review, correction of an incorrect assessment, proof that the wrong person or entity was targeted, or release after compromise approval. The exact remedy depends on the notice and the agency. If the order involves business trust taxes, sales tax, or withholding tax, expect the agency to treat the file more seriously than an ordinary individual balance.</p>
+          </section>
+          <section id="liens-levies" class="content-section">
+            <div class="section-heading"><span class="eyebrow">Public records</span><h2>${escapeHtml(state.state)} Tax Liens and Levies</h2></div>
+            <p>${state.lien}</p>
+            <p>A lien or warrant is different from a payment plan. A payment plan addresses how the debt will be paid; a lien protects the government's claim while the debt remains unresolved. Depending on state law, liens can affect refinancing, property sale, business licensing, title transfer, and vendor or lender due diligence. The best time to ask about lien prevention is before the account reaches forced collection.</p>
+            <p>If a lien has already been filed, ask the agency for the exact release process and what must happen before the release is recorded. Some agencies require full payment; others may discuss withdrawal, subordination, or release after compromise approval in limited cases. Keep proof of payment, agreement approval, release letters, and county or court recording confirmations because public-record cleanup can lag behind account resolution.</p>
+          </section>
+          <section id="statute-limitations" class="content-section">
+            <div class="section-heading"><span class="eyebrow">Timing</span><h2>Statute of Limitations for ${escapeHtml(state.state)} Tax Debt</h2></div>
+            <p>${state.sol}</p>
+            <p>Do not use the IRS collection statute as a shortcut for state tax debt. State limitation periods may be tied to assessment date, filing date, fraud, failure to file, appeal status, bankruptcy, litigation, installment agreements, or other events. A taxpayer who is relying on time should verify the rule with the agency, a state statute, or a qualified professional before ignoring a notice.</p>
+            <p>Limitation analysis is especially sensitive for businesses because sales tax, withholding tax, and payroll-like liabilities may be treated differently from personal income tax. If the state believes tax was collected from customers or withheld from workers and not remitted, collection and responsible-person rules can be more aggressive than a normal balance-due case.</p>
+          </section>
+          <section id="professional-help" class="content-section">
+            <div class="section-heading"><span class="eyebrow">Decision support</span><h2>When to Consider Professional Help</h2></div>
+            <p>Professional help is worth considering when the balance is large, the notice mentions a lien or garnishment, several years are unfiled, a business collected sales tax or withholding and did not remit it, or the taxpayer is comparing an offer in compromise with bankruptcy, appeal, or closure of a business. State tax debt is often procedural, and missing the correct appeal window or form can be more damaging than choosing the wrong payment amount.</p>
+            <p>Legitimate options include CPAs for return reconstruction and financial statements, enrolled agents for tax representation, payroll specialists for employment-tax cleanup, and tax attorneys for litigation, lien, bankruptcy, or responsible-person exposure. The IRS maintains a federal tax return preparer directory at <a href="https://irs.treasury.gov/rpo/rpo.jsf">irs.gov/tax-professionals</a>, the National Association of Enrolled Agents has a directory at <a href="https://www.naea.org/">naea.org</a>, and state bar directories can help locate tax attorneys licensed in the relevant state.</p>
+            <p>A good advisor should ask for the actual state notice, not just the balance. They should identify the agency, tax type, period, appeal status, collection stage, and current filing compliance before recommending a solution. Be cautious of anyone who promises settlement before reviewing assets, income, expenses, and whether the state program actually applies.</p>
+          </section>
+          <section id="prepare-file" class="content-section">
+            <div class="section-heading"><span class="eyebrow">Preparation</span><h2>How to Prepare a Clean ${escapeHtml(state.state)} State Tax Relief File</h2></div>
+            <p>The best state tax relief file is organized before the first phone call. Put the most recent state notice on top, then add older notices in date order. Next, separate federal IRS notices from ${escapeHtml(state.state)} notices so the agency, balance, and deadline are not mixed together. If a spouse, business partner, payroll provider, or bookkeeper is involved, document who handled filings, who controlled payments, and who received notices.</p>
+            <p>For individual income tax balances, gather filed returns, W-2s, 1099s, bank statements, proof of withholding, estimated tax payments, and any amendment history. For business tax balances, gather sales tax returns, withholding returns, payroll records, point-of-sale reports, bank deposits, general ledger detail, officer compensation, and proof that current returns are being filed on time. State agencies often care less about a perfect narrative and more about whether the numbers line up with filed records.</p>
+            <p>If you plan to ask for a payment plan, build a monthly budget that includes current taxes. A state agency may approve a plan for the old debt, but the plan can fail if the taxpayer creates new liability during the same period. For businesses, this means separating trust taxes from operating cash so sales tax or withholding is not accidentally used for rent, inventory, or payroll. For individuals, it means adjusting withholding or estimates before promising a monthly payment.</p>
+            <p>If you plan to ask for compromise or hardship treatment, the file should explain why full payment is unrealistic and why the proposed outcome is better than forced collection. That typically requires more than a hardship statement. Useful support may include income records, medical or disability documentation where relevant, asset values, loan balances, rent or mortgage proof, dependent costs, and recent bank statements. If a state form asks for a financial statement, answer it consistently with the documents attached.</p>
+            <p>Keep a contact log after every agency interaction. Record the date, phone number, representative name or ID if provided, summary of what was said, documents requested, deadline, and next step. Upload or mail documents only through official channels, and keep confirmation numbers. If the state later issues a lien, warrant, levy, or default notice, that contact log can help show whether the taxpayer responded on time and whether a missing document or misunderstanding caused the escalation.</p>
+          </section>
+          <section id="faq" class="faq-section">
+            <div class="section-heading"><span class="eyebrow">FAQ</span><h2>Frequently Asked Questions</h2></div>
+            ${faq.map(([q, a]) => `<details class="faq-item"><summary>${escapeHtml(q)}</summary><p>${a}</p></details>`).join("")}
+          </section>
+          <section id="official-resources" class="content-section">
+            <div class="section-heading"><span class="eyebrow">Official resources</span><h2>${escapeHtml(state.state)} Official Tax Relief Resources</h2></div>
+            ${stateResources(state)}
+            <p>Also see neighboring or comparable state guides: ${neighborLinks}.</p>
+          </section>
+          <section class="disclaimer-box"><strong>Disclaimer:</strong> The information on this page is for general educational purposes only and does not constitute tax, legal, or financial advice. State tax laws and programs change frequently; verify current details directly with the ${escapeHtml(state.agency)} before acting. For personalized guidance, consult a licensed tax professional.</section>
+          ${stateRelatedLinks(page, allPages)}
+        </div>
+        <div class="sidebar-column">${renderToc(sections)}${renderSidebar(page)}</div>
+      </div>
+    </main>
+    ${renderFooter(page)}
+    ${renderCookieBanner(page)}
+  </body>
+</html>`;
+}
+
 function renderPage(page, allPages) {
+  if (page.template === "state") return renderStatePage(page, allPages);
   const isHome = page.path === "index.html";
   return `<!DOCTYPE html>
 <html lang="en">
@@ -1110,7 +1397,7 @@ function renderPage(page, allPages) {
           ${renderSections(page.sections)}
           ${renderChart(page.chart)}
           ${page.extraContent ?? ""}
-          ${renderAuthorBox()}
+          ${renderEditorialBlock()}
           ${renderFaq(page.faq)}
           ${renderDisclaimer()}
           ${renderRelated(page, allPages)}
@@ -1513,6 +1800,7 @@ const supportConfigs = [
   ["pages/tax-audit-guide.html", "Tax Audit Guide: What to Expect and How to Prepare", "tax audit", "filers who want to respond calmly, document well, and avoid making the process harder"],
   ["pages/how-to-stop-irs-wage-garnishment.html", "How to Stop IRS Wage Garnishment Before It Gets Worse", "stop IRS wage garnishment", "workers under collection pressure who need to move quickly and strategically"],
   ["pages/best-states-for-low-taxes.html", "Best States for Low Taxes: What Actually Changes", "best states for low taxes", "households and owners comparing relocation, residency, and total tax burden"],
+// <!-- REVISAR MANUALMENTE: meta descriptions generated from this support-page template can truncate awkwardly and should be rewritten with page-specific data. -->
 ].map(([path, h1, keyword, audience], index) =>
   withDefaults({
     path,
@@ -1725,7 +2013,7 @@ const rootPages = [
     titleBase: "TaxReliefGuide: IRS Relief, Deductions, and Tax Help",
     descriptionBase: "Explore premium U.S. tax guides on IRS relief, tax debt, deductions, credits, payroll taxes, business compliance, and planning calculators for U.S. filers.",
     h1: "Premium U.S. Tax Guides for IRS Relief, Credits, Deductions, and Compliance",
-    hero: "Explore high-value tax topics built for U.S. search intent: IRS debt relief, payroll taxes, business tax planning, deductions, credits, and calculators that help readers act with confidence.",
+    hero: "Explore IRS debt relief, payroll taxes, business tax planning, deductions, credits, and calculators that help readers act with more clarity and confidence.",
     keyword: "U.S. tax relief and tax planning",
     shortLabel: "U.S. tax planning",
     audience: "U.S. taxpayers, families, freelancers, and business owners",
@@ -1759,7 +2047,7 @@ const rootPages = [
     keyword: "about TaxReliefGuide",
     shortLabel: "about this site",
     audience: "readers evaluating editorial quality and trust",
-    challenge: "High-value tax niches attract shallow or sales-first content, so trust signals matter",
+    challenge: "High-value tax niches attract shallow or sales-first content, so source clarity matters",
     eligibility: "Readers should know who writes the content, what expertise guides it, and where the site sets limits",
     cashflow: "Editorial transparency helps readers judge whether a guide is useful enough to inform a financial or tax conversation",
     docs: "We rely on IRS publications, official instructions, widely used tax forms, and practical compliance workflows",
@@ -1964,17 +2252,6 @@ function buildRootSections(page) {
   if (page.path === "index.html") {
     return [
       {
-        id: "why-taxreliefguide",
-        eyebrow: "Site overview",
-        title: "Why this site is structured for modern tax search intent",
-        intro: "Readers usually arrive with a problem, not a taxonomy chart.",
-        paragraphs: [
-          `TaxReliefGuide is designed so a reader can enter through a high-CPC search such as IRS tax relief, payroll taxes, self-employed deductions, or child tax credit, and still navigate into the related topics that actually affect the decision. That matters because tax searches rarely live alone. A reader investigating tax debt may also need back-tax filing guidance, penalty relief context, a payment-plan calculator, and a better withholding strategy for the current year.`,
-          `The site therefore uses a strong pillar-and-support model with long-form guides, calculators, FAQ sections, responsive comparison tables, and visible related-article modules. The goal is to reduce pogo-sticking and help a user build a complete mental model before they act. That is good for readers, good for SEO, and aligned with the type of durable utility content that tends to support long-term monetization without leaning on thin pages or ad-heavy layouts.`,
-          `Every indexable page has a clear canonical, consistent internal linking, author presence, disclaimer, related reading, and dynamic schema support. That technical consistency is important in tax publishing because search quality and user trust depend on both content depth and implementation discipline.`,
-        ],
-      },
-      {
         id: "general-faq",
         eyebrow: "FAQ",
         title: "What readers ask most often across the site",
@@ -1996,9 +2273,16 @@ function buildRootSections(page) {
         title: `How ${page.h1.toLowerCase()} supports reader trust`,
         intro: `Trust and clarity are part of the product in financial publishing.`,
         paragraphs: [
+          ...(page.path === "contact.html"
+            ? [
+                contactEmail
+                  ? `You can reach the editorial team at ${contactEmail} for corrections, source suggestions, partnership inquiries, or editorial questions.`
+                  : "We are updating our contact information. Please check back soon.",
+              ]
+            : []),
           `${page.shortLabel.charAt(0).toUpperCase() + page.shortLabel.slice(1)} helps readers evaluate the site before relying on any specific guide or calculator. In tax content, that matters because a reader may be deciding whether to file, negotiate with the IRS, adjust payroll settings, or speak with a professional based on what they learn here. The context around the content deserves as much care as the content itself.`,
           `We therefore keep these institutional pages practical. They explain what the site covers, how we think about source quality, what users can send to the editorial team, and where the boundaries are between education and individualized advice. Those boundaries make the main content more trustworthy because they reduce confusion about what the site is and is not trying to do.`,
-          `Institutional pages also support technical quality. They provide stable internal destinations for navigation, footer trust signals, organization schema references, and user expectations around updates and corrections.`,
+          `Institutional pages also support technical quality. They provide stable internal destinations for navigation, organization references, and user expectations around updates and corrections.`,
         ],
       },
       {
@@ -2027,6 +2311,18 @@ function buildRootSections(page) {
         `Readers should treat this page as a practical summary of site policy and use it alongside the site-wide disclaimers and institutional pages if they want a fuller picture of how TaxReliefGuide operates.`,
       ],
     },
+    ...(page.path === "privacy-policy.html"
+      ? [{
+          id: "advertising",
+          eyebrow: "Advertising",
+          title: "Google AdSense and Third-Party Ads",
+          intro: "TaxReliefGuides uses Google AdSense to display ads.",
+          paragraphs: [
+            `Google AdSense is a third-party ad service operated by Google LLC. AdSense uses cookies and tracking technologies to serve ads based on your prior visits to this site and other websites. Google may collect data such as your IP address, browser type, and browsing behavior to deliver personalized ads. TaxReliefGuides does not have direct access to data collected by Google for ad delivery. This data is processed in accordance with Google's Privacy Policy.`,
+            `You can opt out of personalized ads by visiting Google's Ads Settings or aboutads.info. California residents may exercise CCPA opt-out rights through Google's ad personalization settings. For privacy or advertising data questions, email ${contactEmail}.`,
+          ],
+        }]
+      : []),
     {
       id: "details",
       eyebrow: "Details",
@@ -2222,6 +2518,144 @@ for (const config of rootPages) {
   allPages.push(page);
 }
 
+const stateHubPage = withDefaults({
+  path: "states/index.html",
+  badge: "State Guides",
+  category: "stateHub",
+  title: "State Tax Relief Guides by U.S. State",
+  titleBase: "State Tax Relief Guides by U.S. State",
+  h1: "State Tax Relief Guides by U.S. State",
+  description: "Compare state tax relief guides for California, Texas, Florida, New York, Pennsylvania, Illinois, Ohio, Georgia, North Carolina, and Michigan.",
+  keyword: "state tax relief",
+  shortLabel: "State tax relief",
+  audience: "taxpayers and business owners comparing state tax debt relief programs alongside IRS options",
+  challenge: "State tax agencies use different forms, collection powers, and payment rules than the IRS",
+  eligibility: "Eligibility depends on the state agency, tax type, filing status, collection stage, and whether the taxpayer has already been contacted",
+  cashflow: "State payment plans and compromises should be modeled together with federal balances and current-year tax duties",
+  docs: "Start with state notices, account numbers, returns, payment history, bank records, and any state lien, warrant, levy, or garnishment notice",
+  breadcrumbs: [
+    { label: "Home", href: `${domain}/` },
+    { label: "States", href: `${domain}/states/` },
+  ],
+  takeaways: [
+    "State tax relief is separate from IRS relief, even when program names sound similar.",
+    "Texas and Florida require a different framework because they do not have broad personal state income taxes.",
+    "The best first step is identifying the state agency, tax type, period, notice, and official program page before contacting anyone.",
+  ],
+  faq: [
+    {
+      q: "Are state tax relief programs the same as IRS relief programs?",
+      a: "No. IRS relief is federal, while state tax relief is administered by each state's tax agency or collection office. Payment terms, compromise standards, lien procedures, garnishment rules, and appeal deadlines can be different.",
+    },
+    {
+      q: "Why do Texas and Florida state tax relief guides look different?",
+      a: "Texas and Florida do not impose a broad personal state income tax. Their state tax debt issues usually involve sales tax, franchise or corporate tax, property tax, reemployment tax, or business compliance rather than a personal income tax balance.",
+    },
+    {
+      q: "Can a state tax agency garnish wages or file liens?",
+      a: "Many state agencies can use liens, warrants, levies, attachments, garnishments, or similar collection tools. The exact name and process varies by state, so taxpayers should read the notice and official agency page for the current procedure.",
+    },
+    {
+      q: "Should I fix IRS debt or state tax debt first?",
+      a: "Map both balances first. The right order depends on collection pressure, filing deadlines, current compliance, lien or levy risk, and whether one agency is already taking enforcement action.",
+    },
+  ],
+  chart: {
+    eyebrow: "State coverage",
+    title: "State relief guide coverage",
+    ariaLabel: "State tax relief guide coverage by region",
+    bars: [
+      { label: "West and Southwest", width: 74, value: "CA, TX" },
+      { label: "Southeast", width: 82, value: "FL, GA, NC" },
+      { label: "Northeast", width: 78, value: "NY, PA" },
+      { label: "Midwest", width: 86, value: "IL, OH, MI" },
+    ],
+  },
+  cta: { label: "Start with California", href: `${domain}/states/california-state-tax-relief` },
+  secondaryCta: { label: "Read IRS relief guide", href: `${domain}/pages/irs-tax-relief-guide` },
+  visual: heroVisual("State tax relief map", [
+    { label: "Guides live", value: "10 states" },
+    { label: "Source type", value: "Official agency pages" },
+    { label: "Best use", value: "Compare state vs IRS" },
+  ], [
+    { label: "State agency", width: 90 },
+    { label: "Payment plans", width: 84 },
+    { label: "OIC/settlement", width: 72 },
+    { label: "Collections", width: 78 },
+  ]),
+  sections: [
+    {
+      id: "state-guides",
+      eyebrow: "State guides",
+      title: "Choose a state tax relief guide",
+      intro: "Each guide focuses on the state agency, official program pages, payment-plan rules, compromise options, liens, garnishments, and practical documentation steps.",
+      paragraphs: [
+        "State tax debt is local in procedure even when the financial stress feels similar to IRS debt. A taxpayer with a federal balance may also have a state income tax assessment, a sales tax account, a withholding tax issue, a corporate tax bill, or a property-related tax obligation. Those accounts often move through different portals, forms, and collection offices.",
+        "The guides below start with ten high-population states where state tax relief intent can be materially different. California, New York, Pennsylvania, Illinois, Ohio, Georgia, North Carolina, and Michigan have personal income tax systems. Texas and Florida require a different angle because most residents are not dealing with broad personal state income tax debt.",
+        "More state guides can be added later using the same framework: official state agency source first, visible caveats where a rule is not confirmed, and no invented phone numbers, deadlines, or professional credentials.",
+      ],
+      html: `
+        <div class="card-grid">
+          ${stateTaxReliefConfigs.map((state) => `<a class="topic-card" href="${localHref("states/index.html", `states/${state.slug}.html`)}"><span class="eyebrow">${escapeHtml(state.state)}</span><h3>${escapeHtml(state.state)} State Tax Relief</h3><p>${escapeHtml(state.taxFocus)}</p></a>`).join("")}
+        </div>
+      `,
+    },
+    {
+      id: "how-to-use",
+      eyebrow: "How to use",
+      title: "How to compare state tax relief with IRS relief",
+      intro: "Use the state guides as a state-agency map, then compare them against the federal IRS guides.",
+      paragraphs: [
+        "Start by separating federal and state balances. Write down the agency, notice number, tax type, tax period, balance, deadline, and current collection stage for each one. If one account is already in lien, levy, garnishment, warrant, or certified collection status, that account may need priority even if it is smaller.",
+        "Next, identify whether the state program is a payment plan, compromise, voluntary disclosure, penalty waiver, hardship hold, or appeal. Those labels are not interchangeable. A voluntary disclosure program is usually for taxpayers who come forward before agency contact, while a payment plan is normally for an assessed balance. A compromise may require financial disclosure and can be much narrower.",
+        "Finally, verify every state-specific detail directly with the agency before acting. This is especially important for collection statutes, wage garnishment limits, forms, phone numbers, and payment-plan terms because those details can change or may depend on the tax type.",
+      ],
+    },
+  ],
+  related: [
+    "pages/irs-tax-relief-guide.html",
+    "pages/tax-debt-guide.html",
+    "pages/offer-in-compromise-guide.html",
+  ],
+});
+allPages.push(stateHubPage);
+
+for (const state of stateTaxReliefConfigs) {
+  allPages.push(withDefaults({
+    path: `states/${state.slug}.html`,
+    template: "state",
+    category: "state",
+    badge: "State Guide",
+    title: stateTitle(state),
+    titleBase: stateTitle(state),
+    h1: `${state.state} State Tax Relief Programs (2026 Guide)`,
+    description: state.meta,
+    keyword: `${state.state} state tax relief`,
+    shortLabel: `${state.state} state tax relief`,
+    audience: `${state.state} residents and businesses comparing state tax relief programs with IRS options`,
+    challenge: `${state.agency} programs differ from IRS programs and must be verified against official state sources`,
+    eligibility: "Eligibility depends on filing compliance, tax type, collection stage, payment capacity, and agency-specific program rules",
+    cashflow: "State payment terms must fit current-year tax duties, federal balances, and normal household or business cash flow",
+    docs: "State notices, returns, payment history, financial statements, bank records, lien or levy notices, and official program forms",
+    stateData: state,
+    breadcrumbs: [
+      { label: "Home", href: `${domain}/` },
+      { label: "States", href: `${domain}/states/` },
+      { label: state.state, href: stateCanonical(state) },
+    ],
+    sections: [],
+    stats: [],
+    cta: { label: "Compare programs", href: `${domain}/states/${state.slug}#programs` },
+    secondaryCta: { label: "State hub", href: `${domain}/states/` },
+    visual: "",
+    related: [
+      "pages/irs-tax-relief-guide.html",
+      "pages/tax-debt-guide.html",
+      "pages/offer-in-compromise-guide.html",
+    ],
+  }));
+}
+
 for (const page of allPages) {
   if (page.path === "index.html") {
     page.homeLead = homeLead(allPages);
@@ -2229,7 +2663,9 @@ for (const page of allPages) {
 }
 
 for (const page of allPages) {
-  if (page.category === "pillar") ensureWordCount(page, allPages, 3000, "pillar");
+  if (page.template === "state") page.wordCount = wordCountFromHtml(renderPage(page, allPages));
+  else if (page.category === "stateHub") ensureWordCount(page, allPages, 1300, "support");
+  else if (page.category === "pillar") ensureWordCount(page, allPages, 3000, "pillar");
   else if (page.category === "support") ensureWordCount(page, allPages, 1700, "support");
   else if (page.template === "calculator") ensureWordCount(page, allPages, 1300, "calculator");
   else if (page.path === "index.html") ensureWordCount(page, allPages, 1600, "support");
@@ -2243,6 +2679,8 @@ function buildSitemap(pages) {
       const priority =
         page.path === "index.html" ? "1.0" :
         page.category === "pillar" ? "0.9" :
+        page.category === "stateHub" ? "0.8" :
+        page.category === "state" ? "0.7" :
         page.template === "calculator" ? "0.8" :
         "0.7";
       const changefreq =
@@ -2253,7 +2691,7 @@ function buildSitemap(pages) {
       return `
   <url>
     <loc>${urlFor(page.path)}</loc>
-    <lastmod>${lastmod}</lastmod>
+    <lastmod>${page.category === "state" || page.category === "stateHub" ? "2026-04-23" : lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`;
@@ -2267,9 +2705,11 @@ function buildSitemap(pages) {
 }
 
 function buildRobots() {
-  return `User-agent: *
+return `User-agent: *
 Allow: /
 Disallow: /404.html
+Disallow: /*?q=*
+Disallow: /*?s=*
 Sitemap: https://taxreliefguides.com/sitemap.xml
 `;
 }
@@ -2315,6 +2755,19 @@ async function cleanupOldHtml(pages) {
       await fs.unlink(path.join(pagesDir, entry.name));
     }
   }
+  const statesDir = path.join(root, "states");
+  try {
+    const stateEntries = await fs.readdir(statesDir, { withFileTypes: true });
+    for (const entry of stateEntries) {
+      if (!entry.isFile() || !entry.name.endsWith(".html")) continue;
+      const rel = `states/${entry.name}`;
+      if (!keep.has(rel)) {
+        await fs.unlink(path.join(statesDir, entry.name));
+      }
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
 }
 
 function auditSite(pages, rendered) {
@@ -2346,12 +2799,12 @@ function auditSite(pages, rendered) {
     if (!html.includes("<header class=\"site-header\">")) issues.push(`Missing header on ${page.path}`);
     if (!html.includes("<footer class=\"site-footer\">")) issues.push(`Missing footer on ${page.path}`);
     if (page.path !== "index.html" && !html.includes("aria-label=\"Breadcrumb\"")) issues.push(`Missing breadcrumbs on ${page.path}`);
-    if (!html.includes("class=\"author-box\"")) issues.push(`Missing author box on ${page.path}`);
+    if (!html.includes("class=\"editorial-block\"")) issues.push(`Missing editorial block on ${page.path}`);
     if (!html.includes("class=\"related-section\"")) issues.push(`Missing related articles on ${page.path}`);
     if (!html.includes(site.disclaimer)) issues.push(`Missing disclaimer on ${page.path}`);
     if (/#"|javascript:void\(0\)|ADVERTISEMENT|Lorem ipsum|TODO/i.test(html)) issues.push(`Placeholder pattern found on ${page.path}`);
-    if (html.includes("type=\"application/ld+json\"")) issues.push(`Static JSON-LD found on ${page.path}`);
-    if (/http:\/\//.test(html) || /www\./.test(html)) issues.push(`HTTP or www found on ${page.path}`);
+    if (page.template !== "state" && html.includes("type=\"application/ld+json\"")) issues.push(`Static JSON-LD found on ${page.path}`);
+    if (/http:\/\/taxreliefguides\.com|www\.taxreliefguides\.com/.test(html)) issues.push(`HTTP or www internal URL found on ${page.path}`);
 
     for (const match of html.matchAll(/<a\b[^>]*href="([^"]+)"/g)) {
       const href = match[1];

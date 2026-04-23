@@ -33,7 +33,7 @@
 
 ## Verification Summary
 
-- Pages scanned: 40
+- Pages scanned: 69
 - `.html` canonicals: 0
 - `www` canonicals: 0
 - `http` canonicals: 0

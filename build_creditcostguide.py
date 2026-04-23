@@ -167,13 +167,6 @@ ROOT_PAGES = [
 ]
 
 
-AUTHOR = {
-    "name": "Maya Ellison",
-    "role": "Senior Personal Finance Editor",
-    "bio": "Maya covers borrowing costs, banking fees, mortgage pricing, and payoff strategy with a focus on plain-English explanations and realistic household budgeting.",
-}
-
-
 NAV_ITEMS = [
     ("/", "Home"),
     ("/pages/personal-loans-guide.html", "Personal Loans"),
@@ -330,16 +323,12 @@ def faq_html(faqs: List[List[str]]) -> str:
 
 def author_box() -> str:
     return trim(
-        f"""
-        <section class="ccg-author-box" aria-label="Author information">
-          <div class="ccg-author-mark">ME</div>
-          <div>
-            <p class="ccg-author-label">Written by</p>
-            <h2>{html.escape(AUTHOR["name"])}</h2>
-            <p class="ccg-author-role">{html.escape(AUTHOR["role"])}</p>
-            <p>{html.escape(AUTHOR["bio"])}</p>
-          </div>
-        </section>
+        """
+        <div class="editorial-block">
+          <strong>Editorial Team</strong>
+          <p>Last reviewed: April 2026</p>
+          <p>This guide compiles information from official IRS publications, state Department of Revenue resources, and other public sources. Content is reviewed quarterly against updated references.</p>
+        </div>
         """
     )
 
@@ -978,7 +967,7 @@ def styles_css() -> str:
         .ccg-chart-card,
         .ccg-topic-card,
         .ccg-related-card,
-        .ccg-author-box,
+        .editorial-block,
         .ccg-calc-card,
         .ccg-cookie-banner {
           border-radius: var(--ccg-radius-xl);
@@ -1082,26 +1071,11 @@ def styles_css() -> str:
         .ccg-faq-item summary { cursor: pointer; font-weight: 800; }
         .ccg-faq-item p { margin: 0.8rem 0 0; }
 
-        .ccg-author-box {
-          display: grid;
-          grid-template-columns: auto 1fr;
-          gap: 1rem;
+        .editorial-block {
           padding: 1.3rem;
           margin-top: 1.4rem;
         }
-        .ccg-author-mark {
-          width: 64px;
-          height: 64px;
-          border-radius: 20px;
-          display: grid;
-          place-items: center;
-          background: var(--ccg-gradient);
-          color: white;
-          font-weight: 900;
-        }
-        .ccg-author-label,
-        .ccg-author-role { margin: 0; color: var(--ccg-slate); }
-        .ccg-author-box h2 { margin: 0.15rem 0; font-size: 1.3rem; }
+        .editorial-block strong { display: block; margin-bottom: 0.45rem; }
 
         .ccg-calc-card { padding: 1.2rem; display: grid; gap: 1.2rem; }
         .ccg-calc-form {
@@ -1469,7 +1443,6 @@ def main_js() -> str:
               "@id": `${canonical}#article`,
               headline: title,
               description,
-              author: { "@type": "Person", name: "Maya Ellison" },
               publisher: { "@id": `${site.domain}/#organization` },
               mainEntityOfPage: canonical
             });
