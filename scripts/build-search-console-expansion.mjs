@@ -1908,7 +1908,12 @@ async function updateSitemap() {
 
 async function buildPages() {
   await ensureRootFavicon();
+  // irs-payment-plan-guide redirects to irs-payment-plans-guide (canonical plural).
+  // Do NOT write its HTML file — Cloudflare's pretty-URL engine serves static files
+  // before consulting _redirects, so the file must be absent for the redirect to fire.
+  const skipFileWrite = new Set(["irs-payment-plan-guide"]);
   for (const page of pageSpecs) {
+    if (skipFileWrite.has(page.slug)) continue;
     const html = expandToMinimum(page);
     await fs.writeFile(path.join(pagesDir, `${page.slug}.html`), html);
   }

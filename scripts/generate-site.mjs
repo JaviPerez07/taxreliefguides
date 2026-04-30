@@ -3233,7 +3233,7 @@ async function cleanupOldHtml(pages) {
     "payroll-tax-relief",
     "payroll-tax-calculator",
     "tax-debt-relief-options",
-    "irs-payment-plan-guide",
+    // irs-payment-plan-guide intentionally NOT here — file must stay absent so _redirects fires
     "irs-currently-not-collectible",
     "tax-debt-settlement",
     "back-taxes-help",
