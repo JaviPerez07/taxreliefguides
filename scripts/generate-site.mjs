@@ -2831,7 +2831,186 @@ for (const config of pillarConfigs) {
   allPages.push(page);
 }
 
+// ── Penalties page ────────────────────────────────────────────────────────────
+// Generates rich extra content for irs-penalties-explained.html.
+// All rates are from IRS Topic 653, IRC §§ 6651/6656/6662/6672/6702, and the
+// Q1 2026 IRS underpayment interest rate announcement.
+function makePenaltiesExtraContent() {
+  return `
+<section id="penalty-rates-table" class="content-section">
+  <div class="section-heading">
+    <span class="eyebrow">2026 rate table</span>
+    <h2>IRS Penalty Rates at a Glance (2026)</h2>
+  </div>
+  <p>These rates apply to federal income tax. Employment taxes and specialty filings have additional rules. Sources: IRS Topic 653, IRC §§ 6651, 6656, 6662, 6672, 6702.</p>
+  <div class="table-shell">
+    <table>
+      <caption>Federal IRS penalty rates 2026</caption>
+      <thead>
+        <tr><th scope="col">Penalty Type</th><th scope="col">Rate</th><th scope="col">Maximum</th><th scope="col">IRC §</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Failure to File (FTF)</th><td>5% per month or partial month of unpaid tax</td><td>25% of unpaid tax (5 months)</td><td>§ 6651(a)(1)</td></tr>
+        <tr><th scope="row">Failure to Pay (FTP)</th><td>0.5% per month or partial month</td><td>25% of unpaid tax</td><td>§ 6651(a)(2)</td></tr>
+        <tr><th scope="row">Combined FTF + FTP (same month)</th><td>FTF reduced to 4.5% + FTP 0.5% = 5% total cap per month</td><td>25% combined</td><td>§ 6651(c)</td></tr>
+        <tr><th scope="row">Minimum FTF (&gt;60 days late)</th><td>Lesser of $525 or 100% of unpaid tax (2026 adjusted amount)</td><td>$525</td><td>§ 6651(a)(1)</td></tr>
+        <tr><th scope="row">Underpayment interest (Q1 2026)</th><td>7% annually (federal short-term rate + 3%), compounded daily</td><td>No cap — runs until paid</td><td>§ 6621</td></tr>
+        <tr><th scope="row">Accuracy-Related</th><td>20% of underpayment</td><td>40% for gross valuation misstatement</td><td>§ 6662</td></tr>
+        <tr><th scope="row">Trust Fund Recovery (TFRP)</th><td>100% of unpaid trust fund taxes</td><td>Equal to entire trust fund amount</td><td>§ 6672</td></tr>
+        <tr><th scope="row">Frivolous Return</th><td>$5,000 per submission</td><td>$5,000 (fixed)</td><td>§ 6702</td></tr>
+        <tr><th scope="row">Failure to Deposit — 1–5 days late</th><td>2% of undeposited amount</td><td>—</td><td>§ 6656</td></tr>
+        <tr><th scope="row">Failure to Deposit — 6–15 days late</th><td>5% of undeposited amount</td><td>—</td><td>§ 6656</td></tr>
+        <tr><th scope="row">Failure to Deposit — &gt;15 days late</th><td>10% of undeposited amount</td><td>—</td><td>§ 6656</td></tr>
+        <tr><th scope="row">Failure to Deposit — &gt;10 days after IRS notice</th><td>15% of undeposited amount</td><td>—</td><td>§ 6656</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><small><strong>Sources:</strong> IRS Topic 653 (irs.gov/taxtopics/tc653); IRS Failure to Deposit page (irs.gov/payments/failure-to-deposit-penalty); IRS Trust Fund Recovery Penalty page. Q1 2026 underpayment rate per IRS Rev. Rul. 2025-XX.</small></p>
+</section>
+
+<section id="failure-to-file" class="content-section">
+  <div class="section-heading">
+    <span class="eyebrow">5% per month</span>
+    <h2>Failure to File (FTF) Penalty</h2>
+  </div>
+  <p>The failure-to-file penalty accrues when a return is not filed by its due date, including any valid extension. The IRS charges 5% of the unpaid tax for each month or partial month the return remains unfiled, up to a maximum of 25% after five months.</p>
+  <p>The FTF penalty applies to the <em>unpaid</em> balance, not the total tax owed. If you paid in full through withholding or estimated payments, filing late may produce no FTF penalty at all — but the return must still be filed.</p>
+  <p><strong>Minimum penalty rule (returns more than 60 days late):</strong> If a return is filed more than 60 days after the due date (or extended due date), the minimum penalty is the lesser of $525 (2026 inflation-adjusted amount) or 100% of the tax due. This minimum penalty can apply even to small balances.</p>
+  <p><strong>Worked example — FTF only:</strong> You owe $6,000 in federal income tax and file 3 months late without paying. FTF = 5% × 3 months × $6,000 = <strong>$900</strong>. You also owe interest on the unpaid balance. If you had paid the full $6,000 on time but filed late, FTF would be $0 (no unpaid balance).</p>
+</section>
+
+<section id="failure-to-pay" class="content-section">
+  <div class="section-heading">
+    <span class="eyebrow">0.5% per month</span>
+    <h2>Failure to Pay (FTP) Penalty</h2>
+  </div>
+  <p>The failure-to-pay penalty accrues on unpaid tax starting the day after the payment due date. It runs at 0.5% per month or partial month, capped at 25% (reaching the cap after 50 months). Unlike the FTF penalty, the FTP does not stop when the return is filed — it keeps running until the balance is paid.</p>
+  <p><strong>Reduced rate during an installment agreement:</strong> If you enter an IRS installment agreement and stay current, the FTP rate drops to 0.25% per month for the duration of the agreement.</p>
+  <p><strong>Worked example — FTP only:</strong> You file on time but leave a $10,000 balance unpaid for 8 months. FTP = 0.5% × 8 months × $10,000 = <strong>$400</strong>. Interest also accrues separately during this period at the current underpayment rate (7% annually for 2026).</p>
+</section>
+
+<section id="combined-month-rule" class="content-section">
+  <div class="section-heading">
+    <span class="eyebrow">5% monthly cap</span>
+    <h2>The Combined Month Rule: When Both Penalties Apply</h2>
+  </div>
+  <p>When a return is both late AND has an unpaid balance, both penalties technically apply to the same month. IRC § 6651(c) caps the combined monthly charge at 5% — the FTF rate drops from 5% to 4.5%, and the FTP 0.5% brings the total back to 5%.</p>
+  <p><strong>Worked example — combined penalties for 3 months:</strong></p>
+  <div class="table-shell">
+    <table>
+      <caption>Combined FTF + FTP on $10,000 unpaid balance</caption>
+      <thead>
+        <tr><th scope="col">Month</th><th scope="col">FTF (4.5%)</th><th scope="col">FTP (0.5%)</th><th scope="col">Total that month</th><th scope="col">Running total</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Month 1</th><td>$450</td><td>$50</td><td>$500</td><td>$500</td></tr>
+        <tr><th scope="row">Month 2</th><td>$450</td><td>$50</td><td>$500</td><td>$1,000</td></tr>
+        <tr><th scope="row">Month 3</th><td>$450</td><td>$50</td><td>$500</td><td>$1,500</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>After 5 months, FTF reaches its 25% cap and stops. The FTP penalty then continues at 0.5% per month — potentially reaching its own 25% cap over the next 50 months. A taxpayer who never files and never pays on a $10,000 balance could face 47.5% in combined penalties (FTF 25% + FTP 22.5% before FTF cap interacts), plus daily compounding interest on the growing total.</p>
+</section>
+
+<section id="underpayment-interest" class="content-section">
+  <div class="section-heading">
+    <span class="eyebrow">Daily compound interest</span>
+    <h2>IRS Underpayment Interest</h2>
+  </div>
+  <p>Interest under IRC § 6621 accrues on unpaid tax from the original due date until the day of payment. The quarterly rate equals the federal short-term rate plus 3 percentage points. For Q1 2026, the IRS underpayment interest rate is <strong>7% annually</strong>, applied daily.</p>
+  <p>Interest is not a penalty. It cannot be abated, waived, or forgiven under normal abatement programs. It accrues on the unpaid tax, on assessed penalties, and on interest already charged — making compound growth a real concern on older balances.</p>
+  <p><strong>Quick estimate:</strong> On a $5,000 unpaid balance for 12 months at 7% annually: approximately $350 in interest (before compounding effects). For a 2-year horizon, the same balance generates roughly $700–$730 in interest before accounting for compounding. On balances left unresolved for 3–5 years, interest alone can exceed the original penalty amount.</p>
+</section>
+
+<section id="trust-fund-recovery" class="content-section">
+  <div class="section-heading">
+    <span class="eyebrow">100% personal liability</span>
+    <h2>Trust Fund Recovery Penalty (TFRP)</h2>
+  </div>
+  <p>The Trust Fund Recovery Penalty under IRC § 6672 is one of the IRS's most aggressive collection tools. When a business collects payroll taxes from employees (income tax withholding, employee FICA) but fails to remit them to the IRS, those amounts are held in trust for the government. Any person who is both "responsible" for collecting and paying the taxes, and "willfully" failed to do so, can be personally assessed for 100% of the trust fund amount.</p>
+  <p><strong>What is the trust fund portion?</strong> It includes the employees' withheld federal income taxes plus the employees' share of Social Security and Medicare taxes. It does not include the employer's matching FICA share.</p>
+  <p><strong>Who is a "responsible person"?</strong> The IRS evaluates authority, not just title. Business owners, officers, check signers, bookkeepers with payment authority, and in some cases board members may all be assessed. If two or more people meet the criteria, the IRS can assess each person for the full trust fund amount — not just their pro-rata share.</p>
+  <p><strong>Worked example:</strong> A business has $45,000 in unpaid trust fund taxes. Two officers sign checks. The IRS can assess each officer personally for $45,000. When the business closes, the obligation does not go away — the IRS can pursue the officers directly, file liens against their personal assets, and levy personal bank accounts.</p>
+</section>
+
+<section id="accuracy-related" class="content-section">
+  <div class="section-heading">
+    <span class="eyebrow">20% of underpayment</span>
+    <h2>Accuracy-Related Penalty</h2>
+  </div>
+  <p>The accuracy-related penalty under IRC § 6662 applies to the underpayment amount caused by negligence, disregard of rules, or substantial understatement of income tax. The standard rate is 20% of the understated amount. For gross valuation misstatements, the rate doubles to 40%.</p>
+  <p><strong>Substantial understatement:</strong> For individuals, a substantial understatement exists when the understatement exceeds the greater of 10% of the correct tax or $5,000.</p>
+  <p><strong>Negligence:</strong> The IRS defines negligence as failure to make a reasonable attempt to comply with the tax code or failure to maintain adequate records. Signing a return with known errors can trigger this penalty.</p>
+  <p><strong>Defense — reasonable cause:</strong> The penalty does not apply if the taxpayer had reasonable cause and acted in good faith (IRC § 6664(c)). Documented reliance on a qualified professional, good-faith reliance on a clear statutory provision, or circumstances beyond the taxpayer's control can support this defense. The "I didn't know" argument by itself rarely qualifies.</p>
+</section>
+
+<section id="penalty-abatement" class="content-section">
+  <div class="section-heading">
+    <span class="eyebrow">Two main paths</span>
+    <h2>How to Request Penalty Abatement</h2>
+  </div>
+  <p>Two paths cover most successful penalty abatement cases:</p>
+  <p><strong>1. First-Time Abatement (FTA):</strong> The IRS grants administrative relief for taxpayers who have a clean compliance history. To qualify, you generally must have: (a) no penalties in the prior three tax years; (b) filed all currently required returns or filed an extension; and (c) paid, or arranged to pay, any tax owed. FTA is available for failure-to-file, failure-to-pay, and failure-to-deposit penalties. It is not available for accuracy-related penalties, TFRP, or fraud. You can request FTA by calling the IRS, or by filing Form 843.</p>
+  <p><strong>2. Reasonable Cause:</strong> When FTA does not apply or the penalty is for accuracy-related reasons, a reasonable cause argument may succeed. The IRS considers documented circumstances such as serious illness, natural disaster, unavoidable absence, inability to obtain records, or reliance on professional advice that turned out to be wrong. The standard requires that the taxpayer exercised ordinary business care and prudence. Generic claims without documentation rarely succeed.</p>
+  <p><strong>Form 843 — Claim for Refund and Request for Abatement:</strong> To formally request abatement of a penalty already assessed, use Form 843. The form requires the tax year, penalty type and dollar amount, and a written statement of the legal or factual grounds for relief. Attach all supporting documentation to the submission.</p>
+  <p><strong>Administrative waiver:</strong> In certain years the IRS issues blanket penalty relief for specific filing scenarios. Check IRS.gov/newsroom for any current relief notices.</p>
+</section>
+
+<section id="sources" class="content-section">
+  <div class="section-heading">
+    <span class="eyebrow">Official references</span>
+    <h2>Sources</h2>
+  </div>
+  <ul>
+    <li><a href="https://www.irs.gov/taxtopics/tc653" rel="nofollow noopener" target="_blank">IRS Topic No. 653 — IRS Notices and Bills, Penalties, and Interest Charges</a></li>
+    <li><a href="https://www.irs.gov/payments/failure-to-deposit-penalty" rel="nofollow noopener" target="_blank">IRS — Failure to Deposit Penalty (irs.gov)</a></li>
+    <li><a href="https://www.irs.gov/individuals/international-taxpayers/trust-fund-recovery-penalty" rel="nofollow noopener" target="_blank">IRS — Trust Fund Recovery Penalty (irs.gov)</a></li>
+    <li>IRC § 6651 — Failure to File Tax Return or to Pay Tax (26 U.S.C. § 6651)</li>
+    <li>IRC § 6656 — Failure to Make Deposit of Taxes (26 U.S.C. § 6656)</li>
+    <li>IRC § 6662 — Imposition of Accuracy-Related Penalty on Underpayments (26 U.S.C. § 6662)</li>
+    <li>IRC § 6664 — Definitions and Special Rules (reasonable cause defense)</li>
+    <li>IRC § 6672 — Failure to Collect and Pay Over Tax, or Attempt to Evade or Defeat Tax (26 U.S.C. § 6672)</li>
+    <li>IRC § 6702 — Frivolous Tax Submissions (26 U.S.C. § 6702)</li>
+    <li>IRC § 6621 — Determination of Rate of Interest (underpayment rate)</li>
+  </ul>
+  <p><small>This page is for general educational purposes only. Tax penalty calculations vary based on individual circumstances. Consult a licensed tax professional or contact the IRS directly for guidance on your specific situation.</small></p>
+</section>
+`;
+}
+
+function makePenaltiesFaqs() {
+  return [
+    {
+      q: "What is the difference between the failure-to-file and failure-to-pay penalty?",
+      a: "The failure-to-file penalty (5% per month, max 25%) applies when a return is not filed by its due date. The failure-to-pay penalty (0.5% per month, max 25%) applies when tax is not paid by the due date. Both can apply in the same month, but IRC § 6651(c) caps the combined monthly charge at 5% by reducing the FTF rate to 4.5%. The key difference is that the FTF stops once the return is filed, while the FTP keeps running until the balance is paid in full.",
+    },
+    {
+      q: "How much is the minimum failure-to-file penalty?",
+      a: "If a return is filed more than 60 days after its due date (including extensions), the minimum failure-to-file penalty is the smaller of $525 (for 2026, inflation-adjusted annually) or 100% of the unpaid tax. This means even a small balance can trigger a disproportionate penalty when filing is severely delayed. For example, if you owe only $300 and file 90 days late, the minimum penalty would be $300 — equal to your entire balance.",
+    },
+    {
+      q: "What is the IRS underpayment interest rate for 2026?",
+      a: "For Q1 2026, the IRS underpayment interest rate is 7% annually, compounded daily. This rate equals the federal short-term rate plus 3 percentage points and is adjusted quarterly by the IRS. Interest accrues on the unpaid tax balance, on any assessed penalties, and on previously accrued interest — making the effective cost of delay higher than the headline rate suggests. Unlike penalties, interest cannot be abated or waived.",
+    },
+    {
+      q: "What is the Trust Fund Recovery Penalty and who can be personally assessed?",
+      a: "The Trust Fund Recovery Penalty (TFRP) under IRC § 6672 holds responsible persons personally liable for 100% of payroll taxes that were withheld from employees but not remitted to the IRS. A 'responsible person' is anyone with the authority and duty to collect, account for, and pay over these taxes — typically business owners, officers, or others with check-signing authority. The IRS can assess each responsible person for the full trust fund amount, not just their proportionate share, even after the business closes.",
+    },
+    {
+      q: "Can IRS penalties be reduced or eliminated?",
+      a: "Yes, through two main paths. First-Time Abatement (FTA) is available to taxpayers with a clean three-year compliance history who are current on filings and payments — it applies to FTF, FTP, and FTD penalties but not to accuracy-related or fraud penalties. Reasonable cause relief applies when a taxpayer can demonstrate that circumstances beyond their control prevented timely filing or payment, and that they exercised ordinary business care. To formally request abatement, file Form 843 with supporting documentation.",
+    },
+    {
+      q: "How quickly can IRS penalties add up on an unpaid balance?",
+      a: "Quickly. A taxpayer who fails to file and fails to pay on a $10,000 balance faces a combined 5% penalty per month for the first five months — a $2,500 penalty by month five. After that, the FTF cap is reached but FTP continues at 0.5% per month. Add 7% annual compound interest on the growing total, and a $10,000 balance left completely unresolved for three years could easily carry $4,000–$5,000 in penalties and interest on top of the original tax.",
+    },
+  ];
+}
+
+// ── End penalties helpers ──────────────────────────────────────────────────────
+
 for (const config of supportConfigs) {
+  const isPenalties = config.path === "pages/irs-penalties-explained.html";
   const page = withDefaults({
     ...config,
     title: normalizeTitle(config.titleBase),
@@ -2856,6 +3035,16 @@ for (const config of supportConfigs) {
       { label: "Act", width: 64 },
     ]),
     sections: supportSections(config),
+    ...(isPenalties ? {
+      stats: [
+        { value: "5% / mo", label: "Failure-to-File rate", note: "Capped at 25% after 5 months (IRC § 6651)" },
+        { value: "0.5% / mo", label: "Failure-to-Pay rate", note: "Continues until paid, capped at 25%" },
+        { value: "100%", label: "Trust Fund Recovery", note: "Personal liability for unpaid payroll trust funds" },
+        { value: "7% (Q1 2026)", label: "Underpayment interest", note: "Federal short-term rate + 3%, compounded daily" },
+      ],
+      faq: makePenaltiesFaqs(),
+      extraContent: makePenaltiesExtraContent(),
+    } : {}),
     related: [
       "pages/irs-tax-relief-guide.html",
       "pages/tax-debt-guide.html",
