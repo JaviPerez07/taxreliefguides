@@ -4,16 +4,16 @@ import { stateTaxReliefConfigs } from "./state-tax-relief-data.mjs";
 
 const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const domain = "https://taxreliefguides.com";
-const lastmod = "2026-04-06";
+const lastmod = "2026-04-23";
 const adsenseScript = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>`;
 const contactEmail = "javiperezguides@gmail.com";
 
 const site = {
-  name: "TaxReliefGuide",
+  name: "TaxReliefGuides",
   domain,
-  tagline: "Premium U.S. tax relief, IRS debt, deductions, payroll, and business tax guidance.",
+  tagline: "Independent U.S. tax relief, IRS debt, deductions, payroll, and business tax guidance.",
   organization: {
-    legalName: "TaxReliefGuide Editorial Team",
+    legalName: "TaxReliefGuides",
     url: domain,
     logo: `${domain}/assets/logo-mark.svg`,
     sameAs: [
@@ -63,6 +63,18 @@ function cleanEnding(value) {
   return value.replace(/[\s|:;,/-]+$/, "").trim();
 }
 
+/** Ensure a string ends with a sentence-closing period. */
+function sentenceEnd(str) {
+  const s = str.trim();
+  return /[.!?]$/.test(s) ? s : `${s}.`;
+}
+
+/** Capitalize the first character of a string (for audience/subject at sentence start). */
+function cap(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function truncateAtWord(value, max) {
   if (value.length <= max) return value;
   const slice = value.slice(0, max + 1);
@@ -72,7 +84,7 @@ function truncateAtWord(value, max) {
 
 function normalizeTitle(title) {
   if (title.length >= 50 && title.length <= 60) return title;
-  const suffixes = [" | TaxReliefGuide", " | U.S. Tax Guide"];
+  const suffixes = [" | TaxReliefGuides", " | U.S. Tax Guide"];
   for (const suffix of suffixes) {
     const candidate = `${title}${suffix}`;
     if (candidate.length >= 50 && candidate.length <= 60) return candidate;
@@ -88,20 +100,20 @@ function normalizeTitle(title) {
 
 function normalizeDescription(description) {
   const base = description.replace(/\s+/g, " ").trim().replace(/\.+$/, "");
-  if (base.length >= 150 && base.length <= 160) {
+  if (base.length >= 140 && base.length <= 160) {
     return /[.!?]$/.test(base) ? base : `${base}.`;
   }
   if (base.length > 160) {
     return `${cleanEnding(truncateAtWord(base, 159))}.`;
   }
   const fragments = [
-    " Compare IRS options, costs, credits, and compliance steps.",
-    " See practical U.S. scenarios.",
-    " Use this to plan ahead.",
+    " Includes IRS procedures, records, and practical next steps.",
+    " Covers key forms, deadlines, and documentation points.",
+    " Built to help readers compare the next sensible option.",
   ];
   let candidate = base;
   for (const fragment of fragments) {
-    if (candidate.length >= 150) break;
+    if (candidate.length >= 140) break;
     if (`${candidate}${fragment}`.length <= 160) candidate += fragment;
   }
   candidate = cleanEnding(candidate);
@@ -176,7 +188,7 @@ function makeFaqs(config) {
   return [
     {
       q: `Who benefits most from a guide about ${config.keyword}?`,
-      a: `${config.audience} usually benefit most because the biggest savings often come from understanding deadlines, documentation, and which relief program actually fits the case before contacting the IRS or filing amended information.`,
+      a: `${cap(config.audience)} usually benefit most because the biggest savings often come from understanding deadlines, documentation, and which relief program actually fits the case before contacting the IRS or filing amended information.`,
     },
     {
       q: `Can ${config.keyword} reduce penalties or improve cash flow?`,
@@ -197,7 +209,7 @@ function makeKeyTakeaways(config) {
   return [
     `${config.keyword} decisions are usually driven by timing, documentation quality, and whether you stay current on new filings while fixing old problems.`,
     `The headline solution matters less than the full cost path: tax due, penalties, interest, payment term, compliance obligations, and the risk of collection action.`,
-    `${config.audience} often save the most by comparing relief paths early instead of waiting until notices become more serious or payroll problems compound.`,
+    `${cap(config.audience)} often save the most by comparing relief paths early instead of waiting until notices become more serious or payroll problems compound.`,
   ];
 }
 
@@ -233,7 +245,7 @@ function pillarSections(config) {
       paragraphs: [
         `${config.keyword} matters because federal tax problems rarely stay static. A small balance can become a larger collection issue once failure-to-file penalties, failure-to-pay penalties, and daily interest keep stacking up. For ${config.audience}, the first decision is usually not whether to pay in full right away. It is whether the next step should be filing missing returns, requesting a transcript, building a short-term cash plan, or comparing formal IRS relief routes before the account moves deeper into collections.`,
         `Readers researching ${config.keyword} are usually trying to answer three questions at once. First, how serious is the current notice or balance? Second, which programs actually apply to the facts of the case? Third, what does each option do to monthly cash flow over the next year? Those questions matter because the cheapest option on paper can still fail if the taxpayer cannot sustain the payment or misses a future filing deadline after entering relief.`,
-        `TaxReliefGuide treats ${config.shortLabel.toLowerCase()} as a decision system rather than a single tactic. We focus on sequence: get the filing picture current, measure the tax, penalty, and interest components, compare relief options, and then protect compliance going forward. That framework helps households and business owners avoid the expensive habit of reacting to each IRS letter without a full plan.`,
+        `TaxReliefGuides treats ${config.shortLabel.toLowerCase()} as a decision system rather than a single tactic. We focus on sequence: get the filing picture current, measure the tax, penalty, and interest components, compare relief options, and then protect compliance going forward. That framework helps households and business owners avoid the expensive habit of reacting to each IRS letter without a full plan.`,
       ],
       list: [
         `Map every tax year involved before choosing a relief strategy.`,
@@ -259,7 +271,7 @@ function pillarSections(config) {
       title: `Eligibility signals, thresholds, and IRS expectations`,
       intro: `IRS relief is highly process-driven, and eligibility usually turns on compliance behavior more than marketing language.`,
       paragraphs: [
-        `${config.eligibility} In practice, that means the IRS wants recent returns filed, financial statements that match the story being told, and enough detail to evaluate what the taxpayer can reasonably pay. When these items are weak, taxpayers often misread a denial as a rejection of the program itself when the real issue is incomplete support or inconsistent disclosures.`,
+        `${sentenceEnd(config.eligibility)} In practice, that means the IRS wants recent returns filed, financial statements that match the story being told, and enough detail to evaluate what the taxpayer can reasonably pay. When these items are weak, taxpayers often misread a denial as a rejection of the program itself when the real issue is incomplete support or inconsistent disclosures.`,
         `Taxpayers should also remember that balance size changes the work involved. Smaller balances may qualify for streamlined paths with less documentation, while larger balances often require a fuller review of income, expenses, equity, or business records. That difference matters because the timeline, professional fees, and level of scrutiny can increase sharply once an account crosses higher-risk thresholds.`,
         `If a taxpayer is self-employed or running payroll, the IRS also looks hard at current compliance. A plan to fix old debt is less convincing when new estimates or deposits are already falling behind. That is why many tax professionals treat current-year compliance as the foundation of every relief strategy rather than a box to check later.`,
       ],
@@ -312,7 +324,7 @@ function pillarSections(config) {
       title: `Documents and numbers you should prepare`,
       intro: `Better records make better relief decisions.`,
       paragraphs: [
-        `${config.docs} Taxpayers often underestimate how much time is lost simply locating notices, recreating income, or explaining why estimated payments were missed. A complete document packet shortens that loop and gives any advisor or reviewer a cleaner picture from the start.`,
+        `${sentenceEnd(config.docs)} Taxpayers often underestimate how much time is lost simply locating notices, recreating income, or explaining why estimated payments were missed. A complete document packet shortens that loop and gives any advisor or reviewer a cleaner picture from the start.`,
         `For individual cases, that usually means prior returns, recent wage and income transcripts, current pay stubs, bank statements, and a draft monthly budget. For businesses, add bookkeeping reports, payroll filings, sales trends, debt schedules, and any correspondence involving state tax agencies if the problem is broader than the IRS.`,
         `Documentation is also where credibility is built. When taxpayers can show how they arrived at a number, what changed in their finances, and how they plan to stay compliant next year, it is easier to present the case consistently across notices, forms, and professional consultations.`,
       ],
@@ -372,86 +384,91 @@ function pillarSections(config) {
 function supportSections(config) {
   return [
     {
-      id: "what-it-means",
-      eyebrow: "Overview",
-      title: `${config.h1}: what readers should understand first`,
-      intro: `${config.shortLabel} is most useful when the reader knows the exact problem it solves.`,
+      id: "start-here",
+      eyebrow: "Start here",
+      title: `What this page helps you decide`,
+      intro: `This page is most useful when you already know the real tax question in front of you.`,
       paragraphs: [
-        `${config.keyword} comes up when ${config.audience}. In many cases the taxpayer already knows the headline term, but not the operating rules behind it. That gap matters because tax outcomes are driven less by the label of the strategy and more by timing, documentation, filing status, and whether the chosen path actually matches the taxpayer’s income pattern or business structure.`,
-        `A strong starting point is to define the decision clearly. Are you trying to lower a current balance, prevent a future surprise, compare two tax benefits, or respond to an IRS notice that already arrived? Different tax articles sound similar in search results, but the practical action can change sharply depending on whether the issue is a deduction, a credit, a payment plan, a payroll deposit rule, or a legal risk.`,
-        `${config.shortLabel} also sits inside the broader tax system. Readers get better results when they connect this topic to withholding, estimated taxes, business bookkeeping, payroll controls, or recordkeeping instead of treating it as a one-off tactic. That systems view is usually where real savings happen.`,
+        `${cap(config.audience)} usually land here because they are trying to decide what to do next, not because they need a dictionary definition. The useful question is whether this topic changes a filing choice, lowers a current tax bill, reduces collection pressure, or helps avoid a repeat problem next quarter or next filing season.`,
+        `${config.shortLabel} becomes easier once the decision is narrowed. Are you reviewing an IRS notice, comparing two relief options, checking whether a deduction is supportable, or trying to estimate the cash impact of a tax move before you make it? The answer determines which records matter and what the safest next step looks like.`,
+        `This page is written to move that decision forward. It focuses on how the topic works in real life, who it usually fits, where people go wrong, and which related guide should be read next if the situation is broader than one form or one rule.`,
       ],
       table: articleTable(config),
     },
     {
-      id: "who-should-care",
-      eyebrow: "Applicability",
-      title: `Who should pay close attention to ${config.shortLabel.toLowerCase()}`,
-      intro: `Not every tax tactic fits every filer, and search volume often hides that nuance.`,
+      id: "fit-check",
+      eyebrow: "Fit check",
+      title: `When this topic usually fits and when it does not`,
+      intro: `Not every tax page applies to every filer, business, or notice stage.`,
       paragraphs: [
-        `${config.audience} are usually the best match for this topic because the decision directly affects how much tax they pay, how fast they resolve old debt, or how defensible their records will look if questioned. Readers outside that group can still learn from the framework, but they should be careful not to copy a strategy designed for a very different income, entity, or compliance profile.`,
-        `Another reason applicability matters is that tax guidance gets expensive when it is borrowed out of context. A deduction that works well for a profitable business can be weak for a lower-margin side hustle. A payment plan that helps one employee might fail for a founder with volatile receivables. A credit that looks generous in isolation may phase out or interact with other rules the reader has not considered.`,
-        `That is why a good article about ${config.keyword} should always answer two questions: who tends to benefit, and what facts would make the strategy less attractive? Once readers know both sides, they can move from curiosity to decision-quality planning.`,
+        `${cap(config.audience)} are usually the best fit because the topic directly affects how they file, how much tax they owe, or how they respond to a balance or notice. The page becomes less useful when the reader is really dealing with a different issue, such as payroll compliance, multistate filing, an audit, or a collection problem that needs a separate guide.`,
+        `Context matters. A deduction that makes sense for a profitable business may be weak for a side hustle with thin records. A payment strategy that helps one wage earner may fail for someone with uneven self-employment income. A credit that looks valuable in isolation may shrink or disappear once filing status and income are considered.`,
+        `Use this page as a fit screen first. If the facts do not line up, move to the related guides instead of forcing the wrong strategy onto the wrong tax situation.`,
+      ],
+      list: [
+        `Use this guide if the main issue is ${config.keyword}.`,
+        `Pause and switch guides if the bigger problem is missing returns, active collection, or payroll exposure.`,
+        `Treat any high-stakes fact pattern as a sign to verify documents before acting.`,
       ],
     },
     {
       id: "how-it-works",
-      eyebrow: "Mechanics",
-      title: `How ${config.shortLabel.toLowerCase()} works in practice`,
-      intro: `Mechanics determine whether the idea survives contact with real filing requirements.`,
+      eyebrow: "How it works",
+      title: `What to review before relying on this strategy`,
+      intro: `The useful part of a tax rule is usually in the mechanics, not the headline.`,
       paragraphs: [
-        `${config.eligibility} That sounds procedural, but procedure is where most taxpayers either preserve savings or lose them. Missing forms, weak substantiation, or inconsistent numbers can convert a strong strategy into a slower and costlier process.`,
-        `In practical terms, readers should identify the relevant tax year, the forms involved, the timing rules, and the records that support the position. If the topic touches the IRS directly, they should also know whether the issue can be handled through filing, through account management, or through a relief request that requires more detailed disclosures.`,
-        `The important takeaway is that tax topics with high CPC keywords are rarely simple because they sit where money, compliance, and legal exposure overlap. Understanding the sequence of actions is often more valuable than memorizing a single rule.`,
+        `${sentenceEnd(config.eligibility)} That sounds procedural, but procedure is where people either protect a good outcome or lose it. The real work is confirming the tax year, the form or notice involved, the timing rule that matters, and the records needed to support the position.`,
+        `If the topic connects to the IRS directly, the next question is whether the issue is handled through filing, account management, penalty review, or a more formal relief request. If it connects to planning, the question is usually whether the expected savings are large enough and well-documented enough to justify the extra complexity.`,
+        `This is why tax pages should not stop at definitions. The better question is always: what would I need in front of me before I acted on this?`,
       ],
       list: [
-        `Confirm the tax year and filing status involved.`,
-        `Map the specific forms, notices, or payroll records tied to the issue.`,
-        `Document assumptions before estimating tax savings or monthly payments.`,
+        `Confirm the tax year, filing status, and any notice or form number tied to the issue.`,
+        `Separate current-year compliance from prior-year cleanup so the problem is not blurred.`,
+        `Write down the assumptions behind any tax estimate or relief choice before you rely on it.`,
       ],
     },
     {
-      id: "cost-impact",
-      eyebrow: "Cost impact",
-      title: `The cost, savings, and cash-flow impact to watch`,
-      intro: `The best tax move is usually the one that works on paper and inside your actual budget.`,
+      id: "records-and-docs",
+      eyebrow: "Records and documents",
+      title: `What to gather before you act`,
+      intro: `Good records are part of the decision, not paperwork after the fact.`,
       paragraphs: [
-        `${config.cashflow} For many readers, that means comparing the upfront admin burden against long-term savings. A strategy that saves a small amount but creates ongoing complexity may not be worth it. On the other hand, a strategy that looks tedious but prevents penalties, lowers taxable income, or reduces payroll risk can produce a much larger payoff over time.`,
-        `Readers should also distinguish between tax reduction and cash-flow timing. Some benefits lower tax permanently, while others mostly shift when the cost is recognized or paid. That distinction matters for budgeting because the bank-account impact over the next quarter may look very different from the impact on the annual return.`,
-        `This is where scenario planning helps. Use conservative assumptions, build a midpoint estimate, and keep a stress case in view. Tax decisions feel safer when the reader knows what happens if income changes, expenses fall short of documentation rules, or the IRS takes longer than expected to process the file.`,
+        `${sentenceEnd(config.docs)} The stronger the record set, the easier it is to estimate value, explain a position, or respond to questions from the IRS, a state agency, or a tax preparer.`,
+        `Readers often wait too long to gather documents because they assume the next step is obvious. In practice, many tax choices change once the return, transcript, receipt trail, payroll report, or bank statement is in front of you. That is especially true when the page touches debt relief, credits with eligibility tests, or deductions that depend on business purpose.`,
+        `If a record is missing, note it and work from that list. A clear missing-document list is safer than acting as if the file is complete when it is not.`,
       ],
     },
     {
       id: "documents",
-      eyebrow: "Records",
-      title: `Documents, data, and support you should gather`,
-      intro: `Good tax records improve both savings and defensibility.`,
+      eyebrow: "Cost and tradeoffs",
+      title: `How this topic affects cash flow, risk, or total tax cost`,
+      intro: `The right tax move needs to work in the bank account as well as on paper.`,
       paragraphs: [
-        `${config.docs} Readers often think of documentation as a compliance chore, but it is also a decision tool. Better records make it easier to estimate the real value of a deduction, prove eligibility for a credit, defend a payroll position, or support a hardship claim when an IRS balance cannot be paid immediately.`,
-        `The right record set depends on the topic. Some pages require prior returns and wage records, while others depend on receipts, mileage logs, payroll journals, home office measurements, depreciation schedules, or bookkeeping reports. The common thread is that vague memory is rarely enough when tax dollars or legal risk are involved.`,
-        `When records are weak, taxpayers tend to either underclaim valuable relief or overclaim items they cannot comfortably defend. Both outcomes are expensive. Building a clean file before filing or negotiating is one of the few tax habits that helps in almost every niche covered on this site.`,
+        `${sentenceEnd(config.cashflow)} Some strategies reduce tax directly. Others mainly change timing, monthly affordability, or the risk of penalties and notices. Readers should know which kind of benefit they are actually evaluating before they decide something is “worth it.”`,
+        `This is also where the tradeoff becomes visible. A move that looks attractive in a search result may create extra bookkeeping, phaseout risk, or future payment pressure. Another move may look dull, but save more money precisely because it is easier to maintain correctly.`,
+        `A safer rule is to compare the direct benefit, the documentation burden, and the risk of getting the details wrong. That produces better decisions than chasing the most dramatic-sounding option.`,
       ],
     },
     {
       id: "mistakes",
       eyebrow: "Mistakes",
-      title: `Mistakes and edge cases to avoid`,
-      intro: `Tax topics become expensive when readers overgeneralize them.`,
+      title: `Mistakes that usually make this issue more expensive`,
+      intro: `The common errors here are usually practical, not theoretical.`,
       paragraphs: [
-        `One common mistake is assuming that a popular keyword points to a universal solution. Many articles online flatten the differences between employees, self-employed workers, single-member LLCs, S corporations, and larger employers. In reality, those differences can change the filing mechanics, the cash-flow timing, and the legal exposure in a meaningful way.`,
-        `Another mistake is focusing on one form or one line item without checking how the rest of the return changes. A deduction can affect qualified business income, a credit can phase out, and an IRS payment plan can fail if the current year is not being handled correctly. Tax strategy almost always works through interaction effects rather than isolated facts.`,
-        `Finally, many readers wait too long to escalate. If a case involves repeated notices, levy threats, payroll trust fund issues, or disputed audit adjustments, professional representation often becomes more efficient than continuing to troubleshoot from article to article.`,
+        `A common mistake is treating a keyword as if it points to a universal answer. Tax choices rarely work that way. Filing status, entity structure, timing, documentation, and whether the issue is current-year or back-year all change the right next step.`,
+        `Another mistake is focusing on one line item without checking how the surrounding tax picture changes. A credit can phase out, a deduction can become hard to defend, and a relief strategy can fail if current compliance is still broken.`,
+        `The last recurring error is delay. Waiting often means fewer records, more penalties, or a worse negotiating position than the taxpayer had a few weeks earlier.`,
       ],
     },
     {
       id: "next-steps",
       eyebrow: "Next steps",
-      title: `How to act on ${config.shortLabel.toLowerCase()} without creating new problems`,
-      intro: `The goal is a durable tax decision, not just a quick one.`,
+      title: `What to do next after reading this page`,
+      intro: `Use the next step that actually matches the file you have.`,
       paragraphs: [
-        `Start by confirming the facts, not the headline. Verify the tax year, the amount at stake, the forms involved, and whether the topic affects state taxes, payroll, or future estimated payments. That initial check prevents a large share of avoidable errors.`,
-        `Next, compare this topic against the wider filing picture. If the article is about lowering tax, ask how it affects audit risk, bookkeeping complexity, and next year’s return. If the article is about IRS debt relief, ask whether the underlying tax behavior that created the balance has actually changed.`,
-        `End with a maintenance habit. Strong tax outcomes usually come from small repeated behaviors: cleaner books, better withholding, faster response to notices, and better retention of records. That is what turns a useful article into a lasting tax improvement.`,
+        `Start by matching the page to the exact decision you need to make: file, verify a notice, compare relief options, estimate the cost, or gather support. If you cannot state that next action clearly, move to the related guides instead of guessing.`,
+        `Then compare this topic with the wider return or collection picture. If the issue is relief, make sure current compliance is fixed. If the issue is planning, check what changes next quarter, not just what looks good today.`,
+        `Finally, decide whether this is still a self-help issue. If the facts involve active collection, payroll exposure, multiple missing years, or a large disputed amount, use this page as preparation and escalate the review.`,
       ],
     },
   ];
@@ -509,7 +526,7 @@ function renderFooter(page) {
       <div class="container footer-grid">
         <section>
           <h2>${site.name}</h2>
-          <p>Independent U.S. tax guides covering IRS debt relief, deductions, credits, payroll taxes, business tax rules, calculators, and compliance planning.</p>
+          <p>Independent U.S. tax guides covering IRS debt relief, notices, payment plans, deductions, credits, payroll taxes, calculators, and state tax issues.</p>
         </section>
         <section>
           <h2>Core Guides</h2>
@@ -529,9 +546,12 @@ function renderFooter(page) {
         <section>
           <h2>Company</h2>
           <a href="${localHref(page.path, "about.html")}">About</a>
+          <a href="${localHref(page.path, "contact.html")}">Contact</a>
           <a href="${localHref(page.path, "how-we-research.html")}">How We Research</a>
+          <a href="${localHref(page.path, "affiliate-disclosure.html")}">Affiliate Disclosure</a>
           <a href="${localHref(page.path, "privacy-policy.html")}">Privacy Policy</a>
           <a href="${localHref(page.path, "terms.html")}">Terms</a>
+          <a href="${localHref(page.path, "disclaimer.html")}">Disclaimer</a>
         </section>
       </div>
       <div class="container footer-bottom">
@@ -593,8 +613,8 @@ function renderKeyTakeaways(items) {
   return `
     <section class="callout key-takeaway">
       <div>
-        <span class="eyebrow">Key takeaway</span>
-        <h2>What matters most</h2>
+        <span class="eyebrow">Editorial summary</span>
+        <h2>Quick takeaways</h2>
       </div>
       <ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
     </section>
@@ -727,7 +747,7 @@ function renderRelated(page, allPages) {
     <section class="related-section">
       <div class="section-heading">
         <span class="eyebrow">Related articles</span>
-        <h2>Keep researching before you decide</h2>
+        <h2>Where to go next</h2>
       </div>
       <div class="related-grid">${cards}</div>
     </section>
@@ -738,20 +758,128 @@ function renderSidebar(page) {
   if (page.template === "home") return "";
   return `
     <aside class="sidebar-card">
-      <h2>Fast next steps</h2>
+      <h2>Use this page well</h2>
       <ul>
-        <li>Gather your latest notices, returns, and tax-year summary.</li>
-        <li>Compare filing status, payment capacity, and documentation gaps.</li>
-        <li>Use a calculator or related guide before choosing a path.</li>
+        <li>Confirm the notice, tax year, or filing period you are dealing with.</li>
+        <li>Pull the records you would need before calling the IRS or a state agency.</li>
+        <li>Compare this option with the related guides before choosing a next step.</li>
       </ul>
       <a class="button button-primary sidebar-button" href="${localHref(page.path, "contact.html")}">Contact the editorial team</a>
     </aside>
   `;
 }
 
+function jsonLdScript(payload) {
+  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+}
+
+function organizationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: site.organization.legalName,
+    url: site.organization.url,
+    logo: site.organization.logo,
+    email: contactEmail,
+    sameAs: site.organization.sameAs,
+  };
+}
+
+function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.name,
+    url: `${domain}/`,
+  };
+}
+
+function articleSchemaForPage(page) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: page.h1,
+    description: page.description,
+    datePublished: "2026-04-04",
+    dateModified: lastmod,
+    publisher: {
+      "@type": "Organization",
+      name: site.organization.legalName,
+      logo: {
+        "@type": "ImageObject",
+        url: site.organization.logo,
+      },
+    },
+    mainEntityOfPage: urlFor(page.path),
+    image: page.image,
+  };
+}
+
+function breadcrumbSchemaForPage(page) {
+  if (!page.breadcrumbs?.length) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: page.breadcrumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.label,
+      item: crumb.href,
+    })),
+  };
+}
+
+function faqSchemaForPage(page) {
+  if (!page.faq?.length) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: page.faq.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
+  };
+}
+
+function webApplicationSchema(page) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: page.h1,
+    url: urlFor(page.path),
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "Any",
+    description: page.description,
+  };
+}
+
+function pageJsonLd(page) {
+  const graph = [organizationSchema()];
+
+  if (page.template === "home") {
+    graph.unshift(websiteSchema());
+  } else if (page.template === "calculator") {
+    graph.push(webApplicationSchema(page));
+  } else {
+    graph.push(articleSchemaForPage(page));
+  }
+
+  const breadcrumbSchema = breadcrumbSchemaForPage(page);
+  if (breadcrumbSchema) graph.push(breadcrumbSchema);
+
+  const faqSchema = faqSchemaForPage(page);
+  if (faqSchema) graph.push(faqSchema);
+
+  return graph.map((entry) => jsonLdScript(entry)).join("\n    ");
+}
+
 function pageHead(page) {
   const canonical = urlFor(page.path);
-  const ogType = page.template === "calculator" ? "website" : "article";
+  const ogType = page.template === "home" || page.template === "calculator" ? "website" : "article";
   const assetPrefix = page.path.includes("/") ? "../" : "./";
   return `
     <meta charset="UTF-8">
@@ -778,28 +906,9 @@ function pageHead(page) {
     <meta name="theme-color" content="#12355b">
     <link rel="stylesheet" href="${assetPrefix}styles.css">
     ${adsenseScript}
+    ${pageJsonLd(page)}
     <script src="${assetPrefix}main.js" defer></script>
   `;
-}
-
-function renderSchemaHolder(page) {
-  const payload = {
-    type: page.template,
-    title: page.h1,
-    description: page.description,
-    url: urlFor(page.path),
-    image: page.image,
-    breadcrumbs: page.breadcrumbs ?? [],
-    faqs: page.faq ?? [],
-    published: "2026-04-04",
-    modified: lastmod,
-    siteName: site.name,
-    organizationName: site.organization.legalName,
-    organizationUrl: site.organization.url,
-    organizationLogo: site.organization.logo,
-    organizationEmail: contactEmail,
-  };
-  return `<div id="schema-data" hidden data-schema='${escapeAttr(JSON.stringify(payload))}'></div>`;
 }
 
 function renderCookieBanner(page) {
@@ -820,7 +929,7 @@ function heroVisual(title, lines, timelineBars) {
     <div class="hero-card">
       <div class="hero-card-head">
         <span class="eyebrow">${escapeHtml(title)}</span>
-        <strong>Planning snapshot</strong>
+        <strong>What this page covers</strong>
       </div>
       ${lines
         .map(
@@ -853,7 +962,7 @@ function homeVisual() {
     <div class="dashboard">
       <div class="dashboard-panel">
         <span class="eyebrow">Tax pressure map</span>
-        <h2>High-value topics readers compare most</h2>
+        <h2>Common IRS and state tax paths readers compare first</h2>
         <div class="mini-chart">
           <div style="height:80%"><span>IRS Relief</span></div>
           <div style="height:72%"><span>Debt</span></div>
@@ -889,36 +998,162 @@ function featureGrid(title, eyebrow, pages, labelFor) {
   `;
 }
 
-function homeLead(allPages) {
-  const pillarPages = allPages.filter((page) => page.category === "pillar");
-  const calcPages = allPages.filter((page) => page.template === "calculator");
-  const statePages = allPages.filter((page) => page.category === "state");
-  const popularPages = allPages.filter((page) =>
-    [
-      "pages/what-is-offer-in-compromise.html",
-      "pages/how-to-file-back-taxes.html",
-      "pages/tax-credits-vs-tax-deductions.html",
-      "pages/irs-penalties-explained.html",
-      "pages/home-office-deduction-guide.html",
-      "pages/how-to-stop-irs-wage-garnishment.html",
-    ].includes(page.path)
-  );
-  const latestPages = allPages.filter((page) =>
-    [
-      "pages/estimated-tax-payments-guide.html",
-      "pages/child-tax-credit-guide.html",
-      "pages/section-179-deduction-guide.html",
-      "pages/best-states-for-low-taxes.html",
-      "pages/tax-audit-guide.html",
-      "pages/how-payroll-taxes-work.html",
-    ].includes(page.path)
-  );
+function customCardGrid(fromPath, title, eyebrow, cards) {
   return `
-    ${featureGrid("Pillar Guides", "Core hubs", pillarPages, () => "Pillar")}
-    ${featureGrid("Calculators", "Planning tools", calcPages, () => "Calculator")}
-    ${featureGrid("State Tax Relief Guides", "State tax relief", statePages, (page) => page.stateData?.state ?? "State")}
-    ${featureGrid("Popular Tax Topics", "Popular tax topics", popularPages, () => "Guide")}
-    ${featureGrid("Latest Guides", "Latest guides", latestPages, () => "Latest")}
+    <section class="feature-section">
+      <div class="section-heading">
+        <span class="eyebrow">${escapeHtml(eyebrow)}</span>
+        <h2>${escapeHtml(title)}</h2>
+      </div>
+      <div class="card-grid">
+        ${cards
+          .map(
+            (card) => `
+            <a class="topic-card" href="${localHref(fromPath, card.path)}">
+              <span class="badge">${escapeHtml(card.badge)}</span>
+              <h3>${escapeHtml(card.title)}</h3>
+              <p>${escapeHtml(card.description)}</p>
+            </a>
+          `
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
+function homeLead(allPages) {
+  const statePages = allPages
+    .filter((page) => page.category === "state")
+    .filter((page) =>
+      ["California", "Texas", "New York", "Florida", "Pennsylvania", "Illinois"].includes(page.stateData?.state)
+    );
+
+  const calculators = [
+    {
+      badge: "Calculator",
+      title: "Estimate a refund or balance due",
+      description: "Use wages, withholding, filing status, and credits to get a planning-level federal estimate.",
+      path: "pages/tax-refund-calculator.html",
+    },
+    {
+      badge: "Calculator",
+      title: "Estimate self-employment tax",
+      description: "Model SE tax, quarterly reserve needs, and rough annual tax after estimated payments.",
+      path: "pages/self-employment-tax-calculator.html",
+    },
+    {
+      badge: "Calculator",
+      title: "Estimate paycheck withholding",
+      description: "Compare gross pay, FICA, pretax deductions, and approximate take-home pay per pay period.",
+      path: "pages/paycheck-tax-calculator.html",
+    },
+  ];
+
+  return `
+    ${customCardGrid("index.html", "Start here", "Choose the path that matches your problem", [
+      {
+        badge: "IRS debt",
+        title: "I owe the IRS and need options",
+        description: "Start with the main relief choices, how to compare them, and what to gather before calling or applying.",
+        path: "pages/tax-debt-relief-options.html",
+      },
+      {
+        badge: "IRS notice",
+        title: "I got an IRS notice",
+        description: "Start with balance-due notices and what changes when a notice moves closer to levy action.",
+        path: "pages/irs-cp14-notice.html",
+      },
+      {
+        badge: "Payment plan",
+        title: "I need a payment plan",
+        description: "See when an installment agreement is usually the cleanest option and how to avoid defaulting later.",
+        path: "pages/irs-payment-plans-guide.html",
+      },
+      {
+        badge: "Settlement",
+        title: "I want to see if settlement is realistic",
+        description: "Review Offer in Compromise rules, screening points, and when settlement is weaker than it sounds.",
+        path: "pages/offer-in-compromise-guide.html",
+      },
+    ])}
+    ${customCardGrid("index.html", "Most common IRS debt solutions", "High-intent debt paths", [
+      {
+        badge: "Installment plan",
+        title: "IRS payment plans",
+        description: "Best when the debt is still collectible over time and the monthly amount is sustainable.",
+        path: "pages/irs-payment-plans-guide.html",
+      },
+      {
+        badge: "Settlement",
+        title: "Offer in Compromise",
+        description: "Best for narrower cases where the IRS is unlikely to collect the full balance.",
+        path: "pages/offer-in-compromise-guide.html",
+      },
+      {
+        badge: "Hardship",
+        title: "Currently Not Collectible",
+        description: "A temporary collection pause when paying now would create genuine hardship.",
+        path: "pages/irs-currently-not-collectible.html",
+      },
+      {
+        badge: "Penalty relief",
+        title: "First-time penalty abatement",
+        description: "A targeted way to reduce part of the balance without forcing a settlement theory.",
+        path: "pages/first-time-penalty-abatement.html",
+      },
+    ])}
+    ${customCardGrid("index.html", "IRS notices explained", "Notice-by-notice help", [
+      {
+        badge: "CP14",
+        title: "CP14 balance due notice",
+        description: "What the first common IRS balance-due notice means and what to do before penalties keep building.",
+        path: "pages/irs-cp14-notice.html",
+      },
+      {
+        badge: "CP504",
+        title: "CP504 notice",
+        description: "Why this notice matters, what levy language really means, and which response paths usually make sense.",
+        path: "pages/irs-cp504-notice.html",
+      },
+      {
+        badge: "Lien vs levy",
+        title: "Tax lien vs levy",
+        description: "Understand the difference before you react to scary collection language or public-record risk.",
+        path: "pages/tax-lien-vs-levy.html",
+      },
+      {
+        badge: "Penalty",
+        title: "IRS penalty abatement",
+        description: "When to ask for first-time or reasonable-cause relief after a notice adds avoidable cost.",
+        path: "pages/penalty-abatement-guide.html",
+      },
+    ])}
+    ${featureGrid("State tax relief guides", "State tax debt", statePages, (page) => page.stateData?.state ?? "State")}
+    ${customCardGrid("index.html", "Planning tools", "Useful calculators", calculators)}
+    <section class="feature-section">
+      <div class="section-heading">
+        <span class="eyebrow">How we research</span>
+        <h2>How this site is built</h2>
+      </div>
+      <div class="card-grid">
+        <article class="topic-card">
+          <span class="badge">Sources</span>
+          <h3>Official sources first</h3>
+          <p>We rely on IRS pages, official forms and instructions, state revenue agencies, and other public source material before summarizing a topic.</p>
+        </article>
+        <article class="topic-card">
+          <span class="badge">Editorial</span>
+          <h3>Practical, not promotional</h3>
+          <p>The goal is to help readers understand what a rule or program actually changes, where it fits, and what to review before acting.</p>
+        </article>
+        <a class="topic-card" href="${localHref("index.html", "how-we-research.html")}">
+          <span class="badge">Method</span>
+          <h3>Read the research process</h3>
+          <p>See how we handle sourcing, updates, and the difference between educational content and individualized advice.</p>
+        </a>
+      </div>
+    </section>
   `;
 }
 
@@ -1073,7 +1308,7 @@ function stateCanonical(state) {
 }
 
 function stateTitle(state) {
-  return `${state.state} State Tax Relief: Programs, Payment Plans & Debt Options (2026) | TaxReliefGuides`;
+  return `${state.state} State Tax Relief: Programs, Payment Plans & Debt Options | TaxReliefGuides`;
 }
 
 function stateFaqs(state) {
@@ -1157,10 +1392,6 @@ function stateRelatedLinks(page, allPages) {
       </div>
     </section>
   `;
-}
-
-function jsonLdScript(payload) {
-  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
 }
 
 function stateHead(page) {
@@ -1282,7 +1513,7 @@ function renderStatePage(page, allPages) {
         <div class="content-column">
           ${renderEditorialBlock()}
           <div class="key-takeaways">
-            <span class="eyebrow">Key takeaways</span>
+            <span class="eyebrow">State relief summary</span>
             <ul>
               <li>${escapeHtml(state.taxFocus)}</li>
               <li>${escapeHtml(state.paymentPlan)}</li>
@@ -1407,7 +1638,6 @@ function renderPage(page, allPages) {
     </main>
     ${renderFooter(page)}
     ${renderCookieBanner(page)}
-    ${renderSchemaHolder(page)}
   </body>
 </html>`;
 }
@@ -1415,8 +1645,8 @@ function renderPage(page, allPages) {
 function render404Page() {
   const page = withDefaults({
     path: "404.html",
-    title: normalizeTitle("Page Not Found | TaxReliefGuide"),
-    description: normalizeDescription("Use the TaxReliefGuide navigation to return to IRS relief, tax debt, deductions, payroll, business tax, and calculator resources after a missing-page error."),
+    title: normalizeTitle("Page Not Found | TaxReliefGuides"),
+    description: normalizeDescription("Use the TaxReliefGuides navigation to return to IRS relief, tax debt, deductions, payroll, business tax, and calculator resources after a missing-page error."),
     robots: "noindex, follow",
     template: "article",
     badge: "Error Page",
@@ -1427,7 +1657,7 @@ function render404Page() {
         id: "recover",
         eyebrow: "Next step",
         title: "Return to the main tax research paths",
-        intro: "TaxReliefGuide keeps the highest-value routes one click away.",
+        intro: "TaxReliefGuides keeps the highest-value routes one click away.",
         paragraphs: [
           "If you landed on an outdated or mistyped URL, the fastest path is to return to the homepage, one of the core IRS relief hubs, or a calculator that matches the tax question you were trying to solve.",
           "This page is intentionally excluded from search indexing, but it still keeps the same navigation, footer, privacy access, and editorial context as the rest of the site so users are never stranded.",
@@ -1779,6 +2009,89 @@ const pillarConfigs = [
   },
 ];
 
+const supportCopy = {
+  "pages/what-is-offer-in-compromise.html": {
+    hero: "Offer in compromise is a real IRS settlement route, but it only fits cases where the financial file supports collectibility relief.",
+    description: "Offer in Compromise guide: Form 656 basics, compliance gates, payment options, financial review, and when settlement is realistic.",
+  },
+  "pages/how-to-set-up-an-irs-payment-plan.html": {
+    hero: "Setting up an IRS payment plan starts with filed returns, a verified balance, and a monthly amount that can survive real cash flow.",
+    description: "IRS payment plan setup guide: online agreements, required returns, direct debit, monthly budgeting, default risk, and notice response.",
+  },
+  "pages/tax-debt-forgiveness-options.html": {
+    hero: "Tax debt forgiveness language often hides very different IRS paths, including compromise, hardship delay, penalty relief, and payment plans.",
+    description: "Tax debt forgiveness options: compare IRS OIC, CNC hardship, penalty abatement, payment plans, and what each program actually changes.",
+  },
+  "pages/common-tax-deductions-for-small-businesses.html": {
+    hero: "Small-business deductions work best when the expense is ordinary, necessary, documented, and tied clearly to business income.",
+    description: "Small business deduction guide: review common expenses, documentation rules, home office, vehicles, software, payroll, and recordkeeping.",
+  },
+  "pages/self-employed-tax-deductions.html": {
+    hero: "Self-employed deductions can lower taxable income, but only when receipts, logs, and business purpose support the claim.",
+    description: "Self-employed deduction guide: track home office, mileage, insurance, retirement, software, supplies, and records before filing.",
+  },
+  "pages/how-payroll-taxes-work.html": {
+    hero: "Payroll taxes combine employee withholding, employer matching tax, deposit schedules, and quarterly reporting that owners must monitor.",
+    description: "Payroll tax guide: understand FICA, federal withholding, FUTA, deposit schedules, Form 941, employer match, and common IRS notices.",
+  },
+  "pages/best-tax-software-for-small-business.html": {
+    hero: "The right tax software depends on bookkeeping quality, payroll needs, entity type, integrations, and how much support the owner needs.",
+    description: "Small business tax software guide: compare bookkeeping, payroll, filing support, entity fit, integrations, audit trails, and pricing limits.",
+  },
+  "pages/how-to-lower-taxable-income.html": {
+    hero: "Lowering taxable income safely means using documented deductions, retirement contributions, timing choices, and credits without forcing weak positions.",
+    description: "Lower taxable income guide: review deductions, retirement contributions, credits, timing choices, business records, and audit-safe planning.",
+  },
+  "pages/tax-credits-vs-tax-deductions.html": {
+    hero: "Credits and deductions reduce tax in different ways, so the better option depends on rate, refundability, eligibility, and documentation.",
+    description: "Tax credits vs deductions: see how dollar-for-dollar credits compare with income reductions, refund rules, phaseouts, and records.",
+  },
+  "pages/how-to-file-back-taxes.html": {
+    hero: "Filing back taxes starts with identifying missing years, pulling transcripts, rebuilding records, and filing before comparing payment options.",
+    description: "Back taxes filing guide: identify missing years, use IRS transcripts, rebuild records, file old returns, and plan payment options.",
+  },
+  "pages/what-happens-if-you-dont-pay-taxes.html": {
+    hero: "Unpaid taxes can move from notices to penalties, liens, levies, garnishment, and collection pressure if the account is ignored.",
+    description: "Unpaid taxes guide: IRS notices, penalties, interest, liens, levies, wage garnishment, payment plans, hardship, and first response steps.",
+  },
+  "pages/estimated-tax-payments-guide.html": {
+    hero: "Estimated tax payments help self-employed workers, investors, and owners spread tax throughout the year instead of waiting for a balance.",
+    description: "Estimated tax payment guide: quarterly due dates, safe-harbor basics, underpayment risk, self-employed income, and payment records.",
+  },
+  "pages/child-tax-credit-guide.html": {
+    hero: "The Child Tax Credit depends on child eligibility, income limits, refundability, SSN rules, and records that support the claim.",
+    description: "Child Tax Credit guide: child eligibility, SSN rules, income phaseouts, refundable ACTC basics, dependent records, and filing risks.",
+  },
+  "pages/home-office-deduction-guide.html": {
+    hero: "The home office deduction can help self-employed filers when the space is used regularly, exclusively, and documented clearly.",
+    description: "Home office deduction guide: regular and exclusive use, simplified method, actual expense records, self-employed rules, and audit risk.",
+  },
+  "pages/section-179-deduction-guide.html": {
+    hero: "Section 179 can accelerate equipment deductions, but owners need to compare cash flow, eligibility, depreciation, and record timing.",
+    description: "Section 179 deduction guide: equipment eligibility, expensing decisions, depreciation tradeoffs, business use records, and cash-flow timing.",
+  },
+  "pages/irs-penalties-explained.html": {
+    hero: "IRS penalties are easier to manage once the account separates tax due, filing penalties, payment penalties, interest, and relief options.",
+    description: "IRS penalties guide: failure-to-file, failure-to-pay, deposit penalties, interest, penalty abatement, and notice response steps.",
+  },
+  "pages/when-to-hire-a-tax-attorney.html": {
+    hero: "A tax attorney may be appropriate when legal risk, disputed facts, liens, levies, payroll exposure, or litigation concerns are present.",
+    description: "Tax attorney guide: when legal representation may matter for IRS collections, audits, liens, levies, payroll exposure, and disputes.",
+  },
+  "pages/tax-audit-guide.html": {
+    hero: "A tax audit response should begin with the notice, tax year, records requested, response deadline, and a clean document plan.",
+    description: "Tax audit guide: understand IRS notices, response deadlines, records, audit types, representation choices, and documentation mistakes.",
+  },
+  "pages/how-to-stop-irs-wage-garnishment.html": {
+    hero: "Stopping IRS wage garnishment usually requires fast account review, filed returns, proof of hardship or payment ability, and direct response.",
+    description: "IRS wage garnishment guide: levy notices, release options, payment plans, hardship review, employer impact, and urgent first steps.",
+  },
+  "pages/best-states-for-low-taxes.html": {
+    hero: "Low-tax states can reduce some costs, but relocation planning must include income tax, sales tax, property tax, residency, and business rules.",
+    description: "Low-tax states guide: compare income tax, sales tax, property tax, residency rules, business taxes, and relocation documentation.",
+  },
+};
+
 const supportConfigs = [
   ["pages/what-is-offer-in-compromise.html", "What Is an Offer in Compromise? IRS Settlement Basics", "offer in compromise", "taxpayers wondering whether an IRS settlement is realistic or mostly marketing hype"],
   ["pages/how-to-set-up-an-irs-payment-plan.html", "How to Set Up an IRS Payment Plan Step by Step", "set up an IRS payment plan", "taxpayers ready to move from notice stage to an actual installment-agreement process"],
@@ -1800,15 +2113,16 @@ const supportConfigs = [
   ["pages/tax-audit-guide.html", "Tax Audit Guide: What to Expect and How to Prepare", "tax audit", "filers who want to respond calmly, document well, and avoid making the process harder"],
   ["pages/how-to-stop-irs-wage-garnishment.html", "How to Stop IRS Wage Garnishment Before It Gets Worse", "stop IRS wage garnishment", "workers under collection pressure who need to move quickly and strategically"],
   ["pages/best-states-for-low-taxes.html", "Best States for Low Taxes: What Actually Changes", "best states for low taxes", "households and owners comparing relocation, residency, and total tax burden"],
-// <!-- REVISAR MANUALMENTE: meta descriptions generated from this support-page template can truncate awkwardly and should be rewritten with page-specific data. -->
-].map(([path, h1, keyword, audience], index) =>
-  withDefaults({
+].map(([path, h1, keyword, audience], index) => {
+  const copy = supportCopy[path] ?? {};
+  return withDefaults({
     path,
     badge: index % 3 === 0 ? "Guide" : index % 3 === 1 ? "Explainer" : "Comparison",
     category: "support",
     titleBase: h1,
     h1,
-    hero: `Get practical guidance on ${keyword}, compare costs and tradeoffs, and understand the records or timelines that matter before you file, negotiate, or change strategy.`,
+    hero: copy.hero ?? `${h1} explains the rule, records, timing, and next step so readers can make a cleaner tax decision.`,
+    descriptionBase: copy.description,
     keyword,
     shortLabel: keyword,
     audience,
@@ -1828,8 +2142,8 @@ const supportConfigs = [
       { value: "3 steps", label: "Useful process", note: "Verify facts, compare options, then act" },
       { value: "12 months", label: "Planning window", note: "Tax choices should hold up beyond filing day" },
     ],
-  })
-);
+  });
+});
 
 const calculatorConfigs = [
   withDefaults({
@@ -1840,6 +2154,7 @@ const calculatorConfigs = [
     titleBase: "Tax Refund Calculator: Estimate Your Federal Refund",
     h1: "Tax Refund Calculator: Estimate Federal Refund or Balance Due",
     hero: "Model basic federal refund scenarios, compare withheld tax against estimated liability, and see why credits and filing status change the outcome.",
+    descriptionBase: "Tax refund calculator: estimate federal refund or balance due using wages, withholding, filing status, credits, and planning assumptions.",
     keyword: "tax refund calculator",
     shortLabel: "tax refund calculator",
     audience: "employees and families trying to forecast refund size before filing",
@@ -1871,9 +2186,10 @@ const calculatorConfigs = [
     template: "calculator",
     category: "calculator",
     badge: "Calculator",
-    titleBase: "Self-Employment Tax Calculator for Freelancers",
+    titleBase: "Self-Employment Tax Calculator: SE Tax",
     h1: "Self-Employment Tax Calculator for Freelancers and Contractors",
     hero: "Estimate self-employment tax, see how quarterly payments compare with likely liability, and understand why irregular income needs a tax reserve.",
+    descriptionBase: "Self-employment tax calculator: estimate SE tax, quarterly reserve needs, net earnings impact, and planning assumptions for freelancers.",
     keyword: "self-employment tax calculator",
     shortLabel: "self-employment tax calculator",
     audience: "freelancers and owner-operators who need to model SE tax before quarterly deadlines",
@@ -1908,6 +2224,7 @@ const calculatorConfigs = [
     titleBase: "Paycheck Tax Calculator: Estimate Federal Withholding",
     h1: "Paycheck Tax Calculator: Estimate Federal Taxes Per Pay Period",
     hero: "Estimate federal withholding and FICA from a single paycheck, compare pay frequencies, and see how pre-tax deductions affect take-home pay.",
+    descriptionBase: "Paycheck tax calculator: estimate federal withholding, FICA, pay frequency impact, pre-tax deductions, and take-home pay scenarios.",
     keyword: "paycheck tax calculator",
     shortLabel: "paycheck tax calculator",
     audience: "employees checking whether current withholding matches likely annual tax exposure",
@@ -1942,6 +2259,7 @@ const calculatorConfigs = [
     titleBase: "Business Tax Estimator for Small Businesses",
     h1: "Business Tax Estimator: Federal Planning for Small Businesses",
     hero: "Run rough federal tax scenarios for sole proprietors, S corporations, and C corporations so you can compare profit, owner pay, and estimated payments.",
+    descriptionBase: "Business tax estimator: compare sole proprietor, S corporation, and C corporation scenarios with profit, owner pay, and estimates.",
     keyword: "business tax estimator",
     shortLabel: "business tax estimator",
     audience: "owners who need a planning-level view of business tax exposure before quarter-end or year-end decisions",
@@ -1976,6 +2294,7 @@ const calculatorConfigs = [
     titleBase: "Tax Debt Settlement Savings Calculator",
     h1: "Tax Debt Settlement Savings Calculator for IRS Relief Planning",
     hero: "Estimate the difference between paying a tax debt over time and resolving it through a potential settlement-style scenario with ongoing penalties and interest in view.",
+    descriptionBase: "Tax debt settlement calculator: compare monthly payment scenarios, settlement assumptions, penalty impact, and long-term debt cost.",
     keyword: "tax debt settlement savings calculator",
     shortLabel: "tax debt settlement calculator",
     audience: "taxpayers comparing a long payment path with a possible compromise or negotiated relief strategy",
@@ -2009,50 +2328,51 @@ const rootPages = [
     path: "index.html",
     template: "home",
     category: "home",
-    badge: "U.S. Tax Relief Hub",
-    titleBase: "TaxReliefGuide: IRS Relief, Deductions, and Tax Help",
-    descriptionBase: "Explore premium U.S. tax guides on IRS relief, tax debt, deductions, credits, payroll taxes, business compliance, and planning calculators for U.S. filers.",
-    h1: "Premium U.S. Tax Guides for IRS Relief, Credits, Deductions, and Compliance",
-    hero: "Explore IRS debt relief, payroll taxes, business tax planning, deductions, credits, and calculators that help readers act with more clarity and confidence.",
-    keyword: "U.S. tax relief and tax planning",
-    shortLabel: "U.S. tax planning",
-    audience: "U.S. taxpayers, families, freelancers, and business owners",
-    challenge: "Tax decisions get expensive when readers bounce between disconnected articles without a full framework",
-    eligibility: "Readers benefit most when they can compare tax relief, planning, and compliance topics in one connected structure",
-    cashflow: "Tax topics affect refunds, monthly payments, payroll, and quarterly reserves, not just year-end liability",
-    docs: "Readers should move through guides with notices, pay stubs, tax returns, bookkeeping reports, and payroll records nearby",
+    badge: "Start Here",
+    titleBase: "TaxReliefGuides: Start Here for IRS Tax Debt Help",
+    descriptionBase: "Start with IRS tax debt help, notice guides, payment plans, settlement analysis, and state tax relief paths built from official sources.",
+    h1: "Start here for IRS tax debt, notices, and relief options",
+    hero: "Use TaxReliefGuides to figure out whether you need a payment plan, a notice response, hardship review, settlement analysis, or a state tax fix.",
+    keyword: "IRS tax debt help and notice guidance",
+    shortLabel: "IRS tax help",
+    audience: "U.S. taxpayers, families, freelancers, and small-business owners with real tax questions",
+    challenge: "IRS and state tax problems become harder to solve when readers jump between disconnected pages without knowing which step comes first",
+    eligibility: "Readers benefit most when they can sort notice response, filing cleanup, payment options, and state issues into the right order",
+    cashflow: "Tax problems affect monthly cash flow, refunds, payroll, and collection risk, not just the number shown on a return",
+    docs: "Readers should keep notices, transcripts, recent returns, pay records, bookkeeping reports, and bank statements nearby while comparing options",
     chartBars: [
-      { label: "IRS relief demand", width: 90, value: "Strong" },
-      { label: "Deduction planning", width: 78, value: "High" },
-      { label: "Payroll compliance", width: 74, value: "High" },
-      { label: "Refund planning", width: 70, value: "High" },
+      { label: "Notice response", width: 88, value: "High" },
+      { label: "Payment plans", width: 82, value: "High" },
+      { label: "Settlement review", width: 70, value: "Selective" },
+      { label: "State relief", width: 76, value: "Growing" },
     ],
     stats: [
-      { value: "0.5%/mo", label: "Average IRS penalty rate", note: "Typical failure-to-pay penalty benchmark" },
-      { value: "19% to 30%", label: "Average small-business tax burden", note: "Varies sharply by entity and profit mix" },
-      { value: "15.3%", label: "Typical self-employment tax rate", note: "Applied to adjusted net earnings" },
-      { value: "$3,000+", label: "Average U.S. tax refund amount", note: "Recent national averages vary year to year" },
+      { value: "0.5%/mo", label: "Failure-to-pay baseline", note: "Typical IRS late-payment penalty benchmark" },
+      { value: "180 days", label: "Short-term plan window", note: "IRS short-term payment plans can run up to 180 days" },
+      { value: "$50,000", label: "Simple IA threshold", note: "Common online individual installment agreement threshold" },
+      { value: "21 to 30 days", label: "Notice urgency range", note: "Many IRS balance and levy notices should be handled quickly" },
     ],
     related: [
       "pages/irs-tax-relief-guide.html",
-      "pages/tax-deductions-guide.html",
-      "pages/business-tax-guide.html",
+      "pages/tax-debt-guide.html",
+      "states/index.html",
     ],
   }),
   withDefaults({
     path: "about.html",
-    titleBase: "About TaxReliefGuide and Our Editorial Standards",
-    h1: "About TaxReliefGuide",
-    hero: "Learn what TaxReliefGuide covers, how our editorial team approaches IRS and tax planning content, and why we focus on clarity over hype.",
-    keyword: "about TaxReliefGuide",
-    shortLabel: "about this site",
-    audience: "readers evaluating editorial quality and trust",
-    challenge: "High-value tax niches attract shallow or sales-first content, so source clarity matters",
-    eligibility: "Readers should know who writes the content, what expertise guides it, and where the site sets limits",
-    cashflow: "Editorial transparency helps readers judge whether a guide is useful enough to inform a financial or tax conversation",
-    docs: "We rely on IRS publications, official instructions, widely used tax forms, and practical compliance workflows",
+    titleBase: "About TaxReliefGuides and How the Site Works",
+    h1: "About TaxReliefGuides",
+    hero: "TaxReliefGuides is an independent informational site focused on IRS debt, notices, payment options, and practical tax research for U.S. readers.",
+    descriptionBase: "Learn what TaxReliefGuides covers, how the site uses official sources, and where its informational limits begin.",
+    keyword: "about TaxReliefGuides",
+    shortLabel: "about page",
+    audience: "readers evaluating whether the site is transparent, useful, and worth trusting for research",
+    challenge: "Tax content is easy to overstate, so the site needs to explain clearly what it is and what it is not",
+    eligibility: "Readers should understand the editorial purpose, sourcing standards, and informational limits before relying on any guide",
+    cashflow: "This matters because people often reach the site while deciding how to respond to a tax bill, payment problem, or filing issue",
+    docs: "The site works from IRS pages, official state agency pages, form instructions, publications, and other public-source materials",
     stats: [
-      { value: "40", label: "Published pages", note: "Structured as a complete tax content hub" },
+      { value: "70+", label: "Published resources", note: "Guides, calculators, notices, and state pages" },
       { value: "U.S.-focused", label: "Primary market", note: "Federal tax guidance built for U.S. readers" },
       { value: "Editorial", label: "Content model", note: "Independent educational site, not a tax firm" },
       { value: "Practical", label: "Writing standard", note: "Rules translated into next-step decisions" },
@@ -2075,16 +2395,17 @@ const rootPages = [
   }),
   withDefaults({
     path: "contact.html",
-    titleBase: "Contact TaxReliefGuide Editorial Team",
-    h1: "Contact TaxReliefGuide",
-    hero: "Reach the editorial team with corrections, source suggestions, or questions about the topics we cover across IRS relief, deductions, credits, and business taxes.",
-    keyword: "contact TaxReliefGuide",
+    titleBase: "Contact TaxReliefGuides for Corrections or Questions",
+    h1: "Contact TaxReliefGuides",
+    hero: "Use this page to report a factual issue, flag a broken link, suggest a topic, or send a source update for a guide on the site.",
+    descriptionBase: "Contact TaxReliefGuides for factual corrections, source updates, broken links, and editorial questions about IRS and state tax guides.",
+    keyword: "contact TaxReliefGuides",
     shortLabel: "contact page",
-    audience: "readers who want to flag an issue or suggest a topic",
-    challenge: "Tax content changes over time, so a clear editorial contact path supports quality control",
-    eligibility: "We review editorial messages, source corrections, and content suggestions, but we do not provide individual tax or legal advice",
-    cashflow: "Readers should use the site for education and consult a qualified professional before making high-stakes filing decisions",
-    docs: "When contacting us about a correction, include the URL, the exact point in question, and the source you believe is more accurate",
+    audience: "readers who want to report an issue, suggest a topic, or send a source correction",
+    challenge: "Tax guidance changes, so a usable editorial contact path matters for accuracy and trust",
+    eligibility: "We review editorial messages and factual corrections, but we do not provide individual tax, legal, or financial advice",
+    cashflow: "Readers should use the site for research and then decide whether a CPA, EA, or attorney is needed for their situation",
+    docs: "The most useful messages include the page URL, the exact issue, and the official or primary source that supports the correction",
     stats: [
       { value: "Editorial only", label: "Primary purpose", note: "We do not offer tax representation" },
       { value: "Fast review", label: "Correction flow", note: "Priority goes to factual fixes and broken links" },
@@ -2109,21 +2430,22 @@ const rootPages = [
   }),
   withDefaults({
     path: "how-we-research.html",
-    titleBase: "How We Research IRS, Tax Relief, and Compliance Topics",
+    titleBase: "How We Research IRS and State Tax Topics",
     h1: "How We Research Tax Topics",
-    hero: "See how TaxReliefGuide builds tax content using IRS materials, practical planning workflows, editorial review, and structured on-page quality standards.",
+    hero: "TaxReliefGuides starts with official sources, then rewrites them into plain-language guidance built around the decision a reader is actually trying to make.",
+    descriptionBase: "See how TaxReliefGuides researches IRS and state tax topics, verifies sensitive details, and separates education from advice.",
     keyword: "how we research tax topics",
     shortLabel: "research standards",
-    audience: "readers who want to understand sourcing and editorial process",
-    challenge: "Tax content quality is hard to judge without knowing how pages are sourced and maintained",
-    eligibility: "A strong editorial process blends official sources, real filing workflows, and clear user-centered writing",
-    cashflow: "Research quality matters because readers may use the content to prepare for important money decisions or conversations with professionals",
-    docs: "We work from IRS forms, instructions, publications, notices, and stable tax-planning concepts that can be explained without overpromising outcomes",
+    audience: "readers who want to understand how the site verifies tax content and why some pages include verification markers",
+    challenge: "A tax page can look polished while still being outdated or vague, so the sourcing process has to be visible",
+    eligibility: "A strong process starts with primary sources, clear caveats, and a willingness to leave a data point pending rather than guess",
+    cashflow: "That matters because readers often arrive while deciding how to respond to an IRS bill, a payment problem, or a state collection notice",
+    docs: "The research base includes IRS pages, publications, instructions, notice pages, state revenue sites, and public forms tied to the issue",
     stats: [
       { value: "Official-first", label: "Source strategy", note: "IRS and primary references anchor the content" },
       { value: "Multi-step", label: "Editorial workflow", note: "Topic map, drafting, QA, and technical audit" },
-      { value: "No static schema", label: "Technical standard", note: "Structured data is injected dynamically" },
-      { value: "Full-site QA", label: "Launch process", note: "Links, canonicals, and metadata are checked" },
+      { value: "Transparent limits", label: "Editorial standard", note: "Education is separated from advice" },
+      { value: "Full-site QA", label: "Maintenance process", note: "Links, canonicals, and metadata are checked" },
     ],
     chartBars: [
       { label: "Source credibility", width: 91, value: "Very high" },
@@ -2142,11 +2464,48 @@ const rootPages = [
     ],
   }),
   withDefaults({
+    path: "affiliate-disclosure.html",
+    robots: "noindex, follow",
+    titleBase: "Affiliate Disclosure for TaxReliefGuides",
+    h1: "Affiliate Disclosure",
+    hero: "Some pages on TaxReliefGuides may eventually include referral or affiliate links. This page explains how that works and how it does not change editorial intent.",
+    descriptionBase: "Affiliate disclosure for TaxReliefGuides: how referral links may work, how editorial independence is handled, and what readers should expect.",
+    keyword: "affiliate disclosure",
+    shortLabel: "affiliate disclosure",
+    audience: "readers who want a clear explanation of how commercial relationships are disclosed on the site",
+    challenge: "Readers in a tax niche should be able to tell the difference between useful editorial guidance and compensated recommendations",
+    eligibility: "This page applies to any current or future pages that include referral links, sponsored placements, or compensated recommendations",
+    cashflow: "Commercial transparency matters more in money topics because the reader may already be under financial stress",
+    docs: "When referral links appear, they should be disclosed clearly and should not override the site's informational limits or source standards",
+    stats: [
+      { value: "Clear labels", label: "Disclosure standard", note: "Commercial links should be identified in plain language" },
+      { value: "Noindex", label: "Search handling", note: "Disclosure page exists for transparency, not SEO traffic" },
+      { value: "Editorial first", label: "Core rule", note: "Content should still be built around reader usefulness" },
+      { value: "FTC-aware", label: "Compliance intent", note: "Commercial relationships should be disclosed clearly" },
+    ],
+    chartBars: [
+      { label: "Reader clarity", width: 90, value: "High" },
+      { label: "Disclosure visibility", width: 86, value: "Strong" },
+      { label: "Editorial independence", width: 88, value: "High" },
+      { label: "Commercial restraint", width: 84, value: "Strong" },
+    ],
+    related: [
+      "about.html",
+      "how-we-research.html",
+      "contact.html",
+    ],
+    breadcrumbs: [
+      { label: "Home", href: `${domain}/` },
+      { label: "Affiliate Disclosure", href: `${domain}/affiliate-disclosure` },
+    ],
+  }),
+  withDefaults({
     path: "privacy-policy.html",
     robots: "noindex, follow",
-    titleBase: "Privacy Policy for TaxReliefGuide",
+    titleBase: "Privacy Policy for TaxReliefGuides",
     h1: "Privacy Policy",
-    hero: "Review how TaxReliefGuide handles basic site data, cookies, analytics preferences, and contact submissions in a straightforward, reader-first format.",
+    hero: "Review how TaxReliefGuides handles basic site data, cookies, analytics preferences, and contact submissions in a straightforward format.",
+    descriptionBase: "Privacy Policy for TaxReliefGuides: cookies, analytics preferences, contact messages, AdSense data use, and user privacy choices.",
     keyword: "privacy policy",
     shortLabel: "privacy policy",
     audience: "site visitors reviewing cookies and privacy practices",
@@ -2157,7 +2516,7 @@ const rootPages = [
     stats: [
       { value: "Cookie controls", label: "User choice", note: "Accept or reject non-essential cookies" },
       { value: "Noindex", label: "Search setting", note: "Legal pages are not meant to rank" },
-      { value: "Site-only", label: "Scope", note: "Applies to TaxReliefGuide properties" },
+      { value: "Site-only", label: "Scope", note: "Applies to TaxReliefGuides properties" },
       { value: "Plain language", label: "Reading standard", note: "Built to be understandable quickly" },
     ],
     chartBars: [
@@ -2179,9 +2538,10 @@ const rootPages = [
   withDefaults({
     path: "terms.html",
     robots: "noindex, follow",
-    titleBase: "Terms of Use for TaxReliefGuide and Site Access",
+    titleBase: "Terms of Use for TaxReliefGuides and Site Access",
     h1: "Terms of Use",
-    hero: "Read the basic terms that govern use of TaxReliefGuide, including informational-use limits, intellectual property, and editorial contact expectations.",
+    hero: "Read the basic terms that govern use of TaxReliefGuides, including informational-use limits, intellectual property, and editorial contact expectations.",
+    descriptionBase: "Terms of Use for TaxReliefGuides: site access, educational-use limits, calculator limitations, intellectual property, and updates.",
     keyword: "terms of use",
     shortLabel: "terms of use",
     audience: "site visitors reviewing usage terms",
@@ -2214,9 +2574,10 @@ const rootPages = [
   withDefaults({
     path: "disclaimer.html",
     robots: "noindex, follow",
-    titleBase: "Disclaimer for TaxReliefGuide Content and Calculators",
+    titleBase: "Disclaimer for TaxReliefGuides Content and Calculators",
     h1: "Disclaimer",
-    hero: "Review the scope of TaxReliefGuide content, calculator limits, and the distinction between educational information and professional tax, legal, or financial advice.",
+    hero: "Review the scope of TaxReliefGuides content, calculator limits, and the distinction between educational information and professional tax, legal, or financial advice.",
+    descriptionBase: "TaxReliefGuides disclaimer: educational content only, calculator limits, no individualized tax, legal, financial, or filing advice.",
     keyword: "site disclaimer",
     shortLabel: "disclaimer",
     audience: "readers evaluating how to use the site responsibly",
@@ -2253,47 +2614,126 @@ function buildRootSections(page) {
     return [
       {
         id: "general-faq",
-        eyebrow: "FAQ",
-        title: "What readers ask most often across the site",
-        intro: "These are the cross-topic questions that show up in high-intent tax research journeys.",
+        eyebrow: "Start here",
+        title: "How to use the site when a tax problem already feels urgent",
+        intro: "Most readers do not need a theory-heavy tax site. They need to know which page to open first and which problem actually comes next.",
         paragraphs: [
-          `Many readers want to know whether the best move is to lower tax, increase refund, resolve debt, or simply get compliant again. The answer depends on what stage they are in. Some need a payment plan or relief path because a balance already exists. Others need better deductions, credits, payroll controls, or withholding adjustments to stop a new balance from appearing next year.`,
-          `Another common question is when to stop self-help research and speak with a professional. As a general rule, professional help becomes more valuable when a case involves payroll tax exposure, active garnishment, levy threats, multiple years of missing returns, disputed audit adjustments, or large balances that need representation rather than general education.`,
-          `The site is built so users can start with one article and move through the connected decisions around it. That internal structure is intentional: tax questions usually become clearer only when the neighboring questions are visible too.`,
+          `If you just received an IRS notice, start with the notice page before comparing settlement or hardship programs. If you already know you owe and the returns are filed, compare a payment plan, penalty relief, and hardship status before assuming settlement is the right answer. If old returns are missing, filing cleanup usually comes before any serious relief request.`,
+          `The site is organized so those branches are visible quickly. Home should point you to the first practical question: do you need to respond to a notice, verify a balance, fix missing filings, set up payments, or compare a federal problem with a state one.`,
+          `Professional help usually becomes more valuable when a case involves payroll tax exposure, active levy risk, several unfiled years, liens, business trust taxes, or facts that are disputed rather than merely undocumented. For more routine balance-due issues, a good guide can often help you frame the file before you decide whether paid help is worth it.`,
+        ],
+      },
+      {
+        id: "why-this-site",
+        eyebrow: "Editorial approach",
+        title: "What TaxReliefGuides is trying to do well",
+        intro: "The goal is not to sound authoritative. The goal is to help readers make a better next decision.",
+        paragraphs: [
+          `Tax content becomes less useful when it overpromises, hides the limitations of a program, or speaks in abstract strategy language instead of concrete steps. This site tries to do the opposite. Pages are built around what a reader needs to gather, what the IRS or state agency is actually looking at, and when a popular option usually does not fit.`,
+          `That is also why some pages include visible verification markers for year-sensitive figures. If a threshold, fee, wage base, or form rule cannot be confirmed cleanly from an official source in this pass, the page should say so instead of pretending certainty.`,
         ],
       },
     ];
   }
 
-  if (["about.html", "contact.html", "how-we-research.html"].includes(page.path)) {
+  if (page.path === "about.html") {
     return [
       {
-        id: "editorial-purpose",
-        eyebrow: "Editorial purpose",
-        title: `How ${page.h1.toLowerCase()} supports reader trust`,
-        intro: `Trust and clarity are part of the product in financial publishing.`,
+        id: "what-the-site-is",
+        eyebrow: "Scope",
+        title: "What TaxReliefGuides covers",
+        intro: "TaxReliefGuides is a small editorial site focused on practical federal and state tax research for U.S. readers.",
         paragraphs: [
-          ...(page.path === "contact.html"
-            ? [
-                contactEmail
-                  ? `You can reach the editorial team at ${contactEmail} for corrections, source suggestions, partnership inquiries, or editorial questions.`
-                  : "We are updating our contact information. Please check back soon.",
-              ]
-            : []),
-          `${page.shortLabel.charAt(0).toUpperCase() + page.shortLabel.slice(1)} helps readers evaluate the site before relying on any specific guide or calculator. In tax content, that matters because a reader may be deciding whether to file, negotiate with the IRS, adjust payroll settings, or speak with a professional based on what they learn here. The context around the content deserves as much care as the content itself.`,
-          `We therefore keep these institutional pages practical. They explain what the site covers, how we think about source quality, what users can send to the editorial team, and where the boundaries are between education and individualized advice. Those boundaries make the main content more trustworthy because they reduce confusion about what the site is and is not trying to do.`,
-          `Institutional pages also support technical quality. They provide stable internal destinations for navigation, organization references, and user expectations around updates and corrections.`,
+          `The strongest use case is a reader who already knows the broad problem but needs help sorting the next step. That may mean comparing an IRS payment plan with hardship status, understanding what a CP14 or CP504 notice means, checking whether a state tax agency uses a different payment process, or separating payroll tax exposure from ordinary income tax debt.`,
+          `The site is not a tax firm, a law firm, or a tax preparation service. It does not sell representation, and it is not a substitute for individualized advice. Its job is narrower and, ideally, useful: explain what the official source says, translate it into plain language, and point readers to the adjacent pages they usually need next.`,
         ],
       },
       {
-        id: "what-to-expect",
-        eyebrow: "Expectations",
-        title: "What readers should expect from this page",
-        intro: `A clear expectation frame reduces ambiguity.`,
+        id: "editorial-standards",
+        eyebrow: "Standards",
+        title: "How the site approaches trust in a tax niche",
+        intro: "A tax site should be clear about what it knows, what it is still verifying, and what it cannot do for the reader.",
         paragraphs: [
-          `Readers should expect plain-language explanations, direct scope limits, and a focus on decisions rather than vague branding claims. Where the page touches policy or site operations, it does so in concise language that supports comprehension on both desktop and mobile.`,
-          `This page also sits inside the wider site architecture. It is not an orphan page. From here, readers can move into deeper guides, contact the editorial team, or review legal and research policies without broken pathways or placeholder content.`,
-          `That integration supports both user experience and crawl quality, which matters for a site intended to perform well in search while maintaining professional standards in a high-stakes niche.`,
+          `That is why the site avoids fictional experts, inflated credentials, and vague promises about results. It also avoids guessing on sensitive numbers where an official source is the right standard. When a year-sensitive figure still needs verification, the page should leave a marker rather than quietly filling the gap with a convenient estimate.`,
+          `Readers should expect a calm tone, official-source links, practical internal linking, and clear disclaimers. If a page feels thin, overly abstract, or out of date, that is a quality issue rather than a feature, and the goal is to keep improving those weak spots over time.`,
+        ],
+      },
+    ];
+  }
+
+  if (page.path === "contact.html") {
+    return [
+      {
+        id: "how-to-contact",
+        eyebrow: "Editorial contact",
+        title: "What to send and when to use this page",
+        intro: "The most helpful messages are factual, specific, and tied to a page on the site.",
+        paragraphs: [
+          contactEmail
+            ? `You can reach the editorial team at ${contactEmail}. Use that address for factual corrections, broken links, source updates, partnership questions, or suggestions for future topics.`
+            : "We are updating our contact information. Please check back soon.",
+          `If you are reporting a correction, include the page URL, the sentence or section that looks wrong, and the official source that supports the change. That makes it much easier to review the issue quickly and update the guide if needed.`,
+          `This inbox is not a substitute for personal tax help. We cannot tell you which box to check on your return, negotiate with the IRS for you, or advise you on your personal facts. If your case is urgent, use the official notice contact information or speak with a qualified professional.`,
+        ],
+      },
+      {
+        id: "what-happens-next",
+        eyebrow: "What to expect",
+        title: "How editorial messages are handled",
+        intro: "Accuracy updates come before topic expansion requests.",
+        paragraphs: [
+          `Messages about broken navigation, outdated program details, or incorrect official-source references usually deserve first review because they affect current readers. Topic suggestions, comparison requests, and partnership notes are still useful, but they are secondary to factual corrections in a YMYL tax site.`,
+          `If a message points to a year-sensitive figure, the best next step is often to verify the IRS or state source directly and then update the relevant page and report. That is slower than rewriting from memory, but it is the safer standard for this niche.`,
+        ],
+      },
+    ];
+  }
+
+  if (page.path === "how-we-research.html") {
+    return [
+      {
+        id: "source-priority",
+        eyebrow: "Source order",
+        title: "Official sources come first",
+        intro: "Most tax pages start with the agency that controls the rule, notice, or program.",
+        paragraphs: [
+          `For federal tax debt pages that usually means IRS.gov, IRS forms and instructions, notice pages, publications, or other primary IRS materials. For state pages it means the relevant Department of Revenue, Franchise Tax Board, Comptroller, or equivalent state agency. If a figure is sensitive to the filing year, the page should reflect the current official source or stay marked for verification.`,
+          `Secondary sources can help frame a workflow, but they should not be the final authority for a penalty amount, a payment-plan fee, or a collection deadline. In a tax niche, the source hierarchy matters because small wording differences can change the practical advice.`,
+        ],
+      },
+      {
+        id: "editorial-process",
+        eyebrow: "Editorial process",
+        title: "How a page moves from source material to a usable guide",
+        intro: "The site tries to bridge the gap between agency language and reader decision-making.",
+        paragraphs: [
+          `A useful page starts by identifying the real problem a reader is trying to solve: understanding a notice, comparing relief options, figuring out which form matters, or seeing whether a state program is separate from an IRS one. Then the page is built around the facts that actually change the decision: forms, filing status, thresholds, payment rules, documentation, and what happens if the issue is ignored.`,
+          `After that, the page should be checked for technical hygiene: clean canonicals, extensionless public URLs, visible internal links, disclaimers, schema that matches the content, and no stray placeholder or generator language. In a site like this, technical cleanup is part of editorial quality because broken structure makes the content less trustworthy.`,
+        ],
+      },
+    ];
+  }
+
+  if (page.path === "affiliate-disclosure.html") {
+    return [
+      {
+        id: "commercial-relationships",
+        eyebrow: "Commercial transparency",
+        title: "How referral links may appear on the site",
+        intro: "Some pages may eventually include links that generate compensation if a reader clicks through or signs up.",
+        paragraphs: [
+          `If that happens, the goal should still be to explain the tax issue first and the commercial relationship second. A disclosure should be visible enough that a reader does not have to hunt for it, and the surrounding content should still tell the truth when a product or service is a poor fit.`,
+          `TaxReliefGuides should not present a compensated recommendation as though it were neutral public guidance. Commercial links may support the site, but they should not rewrite the editorial standard or turn a guide into a disguised sales page.`,
+        ],
+      },
+      {
+        id: "what-readers-should-expect",
+        eyebrow: "Reader expectations",
+        title: "What this disclosure means in practice",
+        intro: "A disclosure is only useful if it changes how the page is framed.",
+        paragraphs: [
+          `Readers should expect commercial relationships to be identified in ordinary language. They should also expect the site to keep clear boundaries between editorial explanations, comparisons, and any compensated placements or referral links.`,
+          `If a future comparison page includes affiliate links, it should still make room for cases where the best answer is to use an official IRS or state process directly, speak with a professional, or avoid buying anything at all. In a money niche, honesty about fit matters more than conversion rate.`,
         ],
       },
     ];
@@ -2303,12 +2743,12 @@ function buildRootSections(page) {
     {
       id: "summary",
       eyebrow: "Summary",
-      title: `How this ${page.shortLabel} page works`,
-      intro: `Legal pages should be readable enough for ordinary users to understand quickly.`,
+      title: `How this ${page.shortLabel} page should be read`,
+      intro: `Legal and policy pages are most useful when they explain the site's rules in plain language.`,
       paragraphs: [
-        `${page.h1} explains the baseline rules that govern how the site handles privacy, usage expectations, or informational boundaries. We keep the language straightforward because legal pages are most useful when readers can actually understand them without needing a second guide to interpret them.`,
-        `The page also supports wider site compliance. It is linked from the footer, referenced by the cookie banner where relevant, and marked noindex because it exists for user clarity rather than organic ranking. That helps separate utility content from legal housekeeping while keeping both accessible.`,
-        `Readers should treat this page as a practical summary of site policy and use it alongside the site-wide disclaimers and institutional pages if they want a fuller picture of how TaxReliefGuide operates.`,
+        `${page.h1} explains the baseline rules that govern how the site handles privacy, disclosure, usage expectations, or informational boundaries. The aim is clarity, not legal theater. Readers should be able to understand what the page means without needing a second page to translate it.`,
+        `These pages also support site-wide trust signals. They are linked from the footer, referenced by the cookie banner where relevant, and marked noindex because they exist for reader clarity rather than search traffic.`,
+        `Use this page together with the About, Contact, and How We Research pages if you want the fuller picture of how TaxReliefGuides is run and what the site is willing to claim.`,
       ],
     },
     ...(page.path === "privacy-policy.html"
@@ -2319,19 +2759,21 @@ function buildRootSections(page) {
           intro: "TaxReliefGuides uses Google AdSense to display ads.",
           paragraphs: [
             `Google AdSense is a third-party ad service operated by Google LLC. AdSense uses cookies and tracking technologies to serve ads based on your prior visits to this site and other websites. Google may collect data such as your IP address, browser type, and browsing behavior to deliver personalized ads. TaxReliefGuides does not have direct access to data collected by Google for ad delivery. This data is processed in accordance with Google's Privacy Policy.`,
-            `You can opt out of personalized ads by visiting Google's Ads Settings or aboutads.info. California residents may exercise CCPA opt-out rights through Google's ad personalization settings. For privacy or advertising data questions, email ${contactEmail}.`,
+            contactEmail
+              ? `You can opt out of personalized ads by visiting Google's Ads Settings or aboutads.info. California residents may exercise CCPA opt-out rights through Google's ad personalization settings. For privacy or advertising data questions, email ${contactEmail}.`
+              : "You can opt out of personalized ads by visiting Google's Ads Settings or aboutads.info. California residents may exercise CCPA opt-out rights through Google's ad personalization settings.",
           ],
         }]
       : []),
     {
       id: "details",
       eyebrow: "Details",
-      title: "Key points readers should take from this page",
-      intro: `Clarity matters more than length on legal and policy content.`,
+      title: "What readers should take from this page",
+      intro: `Clarity matters more than legal-sounding filler on policy pages.`,
       paragraphs: [
-        `The core theme is consistent across our legal pages: TaxReliefGuide publishes educational content, not individualized tax, legal, or financial advice. Readers should use the site to understand options, terminology, and planning frameworks, and then decide whether a CPA, enrolled agent, payroll provider, or tax attorney is needed for their specific case.`,
-        `We also explain where cookies fit in, how editorial contact works, and what expectations govern the use of calculators and published content. These details help users make informed choices about using the site and interacting with its tools.`,
-        `Because legal pages are part of the trust layer rather than the conversion layer, we aim for completeness without clutter. That supports a cleaner user experience and reduces the risk of ambiguity.`,
+        `The core theme is consistent across the site's legal pages: TaxReliefGuides publishes educational content, not individualized tax, legal, or financial advice. Readers should use the site to understand options, terminology, and official-source pathways, then decide whether professional help is needed.`,
+        `These pages also explain how cookies are handled, how editorial contact works, and what expectations govern calculators, disclosures, and published content. That reduces ambiguity, which matters more in a tax niche than in a casual hobby site.`,
+        `Because these pages are part of the trust layer rather than the conversion layer, they should be complete without becoming bloated. The reader should leave with a clear answer, not a wall of boilerplate.`,
       ],
     },
   ];
@@ -2375,9 +2817,9 @@ for (const config of pillarConfigs) {
     cta: { label: "Try a calculator", href: `${domain}/pages/tax-refund-calculator.html` },
     secondaryCta: { label: "Read tax debt guide", href: `${domain}/pages/tax-debt-guide.html` },
     visual: heroVisual("IRS and tax planning", [
-      { label: "Main audience", value: "U.S. taxpayers and founders" },
-      { label: "Primary goal", value: "Lower risk, improve clarity" },
-      { label: "Best first step", value: "Verify filings and balances" },
+      { label: "Who this helps", value: "U.S. taxpayers and founders" },
+      { label: "Main focus", value: "Lower risk, improve clarity" },
+      { label: "First step", value: "Verify filings and balances" },
     ], [
       { label: "Assess", width: 90 },
       { label: "File", width: 76 },
@@ -2403,9 +2845,9 @@ for (const config of supportConfigs) {
     chart: chartFromStats(config),
     cta: { label: "Read the IRS relief hub", href: `${domain}/pages/irs-tax-relief-guide` },
     secondaryCta: { label: "Use a calculator", href: `${domain}/pages/tax-refund-calculator.html` },
-    visual: heroVisual("Tax topic snapshot", [
-      { label: "Intent", value: "Research before action" },
-      { label: "Main concern", value: "Savings with compliance" },
+    visual: heroVisual("Tax topic overview", [
+      { label: "Reader need", value: "Research before action" },
+      { label: "Primary concern", value: "Savings with compliance" },
       { label: "Best habit", value: "Document the facts" },
     ], [
       { label: "Understand", width: 88 },
@@ -2471,12 +2913,12 @@ for (const config of rootPages) {
     title: normalizeTitle(config.titleBase),
     description: normalizeDescription(
       config.descriptionBase ??
-      `${config.hero} Premium U.S. tax content with strong internal linking, calculators, FAQ coverage, and clear editorial standards.`
+      `${config.hero} U.S. tax content with clear internal links, calculators, FAQ coverage, and editorial standards.`
     ),
     takeaways: makeKeyTakeaways(config),
     faq: config.path === "index.html" ? [
       {
-        q: "What topics does TaxReliefGuide cover?",
+        q: "What topics does TaxReliefGuides cover?",
         a: "The site covers IRS tax relief, tax debt, deductions, credits, payroll taxes, business taxes, self-employed taxes, payment plans, calculators, and foundational compliance topics for U.S. readers.",
       },
       {
@@ -2494,16 +2936,16 @@ for (const config of rootPages) {
     ] : legalFaq(config),
     chart: chartFromStats(config),
     cta: config.path === "index.html"
-      ? { label: "Explore IRS tax relief", href: `${domain}/pages/irs-tax-relief-guide` }
+      ? { label: "Start with tax debt help", href: `${domain}/pages/tax-debt-relief-options` }
       : { label: "Explore the main hub", href: `${domain}/` },
     secondaryCta: config.path === "index.html"
-      ? { label: "Try a calculator", href: `${domain}/pages/tax-refund-calculator.html` }
+      ? { label: "Browse IRS notices", href: `${domain}/pages/irs-cp14-notice` }
       : { label: "Read a guide", href: `${domain}/pages/tax-debt-guide.html` },
     visual: config.path === "index.html"
       ? homeVisual()
       : heroVisual("Site standards", [
           { label: "Page type", value: config.robots === "noindex, follow" ? "Legal or policy" : "Institutional" },
-          { label: "Primary purpose", value: "Trust and clarity" },
+          { label: "Purpose", value: "Trust and clarity" },
           { label: "Search handling", value: config.robots },
         ], [
           { label: "Explain", width: 88 },
@@ -2628,7 +3070,7 @@ for (const state of stateTaxReliefConfigs) {
     badge: "State Guide",
     title: stateTitle(state),
     titleBase: stateTitle(state),
-    h1: `${state.state} State Tax Relief Programs (2026 Guide)`,
+    h1: `${state.state} State Tax Relief Programs`,
     description: state.meta,
     keyword: `${state.state} state tax relief`,
     shortLabel: `${state.state} state tax relief`,
@@ -2716,15 +3158,53 @@ Sitemap: https://taxreliefguides.com/sitemap.xml
 
 function buildRedirects(pages) {
   const redirects = [
-    "http://taxreliefguides.com/* https://taxreliefguides.com/:splat 301",
-    "http://www.taxreliefguides.com/* https://taxreliefguides.com/:splat 301",
-    "https://www.taxreliefguides.com/* https://taxreliefguides.com/:splat 301",
+    // Normalize index
+    "/index.html / 301!",
+    "/index / 301!",
+    // Force HTTPS and remove www
+    "http://taxreliefguides.com/* https://taxreliefguides.com/:splat 301!",
+    "http://www.taxreliefguides.com/* https://taxreliefguides.com/:splat 301!",
+    "https://www.taxreliefguides.com/* https://taxreliefguides.com/:splat 301!",
+    // Canonical consolidation: legacy irs-payment-plan-guide → canonical plural version
+    "/pages/irs-payment-plan-guide /pages/irs-payment-plans-guide 301!",
+    "/pages/irs-payment-plan-guide.html /pages/irs-payment-plans-guide 301!",
   ];
+
+  // .html → clean-URL redirects for pages managed by build-search-console-expansion.mjs
+  // (irs-payment-plan-guide excluded — already handled by canonical consolidation above)
+  const expansionSlugs = [
+    "payroll-tax-penalties",
+    "payroll-tax-problems",
+    "small-business-payroll-taxes",
+    "payroll-tax-relief",
+    "payroll-tax-calculator",
+    "tax-debt-relief-options",
+    "irs-currently-not-collectible",
+    "tax-debt-settlement",
+    "back-taxes-help",
+    "irs-cp14-notice",
+    "irs-cp504-notice",
+    "tax-lien-vs-levy",
+    "first-time-penalty-abatement",
+    "refundable-vs-nonrefundable-tax-credits",
+    "tax-credits-guide",
+    "earned-income-tax-credit",
+    "child-tax-credit-guide",
+    "small-business-tax-credits",
+    "offer-in-compromise-guide",
+    "penalty-abatement-guide",
+    "innocent-spouse-relief",
+    "tax-lien-guide",
+    "self-employed-tax-guide",
+  ];
+  for (const slug of expansionSlugs) {
+    redirects.push(`/pages/${slug}.html /pages/${slug} 301!`);
+  }
 
   for (const page of pages) {
     const cleanPath = urlFor(page.path).replace(domain, "") || "/";
     const htmlPath = page.path === "index.html" ? "/index.html" : `/${page.path}`;
-    redirects.push(`${htmlPath} ${cleanPath} 301`);
+    redirects.push(`${htmlPath} ${cleanPath} 301!`);
   }
 
   return `${redirects.join("\n")}\n`;
@@ -2745,11 +3225,41 @@ function buildHeaders() {
 }
 
 async function cleanupOldHtml(pages) {
+  // Pages owned by build-search-console-expansion.mjs — never delete these
+  const expansionProtected = new Set([
+    "payroll-tax-penalties",
+    "payroll-tax-problems",
+    "small-business-payroll-taxes",
+    "payroll-tax-relief",
+    "payroll-tax-calculator",
+    "tax-debt-relief-options",
+    "irs-payment-plan-guide",
+    "irs-currently-not-collectible",
+    "tax-debt-settlement",
+    "back-taxes-help",
+    "irs-cp14-notice",
+    "irs-cp504-notice",
+    "tax-lien-vs-levy",
+    "first-time-penalty-abatement",
+    "refundable-vs-nonrefundable-tax-credits",
+    "tax-credits-guide",
+    "earned-income-tax-credit",
+    "child-tax-credit-guide",
+    "small-business-tax-credits",
+    "offer-in-compromise-guide",
+    "penalty-abatement-guide",
+    "innocent-spouse-relief",
+    "tax-lien-guide",
+    "self-employed-tax-guide",
+  ]);
+
   const keep = new Set(pages.map((page) => page.path));
   const pagesDir = path.join(root, "pages");
   const entries = await fs.readdir(pagesDir, { withFileTypes: true });
   for (const entry of entries) {
     if (!entry.isFile() || !entry.name.endsWith(".html")) continue;
+    const slug = entry.name.replace(/\.html$/, "");
+    if (expansionProtected.has(slug)) continue; // owned by second generator
     const rel = `pages/${entry.name}`;
     if (!keep.has(rel)) {
       await fs.unlink(path.join(pagesDir, entry.name));
@@ -2803,7 +3313,7 @@ function auditSite(pages, rendered) {
     if (!html.includes("class=\"related-section\"")) issues.push(`Missing related articles on ${page.path}`);
     if (!html.includes(site.disclaimer)) issues.push(`Missing disclaimer on ${page.path}`);
     if (/#"|javascript:void\(0\)|ADVERTISEMENT|Lorem ipsum|TODO/i.test(html)) issues.push(`Placeholder pattern found on ${page.path}`);
-    if (page.template !== "state" && html.includes("type=\"application/ld+json\"")) issues.push(`Static JSON-LD found on ${page.path}`);
+    if (!html.includes("type=\"application/ld+json\"")) issues.push(`Missing JSON-LD on ${page.path}`);
     if (/http:\/\/taxreliefguides\.com|www\.taxreliefguides\.com/.test(html)) issues.push(`HTTP or www internal URL found on ${page.path}`);
 
     for (const match of html.matchAll(/<a\b[^>]*href="([^"]+)"/g)) {
@@ -2844,7 +3354,7 @@ function buildWalkthrough(audit, pages) {
     .filter((page) => page.category === "support")
     .map((page) => `- ${page.path}: ${page.wordCount} words`)
     .join("\n");
-  return `# TaxReliefGuide Walkthrough
+  return `# TaxReliefGuides Walkthrough
 
 ## Site Summary
 
@@ -2861,8 +3371,8 @@ function buildWalkthrough(audit, pages) {
 
 - [x] No ad placeholders or "ADVERTISEMENT" blocks
 - [x] No lorem ipsum, TODOs, or empty content blocks
-- [x] No static JSON-LD in HTML files
-- [x] Dynamic schema generated in main.js
+- [x] Static JSON-LD included in page head markup
+- [x] Shared JavaScript no longer injects SEO schema
 - [x] Unique canonical on every page
 - [x] HTTPS only
 - [x] No www URLs
@@ -2870,7 +3380,7 @@ function buildWalkthrough(audit, pages) {
 - [x] Production SEO URLs use absolute https://taxreliefguides.com URLs
 - [x] Header and footer present on every page
 - [x] Breadcrumbs on every page except home
-- [x] Author box on every page
+- [x] Editorial block on every page
 - [x] Disclaimer on every page
 - [x] Related articles on every page
 - [x] No href="#" or javascript:void(0)
@@ -2897,7 +3407,7 @@ ${supportWords}
 - Legal pages are marked \`noindex, follow\`.
 - Canonicals point to the non-www HTTPS domain only.
 - The home page links to pillar guides, calculators, popular tax topics, and latest guides.
-- Dynamic schema supports WebSite, Organization, BreadcrumbList, FAQPage, Article, and WebApplication as applicable.
+- Static schema supports WebSite, Organization, BreadcrumbList, FAQPage, Article, and WebApplication as applicable.
 `;
 }
 

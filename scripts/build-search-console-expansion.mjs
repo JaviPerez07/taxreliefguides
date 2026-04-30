@@ -4,7 +4,7 @@ import path from "node:path";
 const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const pagesDir = path.join(root, "pages");
 const domain = "https://taxreliefguides.com";
-const modifiedDate = "2026-04-18";
+const modifiedDate = "2026-04-23";
 const adsenseScript = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>';
 const contactEmail = "javiperezguides@gmail.com";
 const disclaimer = "This content is for informational purposes only and does not constitute tax, legal, or financial advice.";
@@ -274,6 +274,14 @@ const pageSpecs = [
     mistakes: "Taxpayers lose leverage when they ignore current-year compliance, chase OIC before testing simpler options, or rely on marketing phrases like tax forgiveness without understanding the underlying IRS standard.",
     caseStudy: "A self-employed taxpayer with four filed years of debt wanted a settlement immediately. After reviewing the numbers, it became clear the balance was large but still payable over time with a strict reserve system and a reduction in estimated tax surprises. A payment plan paired with penalty review turned out to be cheaper and easier than forcing an OIC case with weak eligibility.",
     professionalHelp: "Professional help becomes valuable when there are liens, levies, multiple entities, disputed income adjustments, or a realistic question about whether a settlement is truly available. In those situations the cost of a bad strategy can exceed the cost of advice.",
+    heroStep: "Confirm which years are filed before comparing programs.",
+    summaryBullets: [
+      "Missing returns usually narrow the relief menu fast, so filing status comes before program comparison.",
+      "A payment plan is often the best first option to review when the full balance is collectible over time.",
+      "CNC can create breathing room, but it does not erase the debt or stop charges from growing.",
+    ],
+    whenMakesSense: "This page is most useful when you already know the balance is real and you need to compare the main IRS paths without defaulting to the most heavily advertised one first. It is especially useful when you are trying to separate payment-plan cases from hardship cases and narrow whether settlement should even stay on the table.",
+    whenNot: "It is a poor substitute for notice-by-notice cleanup if you still do not know which years are filed, how much of the balance is tax versus penalties, or whether a state tax agency is also involved. It is also not enough by itself when a levy notice, payroll tax issue, or bankruptcy question is already in the file.",
     stats: [
       { value: "24 to 72 months", label: "Common payment windows", note: "Longer paths may apply depending on the facts" },
       { value: "Current compliance", label: "Relief foundation", note: "New filing failures weaken every option" },
@@ -294,6 +302,12 @@ const pageSpecs = [
       ["../pages/tax-debt-settlement", "How tax debt settlement really works"],
       ["../pages/back-taxes-help", "Step-by-step back tax help"],
     ],
+    officialSources: [
+      ["IRS Online payment agreement application", "https://www.irs.gov/payments/online-payment-agreement-application"],
+      ["Temporarily delay the collection process", "https://www.irs.gov/businesses/small-businesses-self-employed/temporarily-delay-the-collection-process"],
+      ["Offer in compromise", "https://www.irs.gov/payments/offer-in-compromise"],
+      ["Administrative penalty relief", "https://www.irs.gov/payments/administrative-penalty-relief"],
+    ],
     faqs: [
       ["What is the best tax debt relief option for most taxpayers?", "For many taxpayers, the best option is not the most dramatic one. If the debt is payable over time and the taxpayer can stay current on new taxes, an installment agreement is often more realistic than a settlement. If the taxpayer cannot currently pay without hardship, CNC may deserve review. The right answer depends on collectibility, not on the popularity of the program name."],
       ["When does an offer in compromise make sense?", "An OIC makes the most sense when the taxpayer cannot pay the debt in full through other means and paying it would create financial hardship or the IRS reasonably cannot collect more. The taxpayer also needs current compliance, filed returns, and enough documentation to support the financial picture. Many advertised settlement cases fail because the file is not actually compromise-ready. OIC is a real tool, but it is narrower than marketing often suggests."],
@@ -306,8 +320,8 @@ const pageSpecs = [
     slug: "irs-payment-plan-guide",
     category: "Tax Debt",
     categoryHref: "../pages/tax-debt-guide",
-    title: "IRS Payment Plan Guide for 2025 and 2026",
-    h1: "IRS Payment Plan Guide: Installment Agreements Explained for 2025",
+    title: "IRS Payment Plan Guide for Installment Agreements",
+    h1: "IRS Payment Plan Guide: Installment Agreements Explained",
     description: "Learn how an IRS payment plan works, who qualifies for an installment agreement, and how to compare monthly affordability with long-term tax cost.",
     hero: "An IRS payment plan is often the most practical tax debt solution, but only if the monthly amount fits real life and the taxpayer stays current going forward.",
     audience: "individual taxpayers and small-business owners comparing installment agreements with settlement, hardship status, or year-end borrowing options",
@@ -321,6 +335,14 @@ const pageSpecs = [
     mistakes: "Common mistakes include choosing a payment amount based on optimism, ignoring future quarterly taxes, and assuming IRS acceptance means the agreement is safe forever.",
     caseStudy: "A W-2 taxpayer with side-gig income owed more than expected after underpaying quarterly taxes. Instead of picking the lowest possible payment, the taxpayer increased withholding at the day job and selected a monthly amount that could survive slower freelance months. The plan lasted because the taxpayer fixed future compliance at the same time.",
     professionalHelp: "Help is especially useful when a taxpayer has multiple open years, business cash swings, or a need to compare a payment plan with CNC or compromise. The right advisor can pressure-test whether the plan is realistic before the IRS does.",
+    heroStep: "Verify the balance, then fix current withholding or estimates.",
+    summaryBullets: [
+      "An installment agreement is usually the first IRS option to review when the debt is real and payable over time.",
+      "Individual online long-term plans are typically limited to balances of $50,000 or less with required returns filed.",
+      "A payment plan can still fail if current withholding or estimated taxes stay wrong.",
+    ],
+    whenMakesSense: "An IRS payment plan usually makes sense when the debt is not affordable today but can be paid over time without creating a new tax balance. It is especially practical for taxpayers who can correct current withholding, estimated payments, or business reserve habits at the same time the agreement is set up.",
+    whenNot: "It is usually a weak fit when returns are still missing, the proposed monthly amount only works on a best-case budget, or the taxpayer has no real present ability to pay. In those cases, CNC or deeper compromise screening may deserve review before locking into an agreement that is likely to default.",
     stats: [
       { value: "Monthly", label: "Core payment rhythm", note: "Most taxpayers think in monthly affordability" },
       { value: "Current filing required", label: "Baseline expectation", note: "Unfiled returns usually weaken eligibility" },
@@ -328,11 +350,11 @@ const pageSpecs = [
       { value: "Default risk", label: "Main failure point", note: "New tax debt can end a plan quickly" },
     ],
     facts: [
-      ["Collection alternatives", "Installment agreements are usually reviewed before compromise", "A realistic payment plan can be the cleanest solution"],
-      ["Current compliance", "Required returns must be filed before a strong plan discussion", "An incomplete filing history weakens approval and sustainability"],
-      ["Cash-flow planning", "Monthly payment needs to survive slow months, not only average months", "Affordability matters more than a perfect spreadsheet answer"],
-      ["Interest and penalties", "They can continue while the balance remains unpaid", "A slower payoff may cost more overall even if the payment feels easier"],
-      ["Lien risk", "The IRS may still file a Notice of Federal Tax Lien in some cases", "A plan helps collection pressure but does not remove every collateral effect"],
+      ["Short-term plan", "Individuals may qualify online if the combined balance is under $100,000 and can be paid within 180 days", "This is the fastest official path when the debt is temporary rather than long term"],
+      ["Long-term individual online plan", "Available when the combined balance is $50,000 or less and required returns are filed", "This is the main simple installment-agreement threshold many readers need first"],
+      ["Business online plan", "Sole proprietors and out-of-business taxpayers may qualify if they owe $25,000 or less and can pay within 24 months", "Business relief rules are narrower than many readers assume"],
+      ["Setup fees", "$22 direct debit, $69 non-direct debit, and $43 for low-income applications with potential reimbursement in some cases", "Method and income level can change the real setup cost"],
+      ["More complex requests", "Form 9465 and a Collection Information Statement such as Form 433-F or 433-H may be required if the taxpayer cannot meet the minimum online terms", "Complex payment-plan cases usually involve more disclosure, not just a bigger balance"],
     ],
     related: [
       ["../pages/tax-debt-relief-options", "Compare all tax debt relief options"],
@@ -340,6 +362,11 @@ const pageSpecs = [
       ["../pages/penalty-abatement-guide", "Reduce part of the balance through penalty review"],
       ["../pages/tax-debt-guide", "Return to the main debt guide"],
       ["../pages/irs-tax-relief-guide", "Read the IRS relief pillar page"],
+    ],
+    officialSources: [
+      ["IRS online payment agreement application", "https://www.irs.gov/payments/online-payment-agreement-application"],
+      ["Installment agreement overview and Form 9465", "https://www.irs.gov/forms-pubs/about-form-9465"],
+      ["Collection Information Statement Form 433-F", "https://www.irs.gov/forms-pubs/about-form-433-f"],
     ],
     faqs: [
       ["Is an IRS payment plan better than an offer in compromise?", "Often yes, especially when the taxpayer can realistically pay the debt over time. A payment plan is usually simpler, faster, and easier to support than a settlement request. It may not sound as attractive from a marketing perspective, but it often produces the most durable result. The right comparison is not excitement versus excitement; it is affordability versus collectibility."],
@@ -368,6 +395,14 @@ const pageSpecs = [
     mistakes: "The biggest mistake is asking for CNC without understanding its limits. Another common error is requesting hardship relief while leaving returns unfiled or providing numbers that are inconsistent across bank records and tax forms.",
     caseStudy: "A taxpayer recovering from a medical leave had no practical way to pay an old IRS balance while covering rent, utilities, and insurance. By gathering complete expense records and showing that current taxes were being handled through payroll withholding, the taxpayer was able to secure temporary relief while rebuilding income stability.",
     professionalHelp: "Assistance is especially useful when the hardship story is complex, when business and personal finances overlap, or when the taxpayer needs to compare CNC with a payment plan or compromise path instead of defaulting to whichever option sounds easiest.",
+    heroStep: "Build a clean monthly budget before asking for hardship relief.",
+    summaryBullets: [
+      "Currently Not Collectible status is a collection pause, not tax forgiveness.",
+      "The IRS may ask for Form 433-F, Form 433-A, or Form 433-B plus supporting financial records.",
+      "Interest and penalties can continue while the account is in hardship status.",
+    ],
+    whenMakesSense: "CNC usually makes sense when paying the IRS now would prevent the taxpayer from covering basic living costs or would destabilize a fragile business that has no real present ability to pay. It can also make sense as temporary breathing room while the taxpayer fixes filing status, rebuilds income, or compares a later payment-plan or compromise strategy.",
+    whenNot: "It is usually a poor fit when the taxpayer can afford a realistic monthly payment, is still missing required returns, or is using hardship language without records that support the budget story. CNC is also not a clean answer if the real issue is a disputed liability or an unfiled return rather than collectibility.",
     stats: [
       { value: "Temporary", label: "Nature of CNC", note: "It delays most collection rather than eliminating the debt" },
       { value: "433 forms", label: "Common disclosure forms", note: "The IRS may ask for 433-F, 433-A, or 433-B" },
@@ -378,8 +413,8 @@ const pageSpecs = [
       ["CNC effect", "Most collection activity is temporarily suspended", "The status creates breathing room when payment is not currently realistic"],
       ["Debt status", "The full debt is still owed", "CNC is not forgiveness or cancellation"],
       ["Charges", "Interest and penalties continue to accrue", "Delaying collection can still increase total cost"],
-      ["Refund treatment", "Refunds may be kept and applied to the debt", "Taxpayers should not expect refunds during hardship status"],
-      ["Collection period", "IRS generally has up to 10 years from assessment to collect, subject to suspensions", "Time still matters in the background of CNC planning"],
+      ["Financial disclosures", "The IRS may request Form 433-F, Form 433-A, or Form 433-B", "Hardship review is document-driven, not just narrative-driven"],
+      ["Collection period", "IRS collection timing still matters in the background of CNC planning", "A pause in active collection does not erase the account or freeze every other rule"],
     ],
     related: [
       ["../pages/tax-debt-relief-options", "Compare hardship with other relief options"],
@@ -387,6 +422,12 @@ const pageSpecs = [
       ["../pages/back-taxes-help", "Fix the filing side first"],
       ["../pages/tax-debt-guide", "Return to the debt pillar page"],
       ["../pages/irs-tax-relief-guide", "Read the main IRS relief guide"],
+    ],
+    officialSources: [
+      ["Temporarily delay the collection process", "https://www.irs.gov/businesses/small-businesses-self-employed/temporarily-delay-the-collection-process"],
+      ["Form 433-F", "https://www.irs.gov/forms-pubs/about-form-433-f"],
+      ["Form 433-A", "https://www.irs.gov/forms-pubs/about-form-433-a"],
+      ["Form 433-B", "https://www.irs.gov/forms-pubs/about-form-433-b"],
     ],
     faqs: [
       ["Does Currently Not Collectible status wipe out IRS debt?", "No. CNC status means the IRS has determined that collection should be temporarily delayed because the taxpayer cannot currently pay without hardship. The debt remains on the account, and interest and penalties can continue to accrue. Refunds may still be applied to the balance. The main benefit is a pause in most active collection steps, not a reduction of the amount owed."],
@@ -415,6 +456,14 @@ const pageSpecs = [
     mistakes: "Common mistakes include filing an offer without current compliance, hiding or softening asset equity, or assuming the IRS will compromise simply because the taxpayer dislikes the balance. Another major error is paying a promoter before verifying that the case is even compromise-ready.",
     caseStudy: "A taxpayer with declining income and limited accessible equity wanted to know whether a settlement was possible. After current-year estimated payments were corrected and the asset picture was documented, it became clear the taxpayer had a narrow but real OIC argument. The key was not the size of the debt alone; it was the gap between the balance and what the IRS could reasonably collect.",
     professionalHelp: "Professional support is often worth it when the taxpayer has business assets, real estate, disputed valuations, or a need to decide whether a compromise case is strong enough to justify the cost. Good advice can save a taxpayer from paying for the wrong program.",
+    heroStep: "Screen whether OIC is realistic before paying for a settlement pitch.",
+    summaryBullets: [
+      "Tax debt settlement usually means Offer in Compromise, not a general IRS discount program.",
+      "The IRS screens collectibility, compliance, and asset equity before it looks like a real settlement case.",
+      "If the debt is realistically payable over time, a payment plan is often the better fit.",
+    ],
+    whenMakesSense: "Settlement review makes sense when the taxpayer has filed required returns, is current on estimated payments if required, is not in bankruptcy, and has a real gap between the balance owed and what the IRS could reasonably collect. It is strongest when the file can be documented cleanly rather than argued emotionally.",
+    whenNot: "It is usually a poor fit when the taxpayer could pay through an installment agreement, is still missing returns, or wants compromise mainly because the debt feels unfair or stressful. It is also weak when the file is being driven by sales language rather than screening based on income, expenses, and asset equity.",
     stats: [
       { value: "$205", label: "OIC application fee", note: "Low-income certification can change fee treatment" },
       { value: "20%", label: "Lump-sum initial payment", note: "Required with that payment choice" },
@@ -434,6 +483,13 @@ const pageSpecs = [
       ["../pages/irs-payment-plan-guide", "See when a payment plan is better"],
       ["../pages/penalty-abatement-guide", "Reduce the balance without settlement"],
       ["../pages/tax-debt-guide", "Return to the main debt guide"],
+    ],
+    officialSources: [
+      ["IRS Offer in Compromise", "https://www.irs.gov/payments/offer-in-compromise"],
+      ["Offer in Compromise Booklet Form 656-B", "https://www.irs.gov/forms-pubs/about-form-656-b"],
+      ["Offer in Compromise Pre-Qualifier Tool", "https://irs.treasury.gov/oic_pre_qualifier/"],
+      ["Form 433-A (OIC)", "https://www.irs.gov/forms-pubs/about-form-433-a-oic"],
+      ["Form 433-B (OIC)", "https://www.irs.gov/forms-pubs/about-form-433-b-oic"],
     ],
     faqs: [
       ["Can anyone settle tax debt for less than the full balance?", "No. The IRS does not accept offers in compromise simply because a taxpayer wants a discount. The case usually needs to show that the offered amount reflects the most the IRS can reasonably expect to collect based on income, expenses, and asset equity. Many taxpayers searching settlement are better candidates for payment plans or penalty relief. Settlement is real, but it is selective."],
@@ -462,6 +518,14 @@ const pageSpecs = [
     mistakes: "People lose time by filing the wrong years first, guessing at numbers without transcript support, or waiting to solve the payment issue before fixing the filing issue. The IRS generally responds better when the taxpayer restores clarity quickly.",
     caseStudy: "A taxpayer with three unfiled years thought the balance would be impossible. After pulling wage and income transcripts, the taxpayer discovered one year qualified for a refund while the other two produced a balance. Filing the returns turned a vague fear into a solvable plan with a smaller net liability than expected.",
     professionalHelp: "Help is often useful when the records are incomplete, the taxpayer is self-employed, or the IRS has already issued substitute-for-return assessments. In those cases, the quality of reconstruction matters a great deal.",
+    heroStep: "Pull transcripts before guessing what the old years contain.",
+    summaryBullets: [
+      "Back-tax cases usually improve once the open years are mapped and old returns are separated from unpaid balances.",
+      "IRS transcripts are often the fastest way to rebuild missing wage and income details.",
+      "Payment options usually come after filing clarity, not before it.",
+    ],
+    whenMakesSense: "This page is useful when the core problem is uncertainty around old years rather than a single current balance. It is especially helpful when you are trying to stop avoidance, identify what the IRS already knows, and move from vague fear to a year-by-year filing plan.",
+    whenNot: "It is not enough by itself when the file is already at active levy stage, involves payroll tax exposure, or turns on a legal dispute rather than missing records. In those cases, you may need notice-specific, levy-specific, or representation-focused guidance alongside the filing cleanup work.",
     stats: [
       { value: "Year by year", label: "Best workflow", note: "Back tax files improve when organized chronologically" },
       { value: "Transcripts first", label: "Fastest evidence step", note: "IRS records help rebuild missing years" },
@@ -470,7 +534,8 @@ const pageSpecs = [
     ],
     facts: [
       ["First filing step", "IRS transcripts help identify wages, 1099 income, and open years", "Good reconstruction starts with what the IRS already sees"],
-      ["CTC / EITC timing", "Some credits still affect old-year math, but refund issuance timing and eligibility rules matter", "Missing a year does not mean every possible benefit is lost"],
+      ["Past-due returns", "Old returns should generally be filed even if full payment is not yet possible", "Filing and paying are separate obligations, and filing usually creates better resolution options"],
+      ["Substitute for return risk", "IRS substitute returns may omit deductions, credits, or filing-status benefits the taxpayer could have claimed", "Waiting can lock in an inflated balance that still needs to be corrected later"],
       ["Collection options", "Payment plans, CNC, and OIC are easier to compare after filing is current", "The payment choice comes after the tax years are defined"],
       ["Penalty profile", "Failure-to-file often hurts more aggressively than failure-to-pay", "Filing old returns can stop one of the fastest cost drivers"],
       ["Current compliance", "Fixing the old years is stronger when current-year filing and payment are also addressed", "The IRS wants to see the problem is not repeating"],
@@ -482,6 +547,12 @@ const pageSpecs = [
       ["../pages/tax-debt-relief-options", "Compare broader relief paths"],
       ["../pages/penalty-abatement-guide", "Understand penalty reduction options"],
     ],
+    officialSources: [
+      ["IRS filing past-due returns", "https://www.irs.gov/individuals/filing-past-due-tax-returns"],
+      ["IRS Get Transcript", "https://www.irs.gov/individuals/get-transcript"],
+      ["IRS substitute for return overview", "https://www.irs.gov/businesses/small-businesses-self-employed/understanding-your-substitute-for-return"],
+      ["IRS online payment agreement application", "https://www.irs.gov/payments/online-payment-agreement-application"],
+    ],
     faqs: [
       ["Should I file old returns even if I cannot pay the balance?", "Usually yes. Filing and paying are separate obligations, and filing old returns generally gives the IRS and the taxpayer a clearer, more workable account. It can also stop the failure-to-file penalty from getting worse. Waiting to file until you can pay often makes the total problem larger. Clarity is usually the first relief step."],
       ["What if I lost my W-2s and 1099s for old tax years?", "IRS wage and income transcripts can help rebuild what payers reported for those years. They are not always enough by themselves, especially for deductions or basis, but they create a strong starting point. Bank statements, bookkeeping records, and prior return copies can fill in more of the file. Reconstruction is common in back-tax cases and does not mean the situation is hopeless."],
@@ -491,12 +562,253 @@ const pageSpecs = [
     ],
   },
   {
+    slug: "irs-cp14-notice",
+    category: "IRS Notices",
+    categoryHref: "../pages/irs-tax-relief-guide",
+    title: "IRS CP14 Notice Guide: What It Means and What to Do",
+    h1: "IRS CP14 Notice: What It Means and How to Respond",
+    description: "IRS CP14 notice guide: why you received it, what the balance due notice means, when to pay or call, and which IRS options to review next.",
+    hero: "A CP14 is usually the IRS's first balance-due notice. It means the agency believes you owe tax, penalties, interest, or a combination of all three, and it expects a response rather than silence.",
+    audience: "taxpayers who received a CP14 and need to decide whether to pay, verify the balance, request a payment plan, or escalate to a deeper tax-debt review",
+    thesis: "A CP14 is not yet the most aggressive IRS notice, but it is early enough that a clean response can still prevent the file from becoming much more expensive and stressful.",
+    whyNow: "Readers who search CP14 usually have a live notice in hand. They are not looking for theory. They want to know what the notice means, what deadline matters, and what to do if the amount cannot be paid in full.",
+    rulesIntro: "The IRS describes CP14 as the first balance due notice sent to taxpayers who owe taxes. It explains the amount due and tells the taxpayer to pay by the due date on the notice to avoid additional interest and penalties.",
+    fit: "This page is a good fit when the taxpayer agrees a balance probably exists but still needs to confirm how much is tax, how much is penalty and interest, and whether the next step is payment, a plan, or a deeper dispute review.",
+    process: "Start by matching the notice to the tax year, comparing it with the filed return or transcript, and checking whether the balance is accurate. If it is correct, decide quickly whether full payment, a short-term payment plan, a long-term installment agreement, or hardship review is the right next move.",
+    costs: "The direct cost of ignoring a CP14 is that interest and penalties can continue to grow, and later notices tend to be harder to handle calmly. The earlier the response, the more flexibility the taxpayer usually has.",
+    records: "Keep the CP14 itself, the return for the year involved, account transcripts if available, proof of payments already made, bank records, and any IRS correspondence that changes the balance.",
+    mistakes: "The most common errors are assuming the notice can wait because it is only the first one, paying without checking the tax year, or jumping straight to settlement language before confirming whether a simple payment plan would solve the problem.",
+    caseStudy: "A taxpayer opened a CP14 and assumed it was just another tax-season letter. After comparing the notice to the return, it became clear the balance came from underpaid estimated taxes plus accrued penalties and interest. Because the taxpayer responded early and fixed the current year's estimates, an installment plan stayed manageable instead of turning into a rolling debt problem.",
+    professionalHelp: "Professional help becomes more useful if the notice amount does not match the filed return, several years are involved, a lien or levy notice has already arrived on another year, or the taxpayer is comparing hardship, settlement, and payment-plan options at the same time.",
+    heroStep: "Match the notice to the tax year before choosing a payment option.",
+    summaryBullets: [
+      "A CP14 is usually the first IRS balance-due notice, so early response still matters.",
+      "Paying by the due date on the notice limits additional interest and penalties.",
+      "If full payment is not possible, the next review is usually a payment plan or hardship screen, not a generic settlement pitch.",
+    ],
+    whenMakesSense: "This page is most useful when you have the actual CP14 notice in hand and need to decide whether the balance is correct, whether the tax year matches your records, and which IRS path should come next. It is also useful when you need a calm first response before later notices arrive.",
+    whenNot: "It is not enough when the issue has already moved beyond a first balance-due notice into levy-stage collection, or when the balance is tied to missing returns or payroll tax exposure instead of one defined notice. In those cases, a broader debt or notice-response strategy is needed.",
+    stats: [
+      { value: "First notice", label: "IRS sequence", note: "CP14 is generally the first balance-due notice" },
+      { value: "Due date matters", label: "Immediate action point", note: "Pay by the notice due date to limit further charges" },
+      { value: "Payment options", label: "Common next step", note: "Short-term and long-term plans may be available" },
+      { value: "Early-stage", label: "Best leverage window", note: "The file is easier to stabilize before later notices" },
+    ],
+    facts: [
+      ["Notice role", "CP14 is generally the first balance due notice the IRS sends when taxes are owed", "It is an early warning, not a notice to ignore"],
+      ["Immediate instruction", "The IRS tells taxpayers to pay the amount due by the date on the notice to avoid additional interest and penalties", "The due date on the notice is the first practical deadline"],
+      ["If you cannot pay", "The IRS points taxpayers to payment options if they cannot pay the full amount", "A payment-plan review usually belongs early in the response"],
+      ["If you disagree", "Taxpayers should call the number on the notice if they disagree or have already paid", "Do not assume a mismatch will correct itself automatically"],
+      ["Hardship option", "If paying the tax debt would prevent basic living expenses, the IRS says collection may be temporarily delayed", "Hardship is a timing tool, not an eraser of the debt"],
+    ],
+    related: [
+      ["../pages/irs-payment-plan-guide", "Compare IRS payment plan options"],
+      ["../pages/tax-debt-relief-options", "See the main debt relief paths"],
+      ["../pages/back-taxes-help", "Fix missing returns before the notices escalate"],
+      ["../pages/irs-cp504-notice", "What a later CP504 notice means"],
+      ["../pages/penalty-abatement-guide", "When penalty relief belongs in the discussion"],
+    ],
+    officialSources: [
+      ["Understanding your CP14 notice", "https://www.irs.gov/individuals/understanding-your-cp14-notice"],
+      ["IRS online payment agreement application", "https://www.irs.gov/payments/online-payment-agreement-application"],
+      ["Temporarily delay the collection process", "https://www.irs.gov/businesses/small-businesses-self-employed/temporarily-delay-the-collection-process"],
+    ],
+    faqs: [
+      ["What does an IRS CP14 notice mean?", "A CP14 generally means the IRS believes you owe a balance for a tax year and is sending the first balance-due notice. It lists the amount due and tells you to pay by the due date on the notice to reduce additional interest and penalties. The notice is a starting point, not the end of the collection process. That is why reading it early matters."],
+      ["Should I pay a CP14 immediately?", "If the amount is correct and you can pay in full, that is usually the cleanest way to stop the issue from growing. If you cannot pay in full, the better move is to respond quickly and review payment options rather than waiting for a later notice. The first step is always confirming the year and amount. Paying the wrong notice or the wrong year creates its own mess."],
+      ["What if my CP14 amount looks wrong?", "Compare the notice with the filed return, your payment records, and an IRS transcript if you have one. If you already paid or believe the balance is wrong, call the number on the notice rather than assuming the problem will correct itself. IRS notices are easiest to challenge when the taxpayer is specific and organized. The more precise the records, the easier the conversation becomes."],
+      ["Can I get a payment plan after a CP14 notice?", "Yes, many taxpayers review a payment plan at the CP14 stage if they cannot pay the full amount. The key is to act before the case moves deeper into collection. A payment plan is usually easier to set up when the filing picture is current and the monthly amount is realistic. Early action preserves options."],
+      ["Does a CP14 mean the IRS is about to levy my bank account?", "Not by itself. CP14 is generally an early balance-due notice, not the final levy notice. But ignoring it can push the case toward more serious notices later. It is best to treat CP14 as a chance to solve the problem while the file is still comparatively manageable. Waiting usually makes the next notice more stressful and more expensive."],
+    ],
+  },
+  {
+    slug: "irs-cp504-notice",
+    category: "IRS Notices",
+    categoryHref: "../pages/irs-tax-relief-guide",
+    title: "IRS CP504 Notice Guide: Final Balance Warning Explained",
+    h1: "IRS CP504 Notice: What It Means Before Collection Gets Worse",
+    description: "IRS CP504 notice guide: why it matters, what the IRS says it may seize next, and how to respond before liens or stronger collection action follow.",
+    hero: "A CP504 is more serious than a first balance-due notice. It tells you the IRS intends to levy and that ignoring the notice can push the case into a much more difficult stage.",
+    audience: "taxpayers who received CP504 and need to decide whether to pay, enter a payment plan, dispute the balance, or prepare for stronger collection action",
+    thesis: "A CP504 should be treated as a live collection warning, not routine mail. It often arrives after earlier notices were ignored or unresolved, and it can signal that the easy window is closing.",
+    whyNow: "Searchers looking for CP504 usually have a real IRS notice with immediate consequences in view. They need clarity on the notice itself and on what to do before the file escalates again.",
+    rulesIntro: "The IRS says a CP504 is a notice of intent to levy. The page for this notice says the IRS may seize a state tax refund and may also file a Notice of Federal Tax Lien if the amount remains unpaid.",
+    fit: "This page fits taxpayers who already know the balance has been moving through collections and now need a practical response plan before the next step becomes harder to control.",
+    process: "Start by confirming the year and balance on the notice, then decide whether the amount is correct. If it is correct and cannot be paid in full, compare immediate payment, an installment agreement, hardship review, or a larger debt-resolution strategy right away.",
+    costs: "The cost of delaying after CP504 is usually worse than the cost of delaying after CP14. Collection pressure increases, lien risk becomes more real, and the taxpayer may lose the easier response window that existed earlier.",
+    records: "Keep the CP504 notice, prior IRS notices, transcripts, returns for the year involved, proof of payments already made, and current financial records if a payment or hardship request may be needed.",
+    mistakes: "The biggest mistake is treating CP504 like one more routine reminder. Other common mistakes include paying without checking the tax year, ignoring the notice because full payment is impossible, or assuming settlement should be the first move even when a payment plan is more realistic.",
+    caseStudy: "A taxpayer ignored earlier notices because the balance seemed too large to handle. When CP504 arrived, the taxpayer finally reviewed the file and realized the problem was still manageable with a payment plan and current-year withholding changes. Responding at the CP504 stage was less comfortable than responding at CP14, but it was still far better than waiting for the next escalation.",
+    professionalHelp: "Support becomes more valuable when the balance spans several years, the notice overlaps with lien concerns, a state tax agency is also collecting, or the taxpayer is trying to compare levy-risk strategy with settlement, CNC, or bankruptcy screening.",
+    heroStep: "Treat CP504 as a live collection warning, not just another reminder.",
+    summaryBullets: [
+      "CP504 is more serious than an early balance-due notice and should be handled quickly.",
+      "The IRS says it may seize your state tax refund and may file a Notice of Federal Tax Lien if the amount remains unpaid.",
+      "If full payment is not possible, the next move is usually a payment-plan or hardship review right away.",
+    ],
+    whenMakesSense: "This page is most useful when you already have CP504 in hand and need to shift from passive reading to an actual response plan. It helps clarify what the notice means, how it differs from earlier balance-due notices, and why waiting further raises the stakes.",
+    whenNot: "It is not enough when the file has already moved into a later levy or hearing-rights notice, or when the core issue is an incorrect assessment that needs appeal strategy rather than simple collection response. It is also not enough if payroll tax or business trust-tax exposure is driving the case.",
+    stats: [
+      { value: "Levy warning", label: "Notice type", note: "CP504 is an IRS intent-to-levy notice" },
+      { value: "State refund at risk", label: "Immediate exposure", note: "IRS says it may seize a state tax refund" },
+      { value: "Lien risk", label: "Public-record concern", note: "The IRS may also file a Notice of Federal Tax Lien" },
+      { value: "Act now", label: "Best timing", note: "Waiting usually narrows the easiest options" },
+    ],
+    facts: [
+      ["Notice type", "CP504 is a notice of intent to levy", "The case has moved beyond an early balance reminder"],
+      ["Immediate collection warning", "The IRS says it may seize your state tax refund", "The notice already describes a real collection consequence"],
+      ["Lien exposure", "The IRS may also file a Notice of Federal Tax Lien", "Public-record risk becomes more concrete at this stage"],
+      ["If you disagree", "Taxpayers should call the number on the notice if they believe the amount is wrong or already paid", "Specific dispute work is better than silence"],
+      ["If you cannot pay", "The IRS points taxpayers to payment options and other collection alternatives", "Inability to pay does not make ignoring the notice safer"],
+    ],
+    related: [
+      ["../pages/irs-cp14-notice", "See what the earlier CP14 notice means"],
+      ["../pages/irs-payment-plan-guide", "Review payment plan options"],
+      ["../pages/tax-lien-vs-levy", "Understand lien vs. levy before the file escalates"],
+      ["../pages/tax-debt-relief-options", "Compare broader IRS relief paths"],
+      ["../pages/irs-currently-not-collectible", "When hardship review may fit"],
+    ],
+    officialSources: [
+      ["Understanding your CP504 notice", "https://www.irs.gov/individuals/understanding-your-cp504-notice"],
+      ["IRS online payment agreement application", "https://www.irs.gov/payments/online-payment-agreement-application"],
+      ["Temporarily delay the collection process", "https://www.irs.gov/businesses/small-businesses-self-employed/temporarily-delay-the-collection-process"],
+    ],
+    faqs: [
+      ["What does an IRS CP504 notice mean?", "CP504 generally means the IRS is warning that it intends to levy and that the case has reached a more serious collection stage than an early balance-due notice. The IRS page for this notice says it may seize your state tax refund and may also file a Notice of Federal Tax Lien. That makes it a notice to act on, not just store in a pile. The practical question is what response you can make now."],
+      ["Is CP504 the final levy notice?", "It is a serious levy warning, but it is still important to read the notice itself and the IRS page carefully rather than assuming every levy right has already matured. The key takeaway is that collection pressure is rising and delay is getting more expensive. At minimum, the notice should trigger a fast review of payment, hardship, or dispute options. It should not be treated as routine mail."],
+      ["Can I still get a payment plan after CP504?", "Yes, many taxpayers still review a payment plan at this stage if the balance is accurate and affordable over time. What changes is the urgency. A plan that could have been discussed calmly after an earlier notice now needs quicker action because the IRS is signaling more serious collection intent. Early follow-through matters."],
+      ["What if I already paid before getting CP504?", "Compare your payment records with the tax year on the notice and call the number shown on the notice if the balance should already have been reduced or cleared. IRS notices do not always reflect a payment immediately, and applying a payment to the wrong tax year can create confusion. The goal is to be precise. Specific records beat general reassurance."],
+      ["Does CP504 mean I should jump straight to settlement?", "Not automatically. Settlement is only one possible path and often not the first one to screen. Many CP504 cases are still better solved by verifying the balance, setting up an installment agreement, or reviewing hardship status if full payment is unrealistic. The best response depends on the file, not the drama of the notice title."],
+    ],
+  },
+  {
+    slug: "tax-lien-vs-levy",
+    category: "IRS Notices",
+    categoryHref: "../pages/irs-tax-relief-guide",
+    title: "Tax Lien vs Levy Guide: The Difference That Matters",
+    h1: "Tax Lien vs. Levy: The Difference That Changes Your Next Move",
+    description: "Tax lien vs levy explained: what each term means, when the IRS can file a lien, when levy notices become serious, and what to review next.",
+    hero: "Taxpayers often use lien and levy as if they mean the same thing. They do not. A lien is a legal claim, while a levy is the actual taking of property or rights to property.",
+    audience: "taxpayers comparing lien risk, levy risk, and notice language so they can respond to the right problem instead of mixing two different collection tools",
+    thesis: "The lien-versus-levy distinction matters because each one changes strategy. A lien affects property and financing position, while a levy is about collection from wages, bank accounts, refunds, or other rights to property.",
+    whyNow: "This is a high-value comparison query because readers usually search it when the file is already under pressure. A good answer has to separate the legal terms and connect them to the notice sequence in plain language.",
+    rulesIntro: "The IRS describes a lien as the government's legal claim against your property when you neglect or fail to pay a tax debt. A levy is different: it is the legal seizure of property or rights to property to satisfy the debt.",
+    fit: "This guide is useful for readers comparing CP504, lien notices, bank-levy fears, and installment-plan strategy. It is especially helpful when someone is trying to decide whether the bigger risk is public-record damage or actual seizure.",
+    process: "Start by identifying which notice you actually received. If it is a balance notice or NFTL issue, the file may be primarily about lien strategy. If the notice is warning about levy rights or the IRS is already taking funds, the timeline is more urgent.",
+    costs: "A lien can interfere with financing, property sales, and public-record perception. A levy is more immediate because it can reach wages, bank funds, refunds, or other property interests. Both can be expensive, but they create different kinds of damage.",
+    records: "Keep the notice, transcripts, payment-plan paperwork, lien filing documents if any, bank records, wage records, and financing documents if the debt is interfering with a refinance or sale.",
+    mistakes: "The biggest mistake is talking about levy when the real issue is a lien, or talking about lien cleanup while ignoring an active levy timeline. Another mistake is assuming a payment plan automatically solves both issues in the same way.",
+    caseStudy: "A taxpayer focused only on the account balance until a refinance stalled. The real problem turned out to be a filed lien, not an immediate levy. Once the file was reframed around lien strategy and payment-plan structure, the taxpayer could ask a much better question about removal, withdrawal, and timing.",
+    professionalHelp: "Professional help is especially useful when real estate, business assets, refinancing, or several open collection notices are involved. Lien and levy issues often intersect with wider financial consequences beyond the tax debt itself.",
+    heroStep: "Read the notice title carefully before assuming lien and levy mean the same thing.",
+    summaryBullets: [
+      "A lien is a legal claim against property; a levy is the actual seizure of property or rights to property.",
+      "The IRS can file a Notice of Federal Tax Lien after assessment, a bill, and neglect or refusal to pay.",
+      "Levy generally requires a separate final notice and hearing rights before the IRS can take many assets.",
+    ],
+    whenMakesSense: "This page is most useful when the notice language is confusing and you need to decide whether the file is primarily about public-record lien strategy or about immediate levy risk. It is also useful before talking with a lender, employer, or advisor about what the IRS can do next.",
+    whenNot: "It is not enough when the issue is really whether the underlying tax is correct or whether missing returns are driving the balance. It also does not replace notice-specific guidance if you already have a levy warning with a hearing deadline attached.",
+    stats: [
+      { value: "Legal claim", label: "Lien meaning", note: "A lien is not the same as actual seizure" },
+      { value: "Seizure tool", label: "Levy meaning", note: "A levy reaches property or rights to property" },
+      { value: "30 days", label: "Levy notice lead time", note: "The IRS generally gives at least 30 days before levy after the final notice" },
+      { value: "30 days", label: "Lien release rule", note: "Release usually follows within 30 days after the legal trigger" },
+    ],
+    facts: [
+      ["Lien definition", "The IRS describes a lien as the government's legal claim against your property when you neglect or fail to pay a tax debt", "A lien is about claim and priority, not immediate seizure"],
+      ["Levy definition", "The IRS describes a levy as the legal seizure of property or rights to property to satisfy a tax debt", "A levy is the action step, not just a claim"],
+      ["Lien sequence", "A lien can arise after the IRS assesses the tax, sends a bill, and the taxpayer neglects or refuses to pay", "This explains why balance-due notices still matter early"],
+      ["Levy sequence", "Before many levies, the IRS generally must give a final notice of intent to levy and notice of your right to a hearing at least 30 days before levy", "Notice timing changes strategy and urgency"],
+      ["Lien release", "The IRS generally releases a lien within 30 days after full payment or when the tax is no longer legally collectible", "Release timing matters once the legal trigger is met"],
+    ],
+    related: [
+      ["../pages/tax-lien-guide", "Read the deeper federal tax lien guide"],
+      ["../pages/irs-cp504-notice", "See what CP504 signals"],
+      ["../pages/irs-payment-plan-guide", "Payment plans and collection pressure"],
+      ["../pages/irs-currently-not-collectible", "When hardship can pause collection"],
+      ["../pages/tax-debt-guide", "Return to the main debt guide"],
+    ],
+    officialSources: [
+      ["IRS tax liens page", "https://www.irs.gov/businesses/small-businesses-self-employed/understanding-a-federal-tax-lien"],
+      ["IRS levies page", "https://www.irs.gov/businesses/small-businesses-self-employed/levy"],
+      ["Form 12277 withdrawal request", "https://www.irs.gov/forms-pubs/about-form-12277"],
+      ["Publication 594 collection process", "https://www.irs.gov/forms-pubs/about-publication-594"],
+    ],
+    faqs: [
+      ["What is the main difference between a tax lien and a tax levy?", "A lien is the government's legal claim against your property when you fail to pay a tax debt. A levy is the actual seizure of property or rights to property to satisfy that debt. That distinction matters because the right response depends on whether the problem is claim priority and public-record damage or immediate collection from wages, accounts, or other assets. The same file can involve both, but they are not the same thing."],
+      ["Does a tax lien mean the IRS already took my money?", "No. A lien is not the same as the IRS taking funds. It is a legal claim that can affect property rights and financial transactions. The practical damage can still be serious, especially for refinancing or sales, but it is different from a levy. Precision helps you choose the right next step."],
+      ["Can the IRS levy without any warning?", "The IRS collection process includes notice steps, and before many levies the IRS generally must provide a final notice of intent to levy and hearing rights at least 30 days before the levy. That is why notice titles matter so much. If the file is already at that stage, timing becomes much more important. A late response is often more expensive."],
+      ["Does a payment plan remove a federal tax lien automatically?", "Not automatically. A payment plan can reduce collection pressure and sometimes support lien relief strategy, but it does not make every lien issue disappear by itself. Taxpayers should be specific about whether the goal is paying the balance over time, avoiding levy action, or addressing the public notice problem. Those are related but different objectives."],
+      ["When should I ask for professional help with lien or levy issues?", "Help becomes more valuable when a lien is blocking a refinance or sale, when several notices are open at once, or when the IRS is already close to levy action. Those cases are more than simple balance-due questions. They often require better sequencing, cleaner records, and more precise strategy than a general guide alone can provide. That is where advice can prevent expensive mistakes."],
+    ],
+  },
+  {
+    slug: "first-time-penalty-abatement",
+    category: "IRS Relief Programs",
+    categoryHref: "../pages/irs-tax-relief-guide",
+    title: "First-Time Penalty Abatement Guide for IRS Penalties",
+    h1: "First-Time Penalty Abatement: Who Qualifies and How to Ask",
+    description: "First-time penalty abatement guide: eligible IRS penalties, clean-history rules, how to request relief, and when FTA is better than reasonable cause.",
+    hero: "First-time penalty abatement can remove certain IRS penalties, but only when the taxpayer's prior compliance history is clean enough and the request matches the right penalty.",
+    audience: "taxpayers reviewing whether first-time relief is available before they build a broader reasonable-cause or payment-plan strategy",
+    thesis: "First-time abatement is valuable precisely because it is narrow. When it fits, it can remove penalties without the heavier factual burden of a full reasonable-cause story.",
+    whyNow: "This is a strong monetization and utility page because many taxpayers discover penalties are a meaningful part of the balance before they decide whether to pay, appeal, or seek other relief.",
+    rulesIntro: "The IRS describes first-time administrative penalty relief as generally limited to failure-to-file, failure-to-pay, and failure-to-deposit penalties. It also screens prior compliance history before granting the relief.",
+    fit: "This page fits taxpayers with one problematic year or period who otherwise have a clean enough recent history to make first-time relief worth screening before a broader reasonable-cause request.",
+    process: "Start by identifying the exact penalty and tax period, then check whether the same return type was filed or validly extended for the prior three years and whether prior penalties were absent or already removed. After that, follow the notice instructions, call the IRS, or use Form 843 if the case calls for a written request.",
+    costs: "The direct filing cost can be low, but the cost of getting the strategy wrong is lost time and weaker leverage in the larger debt case. That is why matching the request to the right penalty matters.",
+    records: "Keep the penalty notice, transcripts, proof of filing or extension history, proof of payments already made, and any documents that affect whether reasonable cause may be stronger than first-time relief.",
+    mistakes: "The most common mistakes are assuming every penalty qualifies, ignoring the prior three-year screening rules, or making an FTA request when the actual facts point more clearly to reasonable cause.",
+    caseStudy: "A taxpayer focused on a large balance but discovered that penalties made up a meaningful share of the total. Because the prior compliance history was clean, first-time abatement became the most efficient first request. That, in turn, made the later payment-plan math much easier to live with.",
+    professionalHelp: "Support becomes more valuable when several penalties overlap, when the file includes business payroll penalties, or when it is genuinely unclear whether first-time relief or reasonable cause is the stronger theory.",
+    heroStep: "Identify the exact penalty type before asking for first-time relief.",
+    summaryBullets: [
+      "First-time relief is generally limited to certain failure-to-file, failure-to-pay, and failure-to-deposit penalties.",
+      "The prior three years of the same return type are part of the main screening test.",
+      "FTA can be simpler than reasonable cause when the compliance history is clean and the penalty fits.",
+    ],
+    whenMakesSense: "First-time penalty abatement makes the most sense when the taxpayer has one bad year or period, the penalty type fits the IRS administrative rule, and the recent filing history is otherwise clean. It is often one of the best first relief reviews before moving to payment-plan or broader debt strategy.",
+    whenNot: "It is a weak fit when the penalty type does not qualify, prior compliance history is not clean, or the facts point to a documented reasonable-cause story instead. It is also not a substitute for filing missing returns or fixing current compliance problems.",
+    stats: [
+      { value: "3 years", label: "History screen", note: "The same return type usually needs a clean recent history" },
+      { value: "3 penalty types", label: "Main scope", note: "FTF, FTP, and FTD are the core administrative categories" },
+      { value: "Form 843", label: "Written request tool", note: "Useful when a written request is appropriate" },
+      { value: "Balance impact", label: "Why it matters", note: "Removing penalties can materially change the next decision" },
+    ],
+    facts: [
+      ["Eligible categories", "First-time administrative relief is generally limited to failure-to-file, failure-to-pay, and failure-to-deposit penalties", "The request should match a qualifying penalty before anything else"],
+      ["Prior filing history", "The same return type generally must be filed or validly extended for the prior three years", "Clean history is a core screening rule"],
+      ["Prior penalties", "The prior three years generally must show no penalties or penalties already removed for a reason other than estimated tax", "A prior-penalty pattern can knock out the simpler request"],
+      ["Unpaid tax", "The request can be made before the underlying tax is fully paid, but failure-to-pay penalties continue until the tax is paid in full", "Timing still affects the economics of the case"],
+      ["Request method", "Taxpayers can follow the notice instructions, call the number on the notice, or use Form 843 with a written statement when appropriate", "The request path should fit the file, not just the internet summary"],
+    ],
+    related: [
+      ["../pages/penalty-abatement-guide", "Read the broader penalty abatement guide"],
+      ["../pages/irs-penalties-explained", "See the existing penalties explainer"],
+      ["../pages/irs-payment-plan-guide", "Pair penalty relief with a payment plan"],
+      ["../pages/tax-debt-relief-options", "Compare other debt relief paths"],
+      ["../pages/back-taxes-help", "Fix the filing side before the relief request"],
+    ],
+    officialSources: [
+      ["IRS administrative penalty relief", "https://www.irs.gov/payments/administrative-penalty-relief"],
+      ["Form 843 Request for Abatement", "https://www.irs.gov/forms-pubs/about-form-843"],
+      ["IRS penalties overview", "https://www.irs.gov/payments/penalties"],
+    ],
+    faqs: [
+      ["What is first-time penalty abatement?", "First-time penalty abatement is an IRS administrative relief path that can remove certain penalties when the taxpayer's recent compliance history is clean enough. It is most often discussed for failure-to-file, failure-to-pay, and failure-to-deposit penalties. The key is that the penalty must qualify and the prior history must fit. It is not a universal waiver for any penalty on any account."],
+      ["How do I know if I qualify for FTA?", "Start by checking the exact penalty type and then review the prior three years for the same return type. The general screen is whether those prior years were filed or validly extended and whether they show no penalties or penalties already removed for a qualifying reason. That makes FTA a history-based review, not just a current-year plea. The better organized the account, the easier the screening becomes."],
+      ["Can I ask for FTA before paying the full tax?", "Yes, the IRS says you can ask for first-time relief before the underlying tax is fully paid. But failure-to-pay penalties can continue to accrue until the tax is paid in full. So even if the request is granted, the full economics of the case may still depend on how quickly the remaining balance is resolved. Timing still matters."],
+      ["Should I use Form 843 for first-time penalty abatement?", "Sometimes. Many taxpayers start by following the notice instructions or calling the IRS number on the notice, but Form 843 may be appropriate when a written request is needed. The better question is not whether one method is universally best. It is which method fits the notice, the account, and the level of documentation needed."],
+      ["When is reasonable cause better than FTA?", "Reasonable cause may be better when the penalty does not fit the first-time categories or when the prior compliance history is not clean but the taxpayer has a documented factual explanation. Illness, casualty, system failure, or other evidence-backed facts may support a stronger reasonable-cause story. In other words, a weaker FTA case does not automatically mean no relief is possible. It may just mean the theory needs to change."],
+    ],
+  },
+  {
     slug: "refundable-vs-nonrefundable-tax-credits",
     category: "Tax Credits",
     categoryHref: "../pages/tax-credits-guide",
     title: "Refundable vs Nonrefundable Tax Credits Explained",
     h1: "Refundable vs. Nonrefundable Tax Credits: The Difference That Changes Your Refund",
-    description: "Learn the difference between refundable and nonrefundable tax credits, how each affects your tax bill, and which 2025 credits can still create a refund.",
+    description: "Learn how refundable and nonrefundable tax credits affect liability, refund timing, Child Tax Credit planning, EITC, and records.",
     hero: "Two taxpayers can claim a credit with the same face value and get very different results. The key difference is whether the credit is refundable, nonrefundable, or partly refundable.",
     audience: "filers who want to understand why some credits increase a refund while others only reduce tax liability down to zero",
     thesis: "The refundable versus nonrefundable split is one of the most practical tax concepts for everyday filers. It changes refund expectations, year-end withholding decisions, and how families evaluate which tax benefits actually move cash.",
@@ -507,24 +819,24 @@ const pageSpecs = [
     costs: "The cost of misunderstanding credit design is usually a refund surprise. Taxpayers may expect cash from a nonrefundable credit or underestimate the power of a refundable credit when planning withholding.",
     records: "Keep prior returns, W-2s, 1099s, dependent records, education forms, and any worksheets that show how the credit is calculated and whether a refundable component applies.",
     mistakes: "The biggest mistake is treating every tax credit as though it works the same way. Another common error is missing that some credits are partly refundable, which means only a portion may become cash beyond tax liability.",
-    caseStudy: "Two families each saw a $2,200 Child Tax Credit headline amount for 2025. The family with enough tax liability used the full nonrefundable portion directly against tax, while the lower-income family relied more heavily on the refundable Additional Child Tax Credit rules. The face value sounded the same, but the path to cash was different.",
+    caseStudy: "Two families can see the same Child Tax Credit headline amount and still receive different refund outcomes. The family with enough tax liability may use the nonrefundable portion directly against tax, while a lower-income family may rely more heavily on refundable Additional Child Tax Credit rules. The face value can sound the same, but the path to cash is different.",
     professionalHelp: "Help becomes more valuable when credit eligibility overlaps with self-employment income, divorce, shared custody, education credits, or phaseout rules. The refundable label alone does not answer every eligibility question.",
     stats: [
-      { value: "$2,200", label: "2025 Child Tax Credit", note: "Headline amount per qualifying child if eligible" },
-      { value: "$1,700", label: "2026 refundable CTC component", note: "Refundable amount used in the statute for 2026" },
-      { value: "$8,046", label: "2025 maximum EITC", note: "For three or more qualifying children" },
+      { value: "Varies yearly", label: "Child Tax Credit", note: "Verify the IRS table for the filing year" },
+      { value: "Partly refundable", label: "ACTC design", note: "Refund rules depend on income and tax year" },
+      { value: "Refundable", label: "EITC design", note: "Credit value depends on filing-year tables" },
       { value: "Zero or refund", label: "Core design split", note: "Nonrefundable stops at zero; refundable may create cash" },
     ],
     facts: [
-      ["Child Tax Credit", "Up to $2,200 per qualifying child for 2025", "The headline amount matters, but refund treatment still depends on the refundable rules"],
-      ["Additional Child Tax Credit", "Up to $1,700 refundable amount discussed for 2026, with earned income threshold rules", "Partly refundable design changes refund outcomes for lower-liability households"],
+      ["Child Tax Credit", "<!-- DATO PENDIENTE VERIFICAR: actualizar monto del Child Tax Credit para el ano fiscal aplicable antes de presentarlo como vigente. --> Verify the IRS amount for the filing year", "The headline amount matters, but refund treatment still depends on the refundable rules"],
+      ["Additional Child Tax Credit", "<!-- DATO PENDIENTE VERIFICAR: verificar componente reembolsable ACTC y umbrales de ingreso para 2026. --> Verify the refundable component and earned-income threshold for the filing year", "Partly refundable design changes refund outcomes for lower-liability households"],
       ["EITC", "Refundable credit", "This is one of the clearest examples of a credit that can increase a refund"],
       ["Credit for Other Dependents", "Up to $500 and nonrefundable", "Useful example of a credit that reduces tax but generally does not create extra refund cash"],
       ["Full CTC income thresholds", "$200,000 single and $400,000 joint for full Child Tax Credit eligibility", "Phaseout rules change how much credit remains available"],
     ],
     related: [
       ["../pages/tax-credits-guide", "Read the main tax credits guide"],
-      ["../pages/child-tax-credit-guide", "Child Tax Credit 2025 guide"],
+      ["../pages/child-tax-credit-guide", "Child Tax Credit guide"],
       ["../pages/earned-income-tax-credit", "Earned Income Tax Credit amounts and rules"],
       ["../pages/tax-refund-calculator", "See how credits change refund estimates"],
       ["../pages/how-to-lower-taxable-income", "Compare credits with deductions"],
@@ -532,7 +844,7 @@ const pageSpecs = [
     faqs: [
       ["What is the simplest way to tell whether a credit is refundable?", "The simplest test is to ask what happens after your tax liability hits zero. If the credit can still produce extra refund money, it is refundable. If it stops once tax liability reaches zero, it is nonrefundable. Some credits are partly refundable, which means only a portion can create cash beyond zero tax."],
       ["Why does the refundable label matter so much for refund planning?", "It matters because a taxpayer's refund depends not just on the credit amount but on how that credit interacts with tax liability and withholding. A nonrefundable credit can be valuable and still leave a taxpayer disappointed if they expected extra cash. A refundable credit can be especially powerful for lower- and moderate-income households because it may increase the refund directly. Understanding the label helps set realistic expectations before filing."],
-      ["Is the Child Tax Credit fully refundable?", "Not in the simple all-or-nothing way many people assume. The 2025 Child Tax Credit includes a nonrefundable core amount, while the Additional Child Tax Credit provides a refundable component for eligible taxpayers. That means refund results can differ significantly depending on income, liability, and earned income rules. The structure is a great example of why reading the headline amount alone is not enough."],
+      ["Is the Child Tax Credit fully refundable?", "Not in the simple all-or-nothing way many people assume. The Child Tax Credit includes a nonrefundable core amount, while the Additional Child Tax Credit provides a refundable component for eligible taxpayers. That means refund results can differ significantly depending on income, liability, and earned income rules. The structure is a good example of why reading the headline amount alone is not enough."],
       ["Is the Earned Income Tax Credit refundable?", "Yes. The EITC is one of the most important refundable credits in the federal system. If a taxpayer qualifies, the credit can reduce tax and still contribute to a refund. That is why EITC planning matters so much for households with modest wages, qualifying children, or self-employment income. It is also why eligibility rules and documentation are closely reviewed."],
       ["Can a nonrefundable credit still be worth pursuing?", "Absolutely. Nonrefundable credits can still save significant money by reducing tax liability dollar for dollar. They are simply different from refundable credits in how they affect cash after liability reaches zero. For many taxpayers, the right takeaway is not that nonrefundable credits are weak, but that they should be planned with the correct expectations. Good planning matches the credit type to the taxpayer's actual return profile."],
     ],
@@ -541,9 +853,9 @@ const pageSpecs = [
     slug: "tax-credits-guide",
     category: "Tax Credits",
     categoryHref: "../pages/tax-credits-guide",
-    title: "Tax Credits Guide for 2025 and 2026",
+    title: "Tax Credits Guide for Refunds and Planning",
     h1: "Tax Credits Guide: Refundable, Nonrefundable, and Business Credit Planning",
-    description: "Explore the most important 2025 and 2026 tax credits for families and businesses, including refund rules, phaseouts, and planning strategies.",
+    description: "Tax credits guide: compare refundable credits, family credits, business credits, phaseouts, records, and refund planning.",
     hero: "Tax credits matter because they reduce tax dollar for dollar. The challenge is knowing which credits fit your facts, how phaseouts work, and whether the credit only reduces tax or can also increase a refund.",
     audience: "households, freelancers, and small-business owners comparing tax benefits that directly reduce federal tax rather than merely lowering taxable income",
     thesis: "A good tax credits strategy starts with structure. Credits differ by refundability, income thresholds, business activity, and filing details, so the strongest planning comes from matching the correct credit to the correct fact pattern.",
@@ -557,15 +869,15 @@ const pageSpecs = [
     caseStudy: "A couple expected the Child Tax Credit to drive their refund but later realized that the refundable structure of the EITC and the nonrefundable limits of other credits changed the result. Once they understood how the pieces interacted, they adjusted withholding and their refund expectations became far more accurate.",
     professionalHelp: "Tax-credit advice is especially useful when multiple credits overlap or when a business is comparing credits such as WOTC, research payroll tax credit, or the small business health care tax credit. In those cases, form selection and documentation discipline matter a lot.",
     stats: [
-      { value: "$8,046", label: "Max 2025 EITC", note: "Three or more qualifying children" },
-      { value: "$2,200", label: "2025 CTC headline amount", note: "Per qualifying child if eligible" },
+      { value: "Verify yearly", label: "EITC tables", note: "Amounts change by filing year and child count" },
+      { value: "Verify yearly", label: "CTC amount", note: "Check IRS rules for the filing year" },
       { value: "$500", label: "Credit for Other Dependents", note: "Nonrefundable example" },
       { value: "$500,000", label: "Research payroll tax election", note: "Qualified small business limit" },
     ],
     facts: [
-      ["EITC", "Maximum 2025 credit is $649 with no child and $8,046 with three or more children", "The refundable design can materially change refunds"],
-      ["EITC investment limit", "$11,950 for tax year 2025", "Higher investment income can block eligibility"],
-      ["Child Tax Credit", "Up to $2,200 per qualifying child for 2025", "High-value family credit with income thresholds"],
+      ["EITC", "<!-- DATO PENDIENTE VERIFICAR: actualizar montos maximos EITC 2026 con fuente IRS oficial. --> Verify the current IRS table by filing status and child count", "The refundable design can materially change refunds"],
+      ["EITC investment limit", "<!-- DATO PENDIENTE VERIFICAR: actualizar limite de ingreso de inversion EITC 2026 con fuente IRS oficial. --> Verify the IRS investment-income cap for the filing year", "Higher investment income can block eligibility"],
+      ["Child Tax Credit", "<!-- DATO PENDIENTE VERIFICAR: actualizar monto CTC 2026 con fuente IRS oficial. --> Verify the IRS amount for the filing year", "High-value family credit with income thresholds"],
       ["Credit for Other Dependents", "Up to $500 and nonrefundable", "Shows how some family credits stop at zero tax liability"],
       ["Research payroll tax credit", "Qualified small businesses may elect up to $500,000 against payroll taxes", "Important bridge between income-tax credit and payroll-tax relief planning"],
     ],
@@ -578,7 +890,7 @@ const pageSpecs = [
     ],
     faqs: [
       ["What is the biggest difference between a credit and a deduction?", "A deduction reduces taxable income, while a credit usually reduces tax liability dollar for dollar. That means a $1,000 credit is often more powerful than a $1,000 deduction, though the actual value still depends on the tax rate and the type of credit involved. Credits can therefore be extremely valuable planning tools. The challenge is that they often come with tighter eligibility rules than many deductions."],
-      ["Which tax credits matter most for families in 2025?", "For many families, the Child Tax Credit and the Earned Income Tax Credit remain two of the most consequential federal credits. The exact value depends on qualifying children, filing status, income, and whether the credit is refundable. Families may also need to evaluate education or dependent-care related credits depending on their facts. The best approach is to compare eligibility and refund treatment together rather than looking at one credit in isolation."],
+      ["Which tax credits matter most for families?", "For many families, the Child Tax Credit and the Earned Income Tax Credit remain two of the most consequential federal credits. The exact value depends on qualifying children, filing status, income, and whether the credit is refundable. Families may also need to evaluate education or dependent-care related credits depending on their facts. The best approach is to compare eligibility and refund treatment together rather than looking at one credit in isolation."],
       ["Which tax credits matter most for small businesses?", "The answer depends on the business model, but credits such as the Work Opportunity Tax Credit, the research payroll tax election, and the small business health care tax credit can be especially relevant. These credits are more technical than many individual credits, so employers need to understand filing forms, wage rules, and eligibility windows. A credit that looks attractive at headline level may still require significant documentation discipline. Planning early is usually far better than trying to recreate support after the fact."],
       ["Why do some credits create a refund while others do not?", "That result depends on whether the credit is refundable, nonrefundable, or partly refundable. A refundable credit can still provide cash after tax liability reaches zero. A nonrefundable credit generally cannot. Understanding that distinction is one of the fastest ways to make sense of a refund that feels lower or higher than expected."],
       ["How should I organize records for credit claims?", "Start with the records tied directly to eligibility: income documents, dependent records, education forms, payroll or business wage records, and any specific forms the IRS requires for the credit. Then keep worksheets showing how the amount was calculated and how any phaseout was applied. Good organization does not just help at filing time; it also lowers stress if the IRS later asks questions. Strong records make credit planning far more defensible."],
@@ -588,33 +900,33 @@ const pageSpecs = [
     slug: "earned-income-tax-credit",
     category: "Tax Credits",
     categoryHref: "../pages/tax-credits-guide",
-    title: "Earned Income Tax Credit Guide for 2025",
-    h1: "Earned Income Tax Credit 2025: Eligibility, Income Limits, and Refund Value",
-    description: "See 2025 Earned Income Tax Credit amounts, AGI limits, investment income rules, and filing tips so you can estimate whether EITC can increase your refund.",
+    title: "Earned Income Tax Credit Guide for Eligibility",
+    h1: "Earned Income Tax Credit: Eligibility, Income Limits, and Refund Value",
+    description: "EITC guide: income tests, child rules, investment-income cap, refund timing, self-employment records, and filing-year table checks.",
     hero: "The Earned Income Tax Credit can be one of the most valuable refundable credits on a federal return. The challenge is that eligibility depends on income, filing status, qualifying children, and several technical rules that filers often overlook.",
-    audience: "workers and families with low to moderate income who want to know whether EITC can reduce tax and potentially increase a refund in 2025",
+    audience: "workers and families with low to moderate income who want to know whether EITC can reduce tax and potentially increase a refund",
     thesis: "EITC planning is not just about claiming a credit at filing time. It is also about understanding how earned income, qualifying children, filing status, and investment income interact before expectations are locked in.",
     whyNow: "Exact-match Search Console queries show that readers are looking for practical rules, not tax jargon. A strong EITC page needs to translate the tables into real filing decisions.",
-    rulesIntro: "For 2025, the IRS ties EITC to earned income, AGI, filing status, number of qualifying children, and an investment income ceiling. Because the credit is refundable, it can increase a taxpayer's refund if the taxpayer qualifies.",
+    rulesIntro: "The IRS ties EITC to earned income, AGI, filing status, number of qualifying children, and an investment income ceiling. Because the credit is refundable, it can increase a taxpayer's refund if the taxpayer qualifies.",
     fit: "This guide is useful for workers with W-2 income, self-employment income, qualifying children, or refund questions tied to modest annual earnings.",
-    process: "To evaluate EITC, start with earned income and AGI, check the number of qualifying children, confirm investment income stays within the limit, and then compare the result against the IRS 2025 tables.",
+    process: "To evaluate EITC, start with earned income and AGI, check the number of qualifying children, confirm investment income stays within the limit, and then compare the result against the IRS table for the filing year.",
     costs: "The cost of misunderstanding EITC is often a missed refund or a delayed one. By law, returns claiming EITC are subject to refund timing rules that can push issuance to mid-February or later.",
     records: "Keep W-2s, self-employment records, dependent records, address and residency proof for qualifying children, and any records needed to confirm filing status and investment income.",
     mistakes: "Common mistakes include claiming a child who does not meet the residency test, overlooking investment income limits, or confusing gross receipts with earned income for self-employment purposes.",
     caseStudy: "A single parent with two qualifying children thought the EITC would be automatic because wages were modest. After reviewing the rules, the filer discovered that investment income remained safely under the limit and the residency records were strong, but a prior address mismatch needed better documentation. Fixing the records in advance protected a credit that was worth thousands of dollars.",
     professionalHelp: "Help is especially useful when EITC overlaps with shared custody, self-employment income, prior claim denials, or multiple households claiming the same child. Documentation quality matters a great deal in those cases.",
     stats: [
-      { value: "$649", label: "2025 max EITC with no child", note: "If all other rules are met" },
-      { value: "$4,328", label: "2025 max EITC with one child", note: "Refundable credit value" },
-      { value: "$7,152", label: "2025 max EITC with two children", note: "Refundable credit value" },
-      { value: "$8,046", label: "2025 max EITC with three or more children", note: "Refundable credit value" },
+      { value: "Verify table", label: "No child", note: "IRS amount changes by filing year" },
+      { value: "Verify table", label: "One child", note: "Refundable value depends on the IRS table" },
+      { value: "Verify table", label: "Two children", note: "Refundable value depends on the IRS table" },
+      { value: "Verify table", label: "Three or more", note: "Refundable value depends on the IRS table" },
     ],
     facts: [
-      ["No qualifying children", "$19,104 AGI limit single / $26,214 joint", "The income ceiling determines whether self-only EITC is available"],
-      ["One qualifying child", "$50,434 AGI limit single / $57,554 joint", "Income and filing status can phase out the credit"],
-      ["Two qualifying children", "$57,310 AGI limit single / $64,430 joint", "Many filers underestimate how quickly the table changes by child count"],
-      ["Three or more qualifying children", "$61,555 AGI limit single / $68,675 joint", "Large refundable value comes with strict eligibility review"],
-      ["Investment income limit", "$11,950 for tax year 2025", "Higher investment income can disqualify the credit"],
+      ["No qualifying children", "<!-- DATO PENDIENTE VERIFICAR: actualizar limite AGI EITC 2026 para cero hijos con fuente IRS oficial. --> Verify the IRS AGI limit for the filing year", "The income ceiling determines whether self-only EITC is available"],
+      ["One qualifying child", "<!-- DATO PENDIENTE VERIFICAR: actualizar limite AGI EITC 2026 para un hijo con fuente IRS oficial. --> Verify the IRS AGI limit for the filing year", "Income and filing status can phase out the credit"],
+      ["Two qualifying children", "<!-- DATO PENDIENTE VERIFICAR: actualizar limite AGI EITC 2026 para dos hijos con fuente IRS oficial. --> Verify the IRS AGI limit for the filing year", "Many filers underestimate how quickly the table changes by child count"],
+      ["Three or more qualifying children", "<!-- DATO PENDIENTE VERIFICAR: actualizar limite AGI EITC 2026 para tres o mas hijos con fuente IRS oficial. --> Verify the IRS AGI limit for the filing year", "Large refundable value comes with strict eligibility review"],
+      ["Investment income limit", "<!-- DATO PENDIENTE VERIFICAR: actualizar limite de ingreso de inversion EITC 2026 con fuente IRS oficial. --> Verify the IRS cap for the filing year", "Higher investment income can disqualify the credit"],
     ],
     related: [
       ["../pages/refundable-vs-nonrefundable-tax-credits", "See why EITC is refundable"],
@@ -625,7 +937,7 @@ const pageSpecs = [
     ],
     faqs: [
       ["Is the Earned Income Tax Credit refundable?", "Yes. EITC is a refundable credit, which means it can reduce tax liability and may still increase a refund if the taxpayer qualifies. That is part of what makes the credit so valuable for low- to moderate-income workers. It is also why the IRS closely reviews eligibility rules. Refund potential and documentation discipline go together."],
-      ["What are the 2025 maximum EITC amounts?", "For 2025, the maximum credit is $649 with no qualifying children, $4,328 with one qualifying child, $7,152 with two, and $8,046 with three or more. Those are maximum amounts, not guaranteed amounts. The actual credit depends on income, filing status, and several eligibility rules. The table is best used as a framework rather than a promise."],
+      ["How should I check the maximum EITC amount?", "Use the IRS table for the filing year, filing status, income level, and number of qualifying children. Maximum amounts are not guaranteed amounts. The actual credit depends on earned income, AGI, filing status, investment income, and several eligibility rules. Treat any table as a starting point for calculation rather than a promise of refund value."],
       ["What disqualifies someone from EITC?", "Common disqualifiers include income above the annual limit for the filing status and child count, investment income above the annual cap, or not meeting the qualifying-child rules. Filing errors, residency issues, and self-employment record problems can also create trouble. Some taxpayers assume low wages alone make them eligible, but the IRS uses a more structured test. That is why checking the full rule set matters."],
       ["Why are EITC refunds often delayed?", "By law, the IRS generally cannot issue refunds on returns claiming EITC before mid-February, even when the taxpayer files early. The delay applies to the entire refund, not only the portion tied to the credit. This rule exists because the IRS performs additional checks on returns claiming EITC and the Additional Child Tax Credit. Taxpayers should plan cash flow with that timing reality in mind."],
       ["Can self-employed workers claim EITC?", "Yes, if they otherwise qualify and their earned income, AGI, and investment income fit the rules. Self-employment can make the claim more document-sensitive because the IRS may look closely at business income and records. Good bookkeeping helps show that the earned income is real and properly reported. That is one reason freelancers and contractors should not wait until filing season to organize the file."],
@@ -635,14 +947,14 @@ const pageSpecs = [
     slug: "child-tax-credit-guide",
     category: "Tax Credits",
     categoryHref: "../pages/tax-credits-guide",
-    title: "Child Tax Credit Guide for 2025",
-    h1: "Child Tax Credit 2025: Eligibility, Refund Rules, and Income Phaseouts",
-    description: "Understand the 2025 Child Tax Credit, the refundable Additional Child Tax Credit, and the income and filing rules that determine how much you can claim.",
+    title: "Child Tax Credit Guide for Eligibility and Refunds",
+    h1: "Child Tax Credit: Eligibility, Refund Rules, and Income Phaseouts",
+    description: "Child Tax Credit guide: qualifying child rules, SSN tests, income phaseouts, ACTC refund basics, records, and filing-year checks.",
     hero: "The Child Tax Credit sounds simple at headline level, but the real planning value comes from understanding who qualifies, how the refundable piece works, and when income begins to reduce the benefit.",
     audience: "parents and guardians who want a practical guide to the Child Tax Credit, the Additional Child Tax Credit, and common eligibility mistakes",
     thesis: "The Child Tax Credit is a strong family tax benefit, but it is not one-size-fits-all. The final result depends on the child's status, the taxpayer's income, and whether the refundable rules are available.",
     whyNow: "Search demand around the Child Tax Credit is highly actionable because filers usually want to know how much refund support the credit can actually create this year.",
-    rulesIntro: "For 2025, the IRS states that the Child Tax Credit is worth up to $2,200 per qualifying child, with the Additional Child Tax Credit serving as the refundable component for certain taxpayers. The child generally must be under age 17 at the end of the year and meet relationship, residency, support, and SSN requirements.",
+    rulesIntro: "The Child Tax Credit generally depends on a qualifying child, a valid SSN, income phaseouts, and whether the refundable Additional Child Tax Credit rules apply. The child generally must be under age 17 at the end of the year and meet relationship, residency, support, and SSN requirements.",
     fit: "This guide fits families with qualifying children, lower-liability households evaluating the refundable piece, and higher-income households checking whether phaseouts reduce the benefit.",
     process: "A good CTC review starts with the child's eligibility, then moves to filing status and income, and finally to the question of whether the taxpayer can benefit from the refundable Additional Child Tax Credit.",
     costs: "The cost of misunderstanding CTC is often a refund surprise or an IRS letter asking for proof of child eligibility. Good records reduce that risk substantially.",
@@ -651,14 +963,14 @@ const pageSpecs = [
     caseStudy: "A married couple expected a full Child Tax Credit for two children but had to review whether one child's documentation and the family's AGI supported the amount they anticipated. Once they checked the residency records and income thresholds, they could map the realistic credit instead of relying on a headline number.",
     professionalHelp: "Professional help is useful when the child lived in multiple households, when custody is shared, when income is near the phaseout range, or when prior CTC claims have been challenged. In those cases, records and return position need to line up carefully.",
     stats: [
-      { value: "$2,200", label: "2025 CTC per child", note: "Up to this amount if all eligibility rules are met" },
-      { value: "$1,700", label: "2026 ACTC reference amount", note: "Refundable amount used in the code adjustment" },
+      { value: "Verify yearly", label: "CTC per child", note: "Check IRS rules for the filing year" },
+      { value: "Verify yearly", label: "ACTC amount", note: "Refundable amount can change by tax year" },
       { value: "$2,500", label: "ACTC earned income threshold", note: "You need earned income of at least this amount" },
       { value: "$200k / $400k", label: "Full-credit income thresholds", note: "Single and joint baseline thresholds" },
     ],
     facts: [
-      ["Child Tax Credit", "Up to $2,200 per qualifying child for 2025", "Headline credit amount for eligible families"],
-      ["Additional Child Tax Credit", "Up to $1,700 refundable amount depending on income", "Refund value depends on the refundable rules"],
+      ["Child Tax Credit", "<!-- DATO PENDIENTE VERIFICAR: actualizar monto CTC 2026 con fuente IRS oficial. --> Verify the IRS amount for the filing year", "Headline credit amount for eligible families"],
+      ["Additional Child Tax Credit", "<!-- DATO PENDIENTE VERIFICAR: actualizar monto reembolsable ACTC 2026 con fuente IRS oficial. --> Verify the refundable amount and income rules for the filing year", "Refund value depends on the refundable rules"],
       ["Earned income test", "$2,500 minimum earned income for ACTC eligibility", "Refundability has its own threshold logic"],
       ["Full-credit threshold", "$200,000 single and $400,000 joint", "Income above these thresholds can reduce the available credit"],
       ["Credit for Other Dependents", "Up to $500 for dependents who do not qualify for the CTC", "Useful fallback when the child rules are not met"],
@@ -671,7 +983,7 @@ const pageSpecs = [
       ["../pages/home-office-deduction-guide", "More family-and-work tax planning"],
     ],
     faqs: [
-      ["Who qualifies for the Child Tax Credit in 2025?", "A qualifying child generally must be under 17 at the end of the tax year, have a valid Social Security number for employment, and meet relationship, residency, support, and dependency rules. The child usually must have lived with you for more than half the year and not have provided more than half of their own support. You also need to claim the child properly on your return. Income thresholds still matter even if the child meets the baseline tests."],
+      ["Who qualifies for the Child Tax Credit?", "A qualifying child generally must be under 17 at the end of the tax year, have a valid Social Security number for employment, and meet relationship, residency, support, and dependency rules. The child usually must have lived with you for more than half the year and not have provided more than half of their own support. You also need to claim the child properly on your return. Income thresholds still matter even if the child meets the baseline tests."],
       ["Is the Child Tax Credit fully refundable?", "Not entirely. The Child Tax Credit includes a nonrefundable core amount, while the Additional Child Tax Credit provides the refundable portion for certain eligible taxpayers. That means one family may use the credit mainly to reduce tax, while another may rely on the refundable component to increase a refund. Understanding the split is essential for realistic refund planning. The headline amount alone does not tell the whole story."],
       ["When does income reduce the Child Tax Credit?", "The IRS states that you qualify for the full amount if annual income is not more than $200,000, or $400,000 for married filing jointly, assuming the other rules are met. Higher income taxpayers may still qualify for a partial credit. The practical takeaway is that the phaseout question should be checked directly rather than assumed away. A family close to the threshold should review income planning carefully."],
       ["What if my dependent does not qualify for the Child Tax Credit?", "You may still be able to claim the Credit for Other Dependents, which is generally up to $500 and is nonrefundable. This can matter when a child is too old for the Child Tax Credit or when another dependent fits the dependency rules but not the full child-credit rules. The alternative credit is smaller, but it still has real value. It is a good example of why the tax-credit map matters."],
@@ -683,10 +995,10 @@ const pageSpecs = [
     category: "Tax Credits",
     categoryHref: "../pages/tax-credits-guide",
     title: "Small Business Tax Credits Worth Reviewing",
-    h1: "Small Business Tax Credits: Which Credits Are Still Worth Reviewing in 2025 and 2026",
+    h1: "Small Business Tax Credits: Credits Worth Reviewing Before Filing",
     description: "Review small business tax credits including WOTC, research payroll tax credit, and the small business health care tax credit with practical qualification notes.",
     hero: "Small business tax credits can reduce tax more directly than deductions, but only when the business knows which forms, wage rules, and timing windows apply.",
-    audience: "small-business owners and advisors looking for a practical shortlist of credits that still matter in 2025 and 2026",
+    audience: "small-business owners and advisors looking for a practical shortlist of credits that still matter before filing",
     thesis: "The best business credit strategy is selective, not encyclopedic. Most small businesses do not need every possible credit; they need the few credits that fit their hiring, payroll, research, or benefit structure and can be documented properly.",
     whyNow: "This topic often sits upstream of tax software, CPA selection, payroll services, and entity planning decisions, so readers need clear eligibility limits and recordkeeping context before acting.",
     rulesIntro: "Business credits usually flow through specific forms and often feed into Form 3800, General Business Credit. Some credits offset income tax, while others, such as the research payroll tax election for qualified small businesses, can reach payroll tax instead.",
@@ -705,7 +1017,7 @@ const pageSpecs = [
     ],
     facts: [
       ["General business credit", "Most current-year business credits flow through Form 3800", "The form structure helps businesses see the portfolio of credit items clearly"],
-      ["Work Opportunity Tax Credit", "Generally 40% of up to $6,000 of first-year wages, for individuals who begin work on or before Dec. 31, 2025", "Hiring incentives can produce immediate payroll-linked tax value"],
+      ["Work Opportunity Tax Credit", "<!-- DATO PENDIENTE VERIFICAR: verificar estado legislativo WOTC posterior al 31 de diciembre de 2025 con IRS/DOL antes de presentarlo como vigente. --> Historically tied to targeted first-year wages and certification timing", "Hiring incentives can produce immediate payroll-linked tax value"],
       ["Research payroll tax election", "Qualified small businesses may elect up to $500,000 against payroll taxes", "Startups can benefit even when income tax liability is low"],
       ["Small business health care tax credit", "Maximum 50% of premiums paid for eligible taxable employers and 35% for eligible tax-exempt employers", "Employee benefits can create direct tax value when the SHOP rules fit"],
       ["Health care credit limits", "Generally fewer than 25 FTEs, average annual wages under $50,000 adjusted for inflation, and at least 50% premium contribution", "Eligibility is narrow enough that screening matters"],
@@ -744,6 +1056,14 @@ const pageSpecs = [
     mistakes: "The biggest mistakes are filing without current compliance, overstating hardship while understating assets, or assuming large debt alone makes compromise likely. Another expensive mistake is paying for representation before screening whether the case fits IRS standards.",
     caseStudy: "A taxpayer with a large assessed balance believed a settlement was certain because income had dropped. After building the file, it became clear the key question was not current frustration but asset equity and future collection potential. Once the taxpayer documented a much narrower collection picture, the compromise discussion became fact-based rather than emotional.",
     professionalHelp: "OIC help is worth serious consideration when real estate, business assets, disputed valuations, or volatile self-employment income make the reasonable collection potential analysis hard to do cleanly. Those are the cases where judgment and documentation quality affect the outcome most.",
+    heroStep: "Use screening first, then decide whether Form 656 is worth the cost.",
+    summaryBullets: [
+      "An Offer in Compromise is built around what the IRS believes it can reasonably collect, not what the taxpayer wishes the balance were.",
+      "Required returns, current estimated payments, and no open bankruptcy are basic screening issues before filing.",
+      "A weak OIC case can cost time and money that would have been better spent on a payment plan or penalty relief.",
+    ],
+    whenMakesSense: "An OIC guide is most useful when the taxpayer has a real question about collectibility and can already see that full payment through normal means may not be realistic. It is especially relevant when the file includes asset valuation questions, variable income, or a need to decide whether to spend money on representation at all.",
+    whenNot: "It is usually the wrong first page when the main problem is missing returns, a simple balance that is affordable over time, or a state tax issue being confused with a federal IRS settlement option. It is also a weak fit when the taxpayer is still in bankruptcy or not current with required filings and payments.",
     stats: [
       { value: "$205", label: "Application fee", note: "Unless low-income certification removes it" },
       { value: "20%", label: "Lump-sum initial payment", note: "Required when choosing that option" },
@@ -763,6 +1083,13 @@ const pageSpecs = [
       ["../pages/irs-tax-relief-guide", "Return to the IRS relief pillar page"],
       ["../pages/penalty-abatement-guide", "Reduce balance without OIC"],
       ["../pages/irs-payment-plan-guide", "When a payment plan is the better fit"],
+    ],
+    officialSources: [
+      ["IRS Offer in Compromise", "https://www.irs.gov/payments/offer-in-compromise"],
+      ["Form 656-B Offer in Compromise Booklet", "https://www.irs.gov/forms-pubs/about-form-656-b"],
+      ["Offer in Compromise Pre-Qualifier Tool", "https://irs.treasury.gov/oic_pre_qualifier/"],
+      ["Form 433-A (OIC)", "https://www.irs.gov/forms-pubs/about-form-433-a-oic"],
+      ["Form 433-B (OIC)", "https://www.irs.gov/forms-pubs/about-form-433-b-oic"],
     ],
     faqs: [
       ["What does the IRS look at most in an Offer in Compromise case?", "The IRS focuses on ability to pay, income, expenses, and asset equity. In simple terms, it asks what it can realistically collect within a reasonable period of time. That means the case turns on financial facts, not on how stressful the debt feels. A strong OIC package therefore needs clean numbers and supporting records."],
@@ -791,6 +1118,14 @@ const pageSpecs = [
     mistakes: "Taxpayers often ask for reasonable cause without facts, or they assume first-time abatement applies automatically. Another common mistake is requesting relief before the filing history and notice details are fully organized.",
     caseStudy: "A taxpayer with one late-filed year and a previously clean compliance history requested first-time abatement after paying down part of the balance. Because the taxpayer matched the request to the right penalty year and had no recent penalty pattern, the request had a much cleaner factual posture than a vague general hardship letter would have.",
     professionalHelp: "Support is especially useful when several penalties overlap, when the facts point to reasonable cause rather than first-time relief, or when the account involves business payroll issues and multiple periods.",
+    heroStep: "Match the request to the exact penalty and tax period first.",
+    summaryBullets: [
+      "First-time abatement and reasonable cause are different relief paths and should not be blended casually.",
+      "The IRS limits administrative first-time relief to certain failure-to-file, failure-to-pay, and failure-to-deposit penalties.",
+      "A penalty request works better after the filing picture and the exact notice are organized.",
+    ],
+    whenMakesSense: "Penalty abatement is especially useful when penalties are a meaningful part of the balance and the taxpayer may have a clean enough history for first-time relief or a documented reasonable-cause story. It is often one of the best first relief reviews before comparing payment plans or compromise.",
+    whenNot: "It is usually not enough when the core problem is the underlying tax itself, several returns are still missing, or the taxpayer is presenting a hardship story without dates, records, or a real compliance history. It is also a poor substitute for deeper payroll-tax defense where trust-fund exposure is the main risk.",
     stats: [
       { value: "History matters", label: "First-time relief", note: "Prior compliance is a key screening factor" },
       { value: "Facts matter", label: "Reasonable cause", note: "Documentation and chronology drive the outcome" },
@@ -798,11 +1133,11 @@ const pageSpecs = [
       { value: "High leverage", label: "Case impact", note: "Reducing penalties can reshape the larger balance" },
     ],
     facts: [
-      ["First-time abatement", "Works best when prior compliance history is clean", "The IRS treats prior behavior as part of the qualification screen"],
-      ["Reasonable cause", "Requires facts showing ordinary business care and prudence", "Narrative alone is not enough without support"],
-      ["Penalty type", "Failure-to-file and failure-to-pay penalties often need different framing", "The request should match the actual assessment"],
-      ["Timing", "Penalty review is often most effective after returns are filed and facts are organized", "Sequence improves clarity and credibility"],
-      ["Strategy", "Penalty abatement can pair well with payment plans or other relief", "Reducing part of the balance can make the next step cheaper and easier"],
+      ["Eligible first-time penalties", "Administrative first-time relief is generally limited to failure-to-file, failure-to-pay, and failure-to-deposit penalties", "The penalty category has to fit before the taxpayer spends time on the request"],
+      ["Clean history screen", "The same return type generally must be filed or validly extended for the prior three years, with no penalties or penalties already removed", "Prior compliance is one of the main first-time screening tests"],
+      ["Unpaid tax", "You can request first-time relief before the underlying tax is fully paid, but failure-to-pay penalties continue to accrue until the tax is paid in full", "Timing the request still matters economically"],
+      ["How to request", "You can request penalty relief by following the notice instructions, calling the number on the notice, or using Form 843 with a written statement when appropriate", "Process matters almost as much as eligibility"],
+      ["Reasonable cause", "Reasonable cause depends on facts showing ordinary business care and prudence", "Narrative alone is weaker than a dated, documented record"],
     ],
     related: [
       ["../pages/irs-penalties-explained", "Read the existing penalties guide"],
@@ -810,6 +1145,11 @@ const pageSpecs = [
       ["../pages/irs-payment-plan-guide", "Pair abatement with a payment plan"],
       ["../pages/offer-in-compromise-guide", "See when OIC is a different strategy"],
       ["../pages/irs-tax-relief-guide", "Return to the IRS relief pillar page"],
+    ],
+    officialSources: [
+      ["IRS administrative penalty relief", "https://www.irs.gov/payments/administrative-penalty-relief"],
+      ["Form 843 Claim for Refund and Request for Abatement", "https://www.irs.gov/forms-pubs/about-form-843"],
+      ["IRS penalties overview", "https://www.irs.gov/payments/penalties"],
     ],
     faqs: [
       ["What is first-time penalty abatement?", "First-time abatement is an IRS administrative relief path that can help eligible taxpayers remove certain penalties when prior compliance history is clean enough. It is not a universal penalty coupon, and it depends heavily on the taxpayer's record. That is why checking history before making the request is important. A good first-time request is precise and grounded in the right year and penalty type."],
@@ -917,9 +1257,9 @@ const pageSpecs = [
     slug: "self-employed-tax-guide",
     category: "Business Taxes",
     categoryHref: "../pages/business-tax-guide",
-    title: "Self-Employed Tax Guide for 2025",
+    title: "Self-Employed Tax Guide for Freelancers and Owners",
     h1: "Self-Employed Tax Guide: SE Tax, Deductions, and Quarterly Payments",
-    description: "Learn how self-employed tax works, including SE tax, quarterly estimated payments, deductions, and 2025-2026 thresholds that affect freelancers and owners.",
+    description: "Self-employed tax guide: SE tax formula, quarterly payments, deductions, records, wage-base checks, and reserve planning for owners.",
     hero: "Self-employed taxpayers manage both income tax and self-employment tax, which means planning needs to happen before filing season. The right system prevents surprises rather than merely explaining them afterward.",
     audience: "freelancers, sole proprietors, owner-operators, consultants, and gig workers who need a practical map of self-employment tax rules and quarterly planning",
     thesis: "Self-employed tax planning works best when the taxpayer separates cash flow, tax reserves, and deductions throughout the year. Waiting until return time usually turns a manageable math problem into an expensive stress problem.",
@@ -935,13 +1275,13 @@ const pageSpecs = [
     stats: [
       { value: "15.3%", label: "SE tax rate", note: "12.4% Social Security plus 2.9% Medicare" },
       { value: "92.35%", label: "Net earnings base", note: "Self-employment tax applies to this adjusted share of earnings" },
-      { value: "$184,500", label: "2026 Social Security wage base", note: "The Social Security portion caps at the wage base" },
+      { value: "Verify yearly", label: "Social Security wage base", note: "The wage base changes by year" },
       { value: "Quarterly", label: "Estimated-payment rhythm", note: "Planning usually needs to happen throughout the year" },
     ],
     facts: [
       ["SE tax base", "Self-employment tax generally applies to 92.35% of net earnings", "The tax is not simply 15.3% of total gross receipts"],
       ["SE tax rate", "15.3% combined", "12.4% Social Security and 2.9% Medicare are the key pieces"],
-      ["Social Security wage base", "$184,500 for 2026", "The Social Security portion stops above the wage base"],
+      ["Social Security wage base", "<!-- DATO PENDIENTE VERIFICAR: verificar wage base Social Security 2026 con SSA/IRS oficial antes de presentarlo como vigente. --> Verify the official wage base for the filing year", "The Social Security portion stops above the wage base"],
       ["Medicare", "No wage base limit", "High earners still keep paying the Medicare portion"],
       ["Half SE tax deduction", "Half of self-employment tax is generally deductible for income-tax purposes", "This softens the total tax cost somewhat but does not eliminate reserve needs"],
     ],
@@ -968,6 +1308,21 @@ function esc(value) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function escPreservingReviewComments(value) {
+  const raw = String(value);
+  const comments = [];
+  const withTokens = raw.replace(/<!-- DATO PENDIENTE VERIFICAR:[\s\S]*?-->/g, (comment) => {
+    const token = `__PENDING_DATA_COMMENT_${comments.length}__`;
+    comments.push([token, comment]);
+    return token;
+  });
+  let escaped = esc(withTokens);
+  for (const [token, comment] of comments) {
+    escaped = escaped.replace(token, comment);
+  }
+  return escaped;
 }
 
 function attr(value) {
@@ -1001,7 +1356,6 @@ function articleSchema(page) {
       "@type": "Organization",
       name: "TaxReliefGuides",
       url: `${domain}/`,
-      email: contactEmail,
     },
     url: canonicalFor(page.slug),
     dateModified: modifiedDate,
@@ -1081,7 +1435,7 @@ function footerMarkup() {
       <div class="container footer-grid">
         <section>
           <h2>TaxReliefGuides</h2>
-          <p>Independent U.S. tax guides covering IRS debt relief, deductions, credits, payroll taxes, business tax rules, calculators, and compliance planning.</p>
+          <p>Independent U.S. tax guides covering IRS debt relief, notices, payment plans, payroll tax issues, tax credits, calculators, and state tax research.</p>
         </section>
         <section>
           <h2>Core Guides</h2>
@@ -1100,9 +1454,12 @@ function footerMarkup() {
         <section>
           <h2>Company</h2>
           <a href="../about">About</a>
+          <a href="../contact">Contact</a>
           <a href="../how-we-research">How We Research</a>
+          <a href="../affiliate-disclosure">Affiliate Disclosure</a>
           <a href="../privacy-policy">Privacy Policy</a>
           <a href="../terms">Terms</a>
+          <a href="../disclaimer">Disclaimer</a>
         </section>
       </div>
       <div class="container footer-bottom">
@@ -1134,15 +1491,16 @@ function editorialBlock() {
 }
 
 function heroCard(page) {
+  const sourceLabel = page.officialSources?.[0]?.[0] ?? "IRS official pages";
   return `
     <div class="hero-card">
       <div class="hero-card-head">
         <span class="eyebrow">${esc(page.category)}</span>
-        <strong>Planning snapshot</strong>
+        <strong>What this page covers</strong>
       </div>
-      <div class="hero-card-row"><span>Main audience</span><strong>${esc(page.audience.split(",")[0])}</strong></div>
-      <div class="hero-card-row"><span>Primary goal</span><strong>Lower tax risk and improve clarity</strong></div>
-      <div class="hero-card-row"><span>Best first move</span><strong>Organize the file before choosing a program</strong></div>
+      <div class="hero-card-row"><span>Best for</span><strong>${esc(page.audience.split(",")[0])}</strong></div>
+      <div class="hero-card-row"><span>First step</span><strong>${esc(page.heroStep ?? "Organize the file before choosing a program")}</strong></div>
+      <div class="hero-card-row"><span>Main source</span><strong>${esc(sourceLabel)}</strong></div>
       <div class="timeline-visual" aria-hidden="true">
         <div class="timeline-step"><span>Assess</span><div class="timeline-track"><div class="timeline-fill" style="width:90%"></div></div></div>
         <div class="timeline-step"><span>File</span><div class="timeline-track"><div class="timeline-fill" style="width:78%"></div></div></div>
@@ -1172,10 +1530,10 @@ function tableMarkup(page) {
       <table>
         <caption>${esc(page.h1)}: key IRS rules and thresholds</caption>
         <thead>
-          <tr><th scope="col">Rule or metric</th><th scope="col">2025-2026 figure</th><th scope="col">Why it matters</th></tr>
+          <tr><th scope="col">Rule or metric</th><th scope="col">Current or source-year figure</th><th scope="col">Why it matters</th></tr>
         </thead>
         <tbody>
-          ${page.facts.map((row) => `<tr><th scope="row">${esc(row[0])}</th><td>${esc(row[1])}</td><td>${esc(row[2])}</td></tr>`).join("")}
+          ${page.facts.map((row) => `<tr><th scope="row">${esc(row[0])}</th><td>${escPreservingReviewComments(row[1])}</td><td>${esc(row[2])}</td></tr>`).join("")}
         </tbody>
       </table>
     </div>`;
@@ -1186,14 +1544,14 @@ function relatedMarkup(page) {
     <section class="related-section">
       <div class="section-heading">
         <span class="eyebrow">Related guides</span>
-        <h2>Read the connected pages before you decide</h2>
+        <h2>Where to go next</h2>
       </div>
       <div class="related-grid">
         ${page.related.map(([href, label]) => `
           <a class="related-card" href="${href}">
             <span class="badge">Related</span>
             <h3>${esc(label)}</h3>
-            <p>Continue researching this topic with another tightly related TaxReliefGuides page.</p>
+            <p>Open the next guide that usually matters once this question is clearer.</p>
           </a>`).join("")}
       </div>
     </section>`;
@@ -1217,16 +1575,19 @@ function faqMarkup(page) {
 }
 
 function keyTakeaways(page) {
+  const bullets = page.summaryBullets ?? [
+    page.thesis,
+    page.process,
+    page.costs,
+  ];
   return `
     <section class="callout key-takeaway">
       <div>
-        <span class="eyebrow">Key takeaway</span>
-        <h2>What matters most</h2>
+        <span class="eyebrow">Editorial summary</span>
+        <h2>Quick read before you choose a path</h2>
       </div>
       <ul>
-        <li>${esc(page.thesis)}</li>
-        <li>${esc(page.rulesIntro)}</li>
-        <li>${esc(page.process)}</li>
+        ${bullets.map((item) => `<li>${esc(item)}</li>`).join("")}
       </ul>
     </section>`;
 }
@@ -1255,66 +1616,86 @@ function listSection(id, eyebrow, title, paragraphs, items) {
       </section>`;
 }
 
+function officialSourcesMarkup(page) {
+  if (!page.officialSources?.length) return "";
+  return `
+      <section id="official-sources" class="content-section">
+        <div class="section-heading">
+          <span class="eyebrow">Official sources</span>
+          <h2>Official pages worth opening before you act</h2>
+        </div>
+        <p>These are the primary pages, forms, or IRS resources used for the most sensitive points on this page. Use them to verify the current rule before you submit anything or rely on a year-sensitive number.</p>
+        <ul>
+          ${page.officialSources.map(([label, href]) => `<li><a href="${href}">${esc(label)}</a></li>`).join("")}
+        </ul>
+      </section>`;
+}
+
 function bodySections(page) {
+  const fitBullets = page.fitBullets ?? [
+    "You have the notice, return, or balance details in front of you and need to compare realistic options.",
+    "You are trying to avoid a worse next step such as default, levy pressure, or a preventable filing mistake.",
+    "You can organize records and current compliance before asking the IRS for flexibility.",
+  ];
+  const nextSteps = page.nextSteps ?? [
+    "Match the issue to the exact IRS notice, year, or quarter involved before calling it a relief case.",
+    "Pull transcripts, notices, and current-year payment records before comparing solutions.",
+    "Fix current compliance first if new balances, missed deposits, or missing returns are still happening.",
+    "Use the related guides below to compare the next realistic path before paying for help.",
+  ];
   return [
-    section("overview", "Overview", `${page.h1}: why the issue matters now`, [
+    section("what-this-does", "Overview", "What this option or issue actually covers", [
       page.thesis,
-      page.whyNow,
-      `For ${page.audience}, the first practical win is usually turning uncertainty into sequence. Instead of reacting to every IRS letter, payroll event, or refund expectation separately, the stronger move is to identify the exact issue, the exact rule that applies, and the exact cash-flow consequence over the next twelve months.`,
+      page.hero,
+      `For ${page.audience}, the first useful step is usually to identify the exact notice, tax year, form, or payment problem in front of them. That turns a vague tax worry into a short action list.`,
     ]),
-    section("rules", "IRS Rules", `Key 2025-2026 rules behind ${page.h1.toLowerCase()}`, [
-      page.rulesIntro,
-      `The best readers' questions are usually not "what is the rule?" but "what does the rule change in my real file?" That is why the table below focuses on thresholds, dates, and program mechanics that can change eligibility, cash flow, or negotiation leverage.`,
-      `Where a number sits at the center of the decision, it is worth checking the underlying source year carefully. A wage base, phaseout, deposit penalty tier, or application fee can change the economics of the decision more than most taxpayers expect.`,
-    ], tableMarkup(page)),
-    section("fit", "Applicability", `Who should pay close attention to ${page.h1.toLowerCase()}`, [
+    listSection("who-it-fits", "Fit check", "Who usually fits this page", [
       page.fit,
-      `This also means the topic does not fit every taxpayer in the same way. Someone with steady W-2 income, a narrow one-year balance, and good records may need a very different strategy from a business owner with seasonal cash flow, payroll exposure, and several years of unresolved notices.`,
-      `The goal of a strong guide is therefore not to push every reader toward the same answer. It is to help the reader see quickly whether the issue is mainly a filing problem, a payment problem, a documentation problem, or a legal-risk problem.`,
+      `The better question is not whether the topic sounds attractive. It is whether the facts of the case actually match the IRS rule, the notice stage, and the taxpayer's ability to stay compliant after the immediate issue is handled.`,
+    ], fitBullets),
+    section("when-it-makes-sense", "Decision point", "When this usually makes sense", [
+      page.whenMakesSense ?? `${page.process} This path usually makes the most sense when it solves the real bottleneck in the file rather than just sounding like the most dramatic option.`,
+      page.whyNow,
+      `In practice, the strongest choice is often the one that matches current compliance, documentation quality, and actual ability to pay rather than the one with the most appealing headline.`,
     ]),
-    listSection("process", "Process", `How to handle ${page.h1.toLowerCase()} step by step`, [
+    section("when-it-does-not", "Reality check", "When this usually does not make sense", [
+      page.whenNot ?? `This topic is usually a weak fit when key returns are still missing, the taxpayer is creating new tax debt, or the financial story points clearly to a different path. An IRS solution that looks exciting in isolation can still be the wrong move if the file is incomplete or the monthly budget cannot support it.`,
+      `Another weak-fit pattern is using this option as a substitute for reading the notice or organizing the tax years involved. In tax resolution work, sequencing matters as much as the end choice.`,
+    ]),
+    listSection("process", "Process", "How the process usually works", [
       page.process,
       `The order matters because taxpayers usually lose money when they negotiate around unclear facts. Filing or reconstructing the file first may feel slower emotionally, but it often creates the shortest path to a workable answer.`,
-      `A good process also includes future compliance. The IRS is much more open to flexibility when the taxpayer can show that the behavior creating the debt, penalty, or missed credit has already been corrected for the current year.`,
-    ], [
-      "Pull transcripts, notices, and filing history before comparing relief paths.",
-      "Separate tax, penalties, interest, and current-year exposure into different buckets.",
-      "Correct current filing or deposit behavior before asking for maximum flexibility.",
-      "Use a monthly cash-flow view rather than an annual guess when comparing affordability.",
-    ]),
-    section("costs", "Costs", `Costs, penalties, and tradeoffs to evaluate`, [
-      page.costs,
-      `Tax decisions are rarely about one line item. A payment plan may look cheap until years of interest are added. A credit may look generous until phaseouts, refundability, or timing rules are applied. A business relief program may look attractive until the documentation burden and current-deposit requirements are considered.`,
-      `The stronger framework is full-cost thinking: What is the direct cost, the timing cost, the compliance cost, and the risk cost if the strategy fails? That broader question usually leads to better decisions than comparing only the headline promise.`,
-    ]),
-    section("records", "Documentation", `What records to gather before you act`, [
+    ], nextSteps),
+    section("forms-fees-docs", "Forms and records", "Forms, fees, deadlines, and documentation", [
+      page.rulesIntro,
       page.records,
-      `Readers often underestimate how much decision quality improves once the file is organized. Clean records do not just help with accuracy. They also reduce panic, improve negotiation posture, and make it easier to see whether the issue is smaller or larger than it first felt.`,
-      `If a record is hard to find, note that explicitly instead of guessing. In IRS matters, an honest missing-data list is usually better than a false sense of precision.`,
-    ]),
-    section("mistakes", "Mistakes", `Avoidable errors that make the problem more expensive`, [
+      `If a threshold, filing requirement, fee, or timing rule drives the decision, verify the current official source before relying on it. That matters especially for year-sensitive items, notice deadlines, and payment-plan setup costs.`,
+    ], tableMarkup(page)),
+    section("mistakes", "Mistakes", "Common mistakes that make the problem more expensive", [
       page.mistakes,
-      `Another recurring problem is mixing strategies that are logically inconsistent. For example, a taxpayer may talk hardship while still spending freely, or may push settlement language while the numbers clearly support a payment plan instead. Strategy works better when the facts and the chosen path point in the same direction.`,
-      `The fastest way to reduce risk is often boring: accurate records, current compliance, realistic cash-flow assumptions, and a refusal to outsource judgment to marketing headlines.`,
+      `Another recurring problem is mixing strategies that do not match the facts. A hardship story with loose spending, an OIC case with clear ability to pay, or a payment plan that ignores next quarter's taxes all tend to break down quickly.`,
+      `The safest correction is usually boring: accurate records, current compliance, realistic cash flow, and a refusal to let marketing language override the file itself.`,
     ]),
-    section("example", "Case Study", `A realistic example of how the decision can unfold`, [
+    section("next-steps", "Next steps", "What to do next after reading this page", [
       page.caseStudy,
-      `Case studies help because they translate abstract tax language into operational choices. In most real files, the answer does not come from one magical form. It comes from better sequencing, cleaner documentation, and a more realistic view of what the IRS or the return is actually going to reward.`,
       page.professionalHelp,
+      page.nextStepParagraph ?? `If the file still feels unclear, compare this guide with the most relevant related pages below before acting. The goal is not to read forever. It is to narrow the next practical move with fewer surprises.`,
     ]),
+    officialSourcesMarkup(page),
   ].join("");
 }
 
 function toc(page) {
   const items = [
-    ["overview", "Why It Matters"],
-    ["rules", "IRS Rules"],
-    ["fit", "Who It Fits"],
-    ["process", "Step-by-Step"],
-    ["costs", "Costs and Tradeoffs"],
-    ["records", "Records"],
+    ["what-this-does", "What It Covers"],
+    ["who-it-fits", "Who It Fits"],
+    ["when-it-makes-sense", "When It Fits"],
+    ["when-it-does-not", "When It Doesn't"],
+    ["process", "Process"],
+    ["forms-fees-docs", "Forms and Records"],
     ["mistakes", "Mistakes"],
-    ["example", "Case Study"],
+    ["next-steps", "Next Steps"],
+    ...(page.officialSources?.length ? [["official-sources", "Official Sources"]] : []),
   ];
   return `
     <aside class="toc-card">
@@ -1326,9 +1707,9 @@ function toc(page) {
 function sidebar(page) {
   return `
     <aside class="sidebar-card">
-      <h2>Fast next steps</h2>
+      <h2>Use this page well</h2>
       <ul>
-        <li>Match the issue to the exact IRS rule, year, or quarter involved.</li>
+        <li>Match the issue to the exact IRS rule, notice, year, or quarter involved.</li>
         <li>Collect records before you choose a relief or planning path.</li>
         <li>Fix current compliance first so the problem does not keep compounding.</li>
       </ul>
@@ -1348,7 +1729,7 @@ ${headerMarkup()}
       <section class="hero hero-inner">
         <div class="container hero-grid">
           <div>
-            <span class="badge badge-hero">Search Console Opportunity</span>
+            <span class="badge badge-hero">${esc(page.category)} Guide</span>
             <nav class="breadcrumbs" aria-label="Breadcrumb">
               <ol>
                 <li><a href="../">Home</a></li>
@@ -1441,6 +1822,8 @@ async function updateTopicClusters() {
         ["./irs-currently-not-collectible", "Currently not collectible status"],
         ["./tax-debt-settlement", "How tax debt settlement really works"],
         ["./back-taxes-help", "Back taxes help step by step"],
+        ["./irs-cp14-notice", "What an IRS CP14 notice means"],
+        ["./irs-cp504-notice", "How to respond to an IRS CP504 notice"],
       ],
     },
     "pages/irs-tax-relief-guide.html": {
@@ -1448,6 +1831,10 @@ async function updateTopicClusters() {
       links: [
         ["./offer-in-compromise-guide", "Offer in Compromise guide"],
         ["./penalty-abatement-guide", "IRS penalty abatement guide"],
+        ["./first-time-penalty-abatement", "First-time penalty abatement guide"],
+        ["./tax-lien-vs-levy", "Tax lien vs. levy explained"],
+        ["./irs-cp14-notice", "IRS CP14 notice guide"],
+        ["./irs-cp504-notice", "IRS CP504 notice guide"],
         ["./innocent-spouse-relief", "Innocent spouse relief guide"],
         ["./tax-lien-guide", "IRS tax lien guide"],
       ],
@@ -1481,7 +1868,11 @@ async function updateSitemap() {
   const sitemapPath = path.join(root, "sitemap.xml");
   const current = await fs.readFile(sitemapPath, "utf8");
   const blocks = [...current.matchAll(/<url>[\s\S]*?<\/url>/g)].map((match) => match[0]);
-  const targetLocs = new Set(pageSpecs.map((page) => canonicalFor(page.slug)));
+  // irs-payment-plan-guide redirects to irs-payment-plans-guide (canonical plural) — exclude from sitemap
+  const sitemapExcludedSlugs = new Set(["irs-payment-plan-guide"]);
+  const targetLocs = new Set(
+    pageSpecs.filter((page) => !sitemapExcludedSlugs.has(page.slug)).map((page) => canonicalFor(page.slug))
+  );
   const map = new Map();
 
   for (const block of blocks) {

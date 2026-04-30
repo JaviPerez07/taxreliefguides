@@ -1,104 +1,5 @@
 const COOKIE_NAME = "trg_cookie_pref";
 
-function parseSchema() {
-  const holder = document.querySelector("#schema-data");
-  if (!holder) return null;
-  try {
-    return JSON.parse(holder.dataset.schema || "{}");
-  } catch {
-    return null;
-  }
-}
-
-function injectSchema() {
-  const data = parseSchema();
-  if (!data || document.querySelector("#dynamic-schema")) return;
-
-  const graph = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      name: data.siteName,
-      url: "https://taxreliefguides.com/",
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: data.organizationName,
-      url: data.organizationUrl,
-      logo: data.organizationLogo,
-      ...(data.organizationEmail ? { email: data.organizationEmail } : {}),
-    },
-  ];
-
-  if (Array.isArray(data.breadcrumbs) && data.breadcrumbs.length > 1) {
-    graph.push({
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: data.breadcrumbs.map((crumb, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: crumb.label,
-        item: crumb.href,
-      })),
-    });
-  }
-
-  if (Array.isArray(data.faqs) && data.faqs.length) {
-    graph.push({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: data.faqs.map((faq) => ({
-        "@type": "Question",
-        name: faq.q,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: faq.a,
-        },
-      })),
-    });
-  }
-
-  if (data.type === "home" || data.type === "article") {
-    graph.push({
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: data.title,
-      description: data.description,
-      datePublished: data.published,
-      dateModified: data.modified,
-      publisher: {
-        "@type": "Organization",
-        name: data.organizationName,
-        logo: {
-          "@type": "ImageObject",
-          url: data.organizationLogo,
-        },
-      },
-      mainEntityOfPage: data.url,
-      image: data.image,
-    });
-  }
-
-  if (data.type === "calculator") {
-    graph.push({
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: data.title,
-      url: data.url,
-      applicationCategory: "FinanceApplication",
-      operatingSystem: "Any",
-      description: data.description,
-    });
-  }
-
-  const script = document.createElement("script");
-  script.type = "application/ld+json";
-  script.id = "dynamic-schema";
-  script.textContent = JSON.stringify(graph);
-  document.head.appendChild(script);
-}
-
 function upsertHeadTag(selector, build) {
   const existing = document.head.querySelector(selector);
   if (existing) {
@@ -354,7 +255,6 @@ function setupCalculators() {
 
 handleSearchQuerySignals();
 setupFilePreviewLinks();
-injectSchema();
 setupMenu();
 setupCookieBanner();
 setupCalculators();
