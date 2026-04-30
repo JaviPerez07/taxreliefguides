@@ -8,6 +8,15 @@ const lastmod = "2026-04-23";
 const adsenseScript = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>`;
 const contactEmail = "javiperezguides@gmail.com";
 
+const editor = {
+  name: "Javi Pérez",
+  jobTitle: "Editor",
+  linkedin: "https://www.linkedin.com/in/javi-perez-guides/",
+  email: contactEmail,
+  image: `${domain}/assets/javi-perez-guides.jpg`,
+  url: `${domain}/about`,
+};
+
 const site = {
   name: "TaxReliefGuides",
   domain,
@@ -548,11 +557,15 @@ function renderFooter(page) {
           <a href="${localHref(page.path, "about.html")}">About</a>
           <a href="${localHref(page.path, "contact.html")}">Contact</a>
           <a href="${localHref(page.path, "how-we-research.html")}">How We Research</a>
+          <a href="${localHref(page.path, "editorial-policy.html")}">Editorial Policy</a>
           <a href="${localHref(page.path, "affiliate-disclosure.html")}">Affiliate Disclosure</a>
           <a href="${localHref(page.path, "privacy-policy.html")}">Privacy Policy</a>
           <a href="${localHref(page.path, "terms.html")}">Terms</a>
           <a href="${localHref(page.path, "disclaimer.html")}">Disclaimer</a>
         </section>
+      </div>
+      <div class="container footer-editorial" style="text-align:center; padding:16px; font-size:14px; color:#6b7280;">
+        Edited by <a href="${localHref(page.path, "about.html")}" style="color:#2563eb;">Javi Pérez</a>, Editor &middot; <a href="${localHref(page.path, "editorial-policy.html")}" style="color:#6b7280;">Editorial Policy</a> &middot; Last site-wide review: April 2026
       </div>
       <div class="container footer-bottom">
         <p>${site.disclaimer}</p>
@@ -692,12 +705,19 @@ function renderSections(sections) {
     .join("");
 }
 
-function renderEditorialBlock() {
+function renderEditorialBlock(page) {
+  const isDeep = page && page.path.includes("/");
+  const imgSrc = isDeep ? `../assets/javi-perez-guides.jpg` : `./assets/javi-perez-guides.jpg`;
+  const aboutHref = page ? localHref(page.path, "about.html") : "/about";
+  const policyHref = page ? localHref(page.path, "editorial-policy.html") : "/editorial-policy";
   return `
-    <div class="editorial-block">
-      <strong>Editorial Team</strong>
-      <p>Last reviewed: April 2026</p>
-      <p>This guide compiles information from official IRS publications, state Department of Revenue resources, and other public sources. Content is reviewed quarterly against updated references.</p>
+    <div class="editorial-block" style="display:flex; align-items:center; gap:14px; padding:16px 20px; border:1px solid #e5e7eb; border-radius:8px; margin:24px 0;">
+      <img src="${imgSrc}" alt="Javi Pérez, Editor" width="56" height="56" style="border-radius:50%; flex-shrink:0;">
+      <div>
+        <div style="font-weight:600;">Edited by <a href="${aboutHref}" style="color:#2563eb;">Javi Pérez</a></div>
+        <p style="margin:4px 0 0; font-size:0.9em; color:#6b7280;">Last reviewed: April 2026 · <a href="${policyHref}" style="color:#6b7280;">Editorial Policy</a></p>
+        <p style="margin:2px 0 0; font-size:0.85em; color:#374151;">This guide compiles information from official IRS publications and state Department of Revenue resources. Content is reviewed quarterly.</p>
+      </div>
     </div>
   `;
 }
@@ -810,6 +830,13 @@ function articleSchemaForPage(page) {
         url: site.organization.logo,
       },
     },
+    editor: {
+      "@type": "Person",
+      name: editor.name,
+      url: editor.url,
+      image: editor.image,
+      jobTitle: editor.jobTitle,
+    },
     mainEntityOfPage: urlFor(page.path),
     image: page.image,
   };
@@ -873,6 +900,29 @@ function pageJsonLd(page) {
 
   const faqSchema = faqSchemaForPage(page);
   if (faqSchema) graph.push(faqSchema);
+
+  if (page.path === "about.html") {
+    graph.push({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: editor.name,
+      jobTitle: editor.jobTitle,
+      worksFor: {
+        "@type": "Organization",
+        name: site.organization.legalName,
+        url: domain,
+      },
+      url: editor.url,
+      image: editor.image,
+      sameAs: [editor.linkedin],
+      email: editor.email,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Almería",
+        addressCountry: "ES",
+      },
+    });
+  }
 
   return graph.map((entry) => jsonLdScript(entry)).join("\n    ");
 }
@@ -1409,6 +1459,11 @@ function stateHead(page) {
       name: "TaxReliefGuides",
       url: domain,
     },
+    editor: {
+      "@type": "Person",
+      name: editor.name,
+      url: editor.url,
+    },
     url: canonical,
   };
   const breadcrumbs = {
@@ -1511,7 +1566,7 @@ function renderStatePage(page, allPages) {
       </section>
       <div class="container main-grid">
         <div class="content-column">
-          ${renderEditorialBlock()}
+          ${renderEditorialBlock(page)}
           <div class="key-takeaways">
             <span class="eyebrow">State relief summary</span>
             <ul>
@@ -1628,7 +1683,7 @@ function renderPage(page, allPages) {
           ${renderSections(page.sections)}
           ${renderChart(page.chart)}
           ${page.extraContent ?? ""}
-          ${renderEditorialBlock()}
+          ${renderEditorialBlock(page)}
           ${renderFaq(page.faq)}
           ${renderDisclaimer()}
           ${renderRelated(page, allPages)}
@@ -2464,6 +2519,41 @@ const rootPages = [
     ],
   }),
   withDefaults({
+    path: "editorial-policy.html",
+    titleBase: "Editorial Policy | TaxReliefGuides",
+    h1: "Editorial Policy",
+    hero: "How TaxReliefGuides selects topics, verifies IRS and state tax data, updates guides, and handles reader corrections.",
+    descriptionBase: "TaxReliefGuides editorial policy: source hierarchy, update schedule, corrections process, AI disclosure, affiliate independence, and editor contact.",
+    keyword: "editorial policy TaxReliefGuides",
+    shortLabel: "editorial policy",
+    audience: "readers who want to understand how the site researches, verifies, and maintains its IRS and tax content",
+    challenge: "Tax content is easy to overstate or leave stale, so the editorial process must be visible and specific",
+    eligibility: "This policy governs all guides, calculators, notices, state pages, and supporting pages across the site",
+    cashflow: "Transparency about sourcing and corrections matters more in a YMYL tax niche because errors can affect real financial decisions",
+    docs: "Primary sources: IRS.gov, official state agency pages, form instructions, publications, and direct agency materials",
+    stats: [
+      { value: "Official-first", label: "Source hierarchy", note: "IRS and state agencies are the primary authority" },
+      { value: "Quarterly", label: "Core review cycle", note: "Pillar guides checked quarterly for accuracy" },
+      { value: "Prompt", label: "Corrections standard", note: "Material errors corrected as soon as confirmed" },
+      { value: "Disclosed", label: "AI and affiliate use", note: "Both are disclosed; neither overrides editorial judgment" },
+    ],
+    chartBars: [
+      { label: "Source rigor", width: 92, value: "Very high" },
+      { label: "Update discipline", width: 87, value: "High" },
+      { label: "Corrections transparency", width: 88, value: "High" },
+      { label: "Commercial independence", width: 90, value: "Very high" },
+    ],
+    related: [
+      "about.html",
+      "how-we-research.html",
+      "contact.html",
+    ],
+    breadcrumbs: [
+      { label: "Home", href: `${domain}/` },
+      { label: "Editorial Policy", href: `${domain}/editorial-policy` },
+    ],
+  }),
+  withDefaults({
     path: "affiliate-disclosure.html",
     robots: "noindex, follow",
     titleBase: "Affiliate Disclosure for TaxReliefGuides",
@@ -2639,6 +2729,23 @@ function buildRootSections(page) {
   if (page.path === "about.html") {
     return [
       {
+        id: "meet-the-editor",
+        eyebrow: "About the editor",
+        title: "Meet the Editor",
+        html: `<div class="editor-profile" style="display:flex; align-items:flex-start; gap:20px; margin:24px 0; flex-wrap:wrap;">
+  <img src="./assets/javi-perez-guides.jpg" alt="Javi Pérez, Editor of TaxReliefGuides" width="180" height="180" style="border-radius:50%; display:block; flex-shrink:0;">
+  <div>
+    <h3 style="margin:0 0 4px;">Javi Pérez</h3>
+    <p style="font-weight:600; color:#2563eb; margin:0 0 8px;">Editor, TaxReliefGuides</p>
+    <p>Javi Pérez is the editor of TaxReliefGuides, an independent consumer education project covering federal and state tax debt relief, IRS notices, payment options, deductions, and business tax compliance. The site translates primary-source IRS and state agency information into plain-language guidance for U.S. readers. Javi has a background in IT and coordinates the editorial operation from Almería, Spain. He is not a CPA, EA, JD, or licensed tax professional. His role is to ensure every guide reflects current official sources, maintains correct sourcing standards, and separates education clearly from individualized advice.</p>
+    <p>
+      <a href="${editor.linkedin}" rel="me noopener" target="_blank" style="color:#2563eb;">LinkedIn</a> ·
+      <a href="mailto:${contactEmail}" style="color:#2563eb;">Email</a>
+    </p>
+  </div>
+</div>`,
+      },
+      {
         id: "what-the-site-is",
         eyebrow: "Scope",
         title: "What TaxReliefGuides covers",
@@ -2656,6 +2763,61 @@ function buildRootSections(page) {
         paragraphs: [
           `That is why the site avoids fictional experts, inflated credentials, and vague promises about results. It also avoids guessing on sensitive numbers where an official source is the right standard. When a year-sensitive figure still needs verification, the page should leave a marker rather than quietly filling the gap with a convenient estimate.`,
           `Readers should expect a calm tone, official-source links, practical internal linking, and clear disclaimers. If a page feels thin, overly abstract, or out of date, that is a quality issue rather than a feature, and the goal is to keep improving those weak spots over time.`,
+        ],
+      },
+    ];
+  }
+
+  if (page.path === "editorial-policy.html") {
+    return [
+      {
+        id: "source-hierarchy",
+        eyebrow: "Source standards",
+        title: "How we choose and verify sources",
+        intro: "Every cost figure, program rule, threshold, and deadline on this site is traced to a primary source before publication.",
+        paragraphs: [
+          `For federal tax pages, that primary source is IRS.gov: IRS publications, form instructions, notice pages, and official program pages. For state tax pages, it is the relevant Department of Revenue, Franchise Tax Board, Comptroller, or equivalent state agency. Secondary sources can provide useful context, but they do not replace the agency source for any number or rule that directly affects what a reader should do.`,
+          `Where a year-sensitive figure cannot be confirmed from a primary source in the current editorial pass, the page leaves an explicit marker rather than guessing. We do not publish unsupported estimates as if they were facts. This standard is harder to maintain than simply filling gaps, but it is the correct default for a site that covers tax compliance, penalties, and relief eligibility.`,
+        ],
+      },
+      {
+        id: "update-schedule",
+        eyebrow: "Review cadence",
+        title: "How often guides are updated",
+        intro: "Core pillar guides are reviewed quarterly. Updates happen immediately when a material rule or figure changes.",
+        paragraphs: [
+          `Core pillar guides — covering IRS debt, payment plans, notices, penalties, deductions, credits, payroll taxes, and business taxes — are reviewed quarterly. Each review checks regulatory references against current IRS or state agency language, verifies that year-sensitive figures match the current tax year, confirms that source links are active and correct, and checks that the practical guidance is still the right first step for the stated problem.`,
+          `Secondary guides and supporting pages are reviewed on an annual cycle unless a material change — a new IRS threshold, a revised state fee, a changed form number, a significant penalty rate adjustment — requires an earlier update. When a material change is identified, the affected page is updated as soon as practical and the reviewed date is updated to reflect the change.`,
+        ],
+      },
+      {
+        id: "corrections",
+        eyebrow: "Corrections policy",
+        title: "How we handle errors and reader corrections",
+        intro: "Material errors are corrected promptly, acknowledged when they affect consequential decisions, and never quietly papered over.",
+        paragraphs: [
+          `If you find information on this site that appears factually incorrect — a wrong threshold, an outdated fee, a broken source link, or a misleading framing — report it using the contact address at ${contactEmail}. Include the page URL, the specific issue, and the official source that supports the correction. That makes it easy to review and update quickly.`,
+          `All correction requests are evaluated against the cited primary source, not the identity or affiliation of the person submitting. If the correction is confirmed, the page is updated and the reviewed date reflects the change. For material errors that could affect a reader's financial or compliance decision, we note the correction within the article where it appeared rather than updating silently.`,
+        ],
+      },
+      {
+        id: "ai-and-commercial",
+        eyebrow: "AI and affiliate disclosure",
+        title: "AI assistance and commercial relationships",
+        intro: "AI tools assist with drafting and structuring. Every published figure is verified against a primary source before publication.",
+        paragraphs: [
+          `AI writing tools may assist with drafting, structuring, and organizing content on this site. AI-generated drafts are reviewed against official sources for every fact, threshold, and program rule that matters for a reader's decision. AI does not replace source verification, and AI output is not published as fact without a primary-source check.`,
+          `This site may earn revenue from display advertising or affiliate links. When a referral link is present and a reader clicks through and completes an action, this site may earn a commission from the third party at no cost to the reader. Commercial relationships do not determine which topics are covered, how comparisons are structured, or what conclusions are reached. Affiliate links are disclosed in the relevant page content. See the <a href="./affiliate-disclosure">Affiliate Disclosure</a> for additional detail.`,
+        ],
+      },
+      {
+        id: "what-we-are-not",
+        eyebrow: "Scope limits",
+        title: "What TaxReliefGuides is not",
+        intro: "The site is educational. It does not provide individualized tax, legal, or financial advice.",
+        paragraphs: [
+          `TaxReliefGuides is not a tax firm, a law firm, a CPA practice, or a tax preparation service. It does not represent taxpayers before the IRS or any state agency. It does not prepare returns, file documents, negotiate settlements, or provide legal strategy. The editor, Javi Pérez, is not a CPA, EA, JD, or licensed tax professional.`,
+          `The content is informational and should be used to support research and planning, not to replace individualized professional advice. Readers with complex situations — multiple unfiled years, active levies, disputed balances, payroll tax exposure, business trust fund issues, or litigation risk — should consult a qualified CPA, enrolled agent, or tax attorney before acting.`,
         ],
       },
     ];

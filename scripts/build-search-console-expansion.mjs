@@ -1357,6 +1357,13 @@ function articleSchema(page) {
       name: "TaxReliefGuides",
       url: `${domain}/`,
     },
+    editor: {
+      "@type": "Person",
+      name: "Javi Pérez",
+      url: `${domain}/about`,
+      image: `${domain}/assets/javi-perez-guides.jpg`,
+      jobTitle: "Editor",
+    },
     url: canonicalFor(page.slug),
     dateModified: modifiedDate,
   };
@@ -1483,10 +1490,13 @@ function cookieBanner() {
 
 function editorialBlock() {
   return `
-    <div class="editorial-block">
-      <strong>Editorial Team</strong>
-      <p>Last reviewed: April 2026</p>
-      <p>This guide compiles information from official IRS publications, state Department of Revenue resources, and other public sources. Content is reviewed quarterly against updated references.</p>
+    <div class="editorial-block" style="display:flex; align-items:center; gap:14px; padding:16px 20px; border:1px solid #e5e7eb; border-radius:8px; margin:24px 0;">
+      <img src="../assets/javi-perez-guides.jpg" alt="Javi Pérez, Editor" width="56" height="56" style="border-radius:50%; flex-shrink:0;">
+      <div>
+        <div style="font-weight:600;">Edited by <a href="../about" style="color:#2563eb;">Javi Pérez</a></div>
+        <p style="margin:4px 0 0; font-size:0.9em; color:#6b7280;">Last reviewed: April 2026 · <a href="../editorial-policy" style="color:#6b7280;">Editorial Policy</a></p>
+        <p style="margin:2px 0 0; font-size:0.85em; color:#374151;">This guide compiles information from official IRS publications and state Department of Revenue resources. Content is reviewed quarterly.</p>
+      </div>
     </div>`;
 }
 
