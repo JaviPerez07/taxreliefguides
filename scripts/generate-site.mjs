@@ -3582,8 +3582,6 @@ function buildRedirects(pages) {
     // Normalize index
     "/index.html / 301!",
     "/index / 301!",
-    // Block public access to internal markdown reports (audit logs, walkthroughs, etc.)
-    "/*.md /404 404",
     // Force HTTPS and remove www
     "http://taxreliefguides.com/* https://taxreliefguides.com/:splat 301!",
     "http://www.taxreliefguides.com/* https://taxreliefguides.com/:splat 301!",
@@ -3644,6 +3642,10 @@ function buildHeaders() {
 
 /*.html
   X-Robots-Tag: noindex
+
+/*.md
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
 `;
 }
 
