@@ -5,7 +5,35 @@ import { stateTaxReliefConfigs } from "./state-tax-relief-data.mjs";
 const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const domain = "https://taxreliefguides.com";
 const lastmod = "2026-04-23";
-const adsenseScript = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>`;
+const consentModeScript = `<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  // Google Consent Mode v2 — defaults set to DENIED before any tag fires.
+  // Updated by main.js based on the cookie banner choice (accept/reject).
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+  // If the visitor previously accepted on this device, restore granted state immediately.
+  try {
+    var pref = (document.cookie.split('; ').find(function(c){return c.indexOf('trg_cookie_pref=')===0;})||'').split('=')[1];
+    if (pref === 'accept') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    }
+  } catch (e) {}
+</script>`;
+const adsenseScript = `${consentModeScript}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>`;
 const contactEmail = "javiperezguides@gmail.com";
 
 const editor = {
@@ -52,6 +80,17 @@ function escapeHtml(value) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+/**
+ * Convert state-data fields that are essentially just `<!-- DATO PENDIENTE -->`
+ * comments into reader-facing fallback prose. Returns the original value
+ * unchanged if any visible text exists.
+ */
+function resolvePendingState(value, fallback) {
+  if (value == null) return fallback;
+  const stripped = String(value).replace(/<!--[\s\S]*?-->/g, "").trim();
+  return stripped.length > 0 ? value : fallback;
 }
 
 function escapeAttr(value) {
@@ -387,6 +426,21 @@ function pillarSections(config) {
         `Finally, make your plan durable. Adjust withholding, set aside estimated payments, protect payroll tax deposits, and calendar review points. The goal of ${config.shortLabel.toLowerCase()} is not only to shrink the old problem. It is to stop the next one from forming.`,
       ],
     },
+    {
+      id: "sources",
+      eyebrow: "Sources & methodology",
+      title: `Sources used for this guide`,
+      intro: `Primary IRS pages and official references that anchor this content.`,
+      html: `<ul>
+        <li><a href="https://www.irs.gov/" rel="noopener" target="_blank">IRS.gov</a> — official Internal Revenue Service pages, forms, and notices.</li>
+        <li><a href="https://www.irs.gov/forms-instructions" rel="noopener" target="_blank">IRS forms and instructions</a> — primary source for filing rules and program forms.</li>
+        <li><a href="https://www.irs.gov/payments" rel="noopener" target="_blank">IRS Payments</a> — official guidance on payment plans, online options, and balances due.</li>
+        <li><a href="https://www.irs.gov/businesses/small-businesses-self-employed/penalty-relief" rel="noopener" target="_blank">IRS Penalty Relief</a> — first-time abatement, reasonable cause, and statutory exceptions.</li>
+        <li><a href="https://www.irs.gov/taxtopics" rel="noopener" target="_blank">IRS Tax Topics</a> — official short summaries of common tax issues.</li>
+        <li>Annual inflation adjustments published in IRS revenue procedures (e.g. Rev. Proc. 2025-32 for 2026 tax year figures).</li>
+      </ul>
+      <p style="font-size:0.9em; color:#6b7280;">All figures and rules are verified against these primary sources before publication. See our <a href="${localHref(config.path, "editorial-policy.html")}">Editorial Policy</a> for the review cycle and corrections process.</p>`,
+    },
   ];
 }
 
@@ -479,6 +533,20 @@ function supportSections(config) {
         `Then compare this topic with the wider return or collection picture. If the issue is relief, make sure current compliance is fixed. If the issue is planning, check what changes next quarter, not just what looks good today.`,
         `Finally, decide whether this is still a self-help issue. If the facts involve active collection, payroll exposure, multiple missing years, or a large disputed amount, use this page as preparation and escalate the review.`,
       ],
+    },
+    {
+      id: "sources",
+      eyebrow: "Sources & methodology",
+      title: `Sources used for this guide`,
+      intro: `Primary IRS pages and official references that anchor this content.`,
+      html: `<ul>
+        <li><a href="https://www.irs.gov/" rel="noopener" target="_blank">IRS.gov</a> — official Internal Revenue Service pages, forms, and notices.</li>
+        <li><a href="https://www.irs.gov/forms-instructions" rel="noopener" target="_blank">IRS forms and instructions</a> — primary source for filing rules and program forms.</li>
+        <li><a href="https://www.irs.gov/payments" rel="noopener" target="_blank">IRS Payments</a> — official guidance on payment options and balances due.</li>
+        <li><a href="https://www.irs.gov/taxtopics" rel="noopener" target="_blank">IRS Tax Topics</a> — official short summaries of common tax issues.</li>
+        <li>Annual inflation adjustments published in IRS revenue procedures (e.g. Rev. Proc. 2025-32 for 2026 tax year figures).</li>
+      </ul>
+      <p style="font-size:0.9em; color:#6b7280;">All figures and rules are verified against these primary sources before publication. See our <a href="${localHref(config.path, "editorial-policy.html")}">Editorial Policy</a> for the review cycle and corrections process.</p>`,
     },
   ];
 }
@@ -1184,8 +1252,9 @@ function homeLead(allPages) {
     <section class="feature-section">
       <div class="section-heading">
         <span class="eyebrow">How we research</span>
-        <h2>How this site is built</h2>
+        <h2>How TaxReliefGuides researches tax topics</h2>
       </div>
+      <p style="max-width:760px; margin:0 0 24px;">When I started TaxReliefGuides, I focused on the gap between official IRS pages and the simplified summaries most readers find in search results. I cross-check every penalty rate, threshold, and program against IRS.gov and state Department of Revenue pages before publishing. I am not a CPA, EA, or tax attorney, and I do not sell tax representation. The site is editorial — its job is to translate the official rules into plain language and point readers to the next page they usually need next.</p>
       <div class="card-grid">
         <article class="topic-card">
           <span class="badge">Sources</span>
@@ -1369,15 +1438,15 @@ function stateFaqs(state) {
     ],
     [
       `What is the minimum monthly payment for a ${state.state} payment plan?`,
-      `${state.paymentMinimum} The practical minimum is not only a dollar figure. The payment must be high enough to fit the state's maximum term, keep the account from defaulting, and leave room for current-year tax obligations. If the agency requires financial disclosure, monthly income, necessary expenses, assets, and bank information can matter as much as the balance. A plan that looks affordable but causes new tax debt is usually a weak plan.`,
+      `${resolvePendingState(state.paymentMinimum, `The ${state.agency} pages reviewed in this pass do not list a single fixed minimum monthly payment for general tax debt; the agency typically calibrates the payment to balance, term, and any required financial disclosure.`)} The practical minimum is not only a dollar figure. The payment must be high enough to fit the state's maximum term, keep the account from defaulting, and leave room for current-year tax obligations. If the agency requires financial disclosure, monthly income, necessary expenses, assets, and bank information can matter as much as the balance. A plan that looks affordable but causes new tax debt is usually a weak plan.`,
     ],
     [
       `How long does ${state.state} have to collect unpaid taxes?`,
-      `${state.sol} State collection limitation rules are separate from the IRS ten-year collection statute, and they can pause, restart, or change when appeals, bankruptcy, amended assessments, payment agreements, or litigation are involved. Treat the statute issue as a legal research item rather than a shortcut. If a collection period is central to your decision, verify it directly with ${state.agency} or a qualified tax professional before relying on the clock.`,
+      `${resolvePendingState(state.sol, `${state.agency} did not publish a single, simple collection limitation period for all tax types in the pages reviewed during this editorial pass.`)} State collection limitation rules are separate from the IRS ten-year collection statute, and they can pause, restart, or change when appeals, bankruptcy, amended assessments, payment agreements, or litigation are involved. Treat the statute issue as a legal research item rather than a shortcut. If a collection period is central to your decision, verify it directly with ${state.agency} or a qualified tax professional before relying on the clock.`,
     ],
     [
       `Can ${state.state} garnish my wages for state tax debt?`,
-      `${state.garnishment} Wage garnishment rules differ by state and by tax type. Some agencies use wage withholding orders, income executions, attachments, or levies, and the employer may have strict duties after receiving the order. The fastest way to stop or reduce the damage is usually to contact the agency before the employer begins remitting funds. If the notice already reached payroll, ask whether a payment agreement, hardship review, or release procedure is available.`,
+      `${resolvePendingState(state.garnishment, `${state.agency} did not publish a single garnishment percentage for state tax debt on the pages reviewed; the limit can depend on tax type, federal CCPA caps, and state-specific orders.`)} Wage garnishment rules differ by state and by tax type. Some agencies use wage withholding orders, income executions, attachments, or levies, and the employer may have strict duties after receiving the order. The fastest way to stop or reduce the damage is usually to contact the agency before the employer begins remitting funds. If the notice already reached payroll, ask whether a payment agreement, hardship review, or release procedure is available.`,
     ],
     [
       `Does filing for bankruptcy eliminate ${state.state} tax debt?`,
@@ -1393,7 +1462,7 @@ function stateFaqs(state) {
     ],
     [
       `Can I qualify for a ${state.state} Offer in Compromise if I already have an IRS OIC?`,
-      `${state.oicForm} An accepted IRS offer may help tell the financial story, but it does not automatically bind a state revenue agency unless that state's program specifically recognizes federal acceptance. Some states require their own forms, financial statements, application fees, tax-period review, and proof that the proposed settlement is in the state's best interest. If both federal and state balances exist, compare the cash needed for each program before submitting either offer. A state may also expect current compliance while the compromise is reviewed.`,
+      `${resolvePendingState(state.oicForm, `No single public offer-in-compromise form was confirmed on the ${state.agency} pages reviewed in this pass; some state programs use voluntary disclosure, settlement, or hardship workflows instead of a named OIC application.`)} An accepted IRS offer may help tell the financial story, but it does not automatically bind a state revenue agency unless that state's program specifically recognizes federal acceptance. Some states require their own forms, financial statements, application fees, tax-period review, and proof that the proposed settlement is in the state's best interest. If both federal and state balances exist, compare the cash needed for each program before submitting either offer. A state may also expect current compliance while the compromise is reviewed.`,
     ],
   ];
 }
@@ -1592,15 +1661,15 @@ function renderStatePage(page, allPages) {
           <section id="payment-plan-details" class="content-section">
             <div class="section-heading"><span class="eyebrow">Installments</span><h2>${escapeHtml(state.state)} Payment Plan Details</h2></div>
             <p>${state.paymentPlan}</p>
-            <p><strong>Maximum term:</strong> ${state.paymentMaxTerm}</p>
-            <p><strong>Minimum payment:</strong> ${state.paymentMinimum}</p>
+            <p><strong>Maximum term:</strong> ${resolvePendingState(state.paymentMaxTerm, `Not published as a fixed maximum on the ${state.agency} payment-plan pages reviewed in this pass; the term typically depends on balance, tax type, and current compliance. Confirm with ${state.agency} for your specific account.`)}</p>
+            <p><strong>Minimum payment:</strong> ${resolvePendingState(state.paymentMinimum, `Not published as a fixed minimum on the ${state.agency} payment-plan pages reviewed in this pass; the agency calibrates the payment to balance, term, and any required financial disclosure. Confirm with ${state.agency} before assuming a number.`)}</p>
             <p><strong>Forms and application path:</strong> ${state.paymentForm}</p>
             <p>A payment plan should be based on the full cost of the debt, not only the first monthly payment. State balances can continue to accrue interest, penalties, collection fees, lien costs, or other charges while a plan is active. A taxpayer who agrees to a payment that is too high may default, while a payment that is too low may not fit agency standards. The practical target is a plan that can survive current taxes, normal living or operating costs, and seasonal income swings.</p>
             <p>Before applying, gather the state notice, account ID, Social Security number or FEIN, bank information if direct debit is required, recent returns, proof of income, and a monthly expense summary. Business taxpayers should also gather sales tax returns, withholding returns, payroll reports, bank statements, owner compensation details, and proof that current deposits or filings are no longer falling behind.</p>
           </section>
           <section id="wage-garnishment" class="content-section">
             <div class="section-heading"><span class="eyebrow">Collection pressure</span><h2>Wage Garnishment Laws in ${escapeHtml(state.state)}</h2></div>
-            <p>${state.garnishment}</p>
+            <p>${resolvePendingState(state.garnishment, `${state.agency} did not publish a single garnishment percentage for state tax debt on the pages reviewed in this pass. The applicable limit can depend on the tax type, federal CCPA caps, and any state-specific orders. Verify the rule that applies to your case directly with ${state.agency}.`)}</p>
             <p>Wage garnishment is often the point where a tax problem becomes visible to an employer, which is why fast response matters. If a garnishment or withholding order has already been issued, the taxpayer should read the order, identify the issuing agency, and call the official contact listed on the notice. Do not assume that an IRS rule or a federal wage formula controls a state order. State rules and employer instructions can be different.</p>
             <p>Common ways to reduce or stop wage collection include full payment, a formal payment agreement, hardship review, correction of an incorrect assessment, proof that the wrong person or entity was targeted, or release after compromise approval. The exact remedy depends on the notice and the agency. If the order involves business trust taxes, sales tax, or withholding tax, expect the agency to treat the file more seriously than an ordinary individual balance.</p>
           </section>
@@ -1612,7 +1681,7 @@ function renderStatePage(page, allPages) {
           </section>
           <section id="statute-limitations" class="content-section">
             <div class="section-heading"><span class="eyebrow">Timing</span><h2>Statute of Limitations for ${escapeHtml(state.state)} Tax Debt</h2></div>
-            <p>${state.sol}</p>
+            <p>${resolvePendingState(state.sol, `${state.agency} did not publish a single, simple collection limitation period for all tax types in the pages reviewed during this editorial pass. State limitation rules can vary by tax type and event, so verify the period that applies to your account directly with the agency or a qualified professional.`)}</p>
             <p>Do not use the IRS collection statute as a shortcut for state tax debt. State limitation periods may be tied to assessment date, filing date, fraud, failure to file, appeal status, bankruptcy, litigation, installment agreements, or other events. A taxpayer who is relying on time should verify the rule with the agency, a state statute, or a qualified professional before ignoring a notice.</p>
             <p>Limitation analysis is especially sensitive for businesses because sales tax, withholding tax, and payroll-like liabilities may be treated differently from personal income tax. If the state believes tax was collected from customers or withheld from workers and not remitted, collection and responsible-person rules can be more aggressive than a normal balance-due case.</p>
           </section>
@@ -2786,8 +2855,8 @@ function buildRootSections(page) {
         title: "How often guides are updated",
         intro: "Core pillar guides are reviewed quarterly. Updates happen immediately when a material rule or figure changes.",
         paragraphs: [
-          `Core pillar guides — covering IRS debt, payment plans, notices, penalties, deductions, credits, payroll taxes, and business taxes — are reviewed quarterly. Each review checks regulatory references against current IRS or state agency language, verifies that year-sensitive figures match the current tax year, confirms that source links are active and correct, and checks that the practical guidance is still the right first step for the stated problem.`,
-          `Secondary guides and supporting pages are reviewed on an annual cycle unless a material change — a new IRS threshold, a revised state fee, a changed form number, a significant penalty rate adjustment — requires an earlier update. When a material change is identified, the affected page is updated as soon as practical and the reviewed date is updated to reflect the change.`,
+          `Core pillar guides cover IRS debt, payment plans, notices, penalties, deductions, credits, payroll taxes, and business taxes. They are reviewed quarterly. Each review checks regulatory references against current IRS or state agency language, verifies that year-sensitive figures match the current tax year, confirms that source links are active and correct, and checks that the practical guidance is still the right first step for the stated problem.`,
+          `Secondary guides and supporting pages are reviewed on an annual cycle unless a material change requires an earlier update. Material changes include a new IRS threshold, a revised state fee, a changed form number, or a significant penalty rate adjustment. When a material change is identified, the affected page is updated as soon as practical and the reviewed date is updated to reflect the change.`,
         ],
       },
       {
@@ -2796,7 +2865,7 @@ function buildRootSections(page) {
         title: "How we handle errors and reader corrections",
         intro: "Material errors are corrected promptly, acknowledged when they affect consequential decisions, and never quietly papered over.",
         paragraphs: [
-          `If you find information on this site that appears factually incorrect — a wrong threshold, an outdated fee, a broken source link, or a misleading framing — report it using the contact address at ${contactEmail}. Include the page URL, the specific issue, and the official source that supports the correction. That makes it easy to review and update quickly.`,
+          `If you find information on this site that appears factually incorrect, report it using the contact address at ${contactEmail}. Examples include a wrong threshold, an outdated fee, a broken source link, or a misleading framing. Include the page URL, the specific issue, and the official source that supports the correction. That makes it easy to review and update quickly.`,
           `All correction requests are evaluated against the cited primary source, not the identity or affiliation of the person submitting. If the correction is confirmed, the page is updated and the reviewed date reflects the change. For material errors that could affect a reader's financial or compliance decision, we note the correction within the article where it appeared rather than updating silently.`,
         ],
       },
@@ -2817,7 +2886,7 @@ function buildRootSections(page) {
         intro: "The site is educational. It does not provide individualized tax, legal, or financial advice.",
         paragraphs: [
           `TaxReliefGuides is not a tax firm, a law firm, a CPA practice, or a tax preparation service. It does not represent taxpayers before the IRS or any state agency. It does not prepare returns, file documents, negotiate settlements, or provide legal strategy. The editor, Javi Pérez, is not a CPA, EA, JD, or licensed tax professional.`,
-          `The content is informational and should be used to support research and planning, not to replace individualized professional advice. Readers with complex situations — multiple unfiled years, active levies, disputed balances, payroll tax exposure, business trust fund issues, or litigation risk — should consult a qualified CPA, enrolled agent, or tax attorney before acting.`,
+          `The content is informational and should be used to support research and planning, not to replace individualized professional advice. Readers with complex situations should consult a qualified CPA, enrolled agent, or tax attorney before acting. Complex situations include multiple unfiled years, active levies, disputed balances, payroll tax exposure, business trust fund issues, and litigation risk.`,
         ],
       },
     ];
@@ -3027,7 +3096,7 @@ function makePenaltiesExtraContent() {
       </tbody>
     </table>
   </div>
-  <p><small><strong>Sources:</strong> IRS Topic 653 (irs.gov/taxtopics/tc653); IRS Failure to Deposit page (irs.gov/payments/failure-to-deposit-penalty); IRS Trust Fund Recovery Penalty page. Q1 2026 underpayment rate per IRS Rev. Rul. 2025-XX.</small></p>
+  <p><small><strong>Sources:</strong> IRS Topic 653 (irs.gov/taxtopics/tc653); IRS Failure to Deposit page (irs.gov/payments/failure-to-deposit-penalty); IRS Trust Fund Recovery Penalty page. Q1 2026 underpayment rate per IRS Rev. Rul. 2025-21 (announced via IR-2025-107, irs.gov/newsroom/interest-rates-remain-the-same-for-the-first-quarter-of-2026).</small></p>
 </section>
 
 <section id="failure-to-file" class="content-section">
@@ -3318,6 +3387,7 @@ const stateHubPage = withDefaults({
   title: "State Tax Relief Guides by U.S. State",
   titleBase: "State Tax Relief Guides by U.S. State",
   h1: "State Tax Relief Guides by U.S. State",
+  hero: "State tax debt is administered separately from IRS debt. Use these state guides to compare official agency programs, payment plan terms, lien procedures, and collection rules across the ten covered states.",
   description: "Compare state tax relief guides for California, Texas, Florida, New York, Pennsylvania, Illinois, Ohio, Georgia, North Carolina, and Michigan.",
   keyword: "state tax relief",
   shortLabel: "State tax relief",
@@ -3512,6 +3582,8 @@ function buildRedirects(pages) {
     // Normalize index
     "/index.html / 301!",
     "/index / 301!",
+    // Block public access to internal markdown reports (audit logs, walkthroughs, etc.)
+    "/*.md /404 404",
     // Force HTTPS and remove www
     "http://taxreliefguides.com/* https://taxreliefguides.com/:splat 301!",
     "http://www.taxreliefguides.com/* https://taxreliefguides.com/:splat 301!",

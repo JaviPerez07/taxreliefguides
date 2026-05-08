@@ -25,7 +25,34 @@
     <link rel="shortcut icon" href="./assets/favicon.ico">
     <meta name="theme-color" content="#12355b">
     <link rel="stylesheet" href="./styles.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>
+    <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  // Google Consent Mode v2 — defaults set to DENIED before any tag fires.
+  // Updated by main.js based on the cookie banner choice (accept/reject).
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+  // If the visitor previously accepted on this device, restore granted state immediately.
+  try {
+    var pref = (document.cookie.split('; ').find(function(c){return c.indexOf('trg_cookie_pref=')===0;})||'').split('=')[1];
+    if (pref === 'accept') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    }
+  } catch (e) {}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"TaxReliefGuides","url":"https://taxreliefguides.com/"}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TaxReliefGuides","url":"https://taxreliefguides.com","logo":"https://taxreliefguides.com/assets/logo-mark.svg","email":"javiperezguides@gmail.com","sameAs":["https://taxreliefguides.com/about","https://taxreliefguides.com/how-we-research","https://taxreliefguides.com/contact"]}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What topics does TaxReliefGuides cover?","acceptedAnswer":{"@type":"Answer","text":"The site covers IRS tax relief, tax debt, deductions, credits, payroll taxes, business taxes, self-employed taxes, payment plans, calculators, and foundational compliance topics for U.S. readers."}},{"@type":"Question","name":"Are the calculators tax filing software?","acceptedAnswer":{"@type":"Answer","text":"No. They are planning tools meant to help readers estimate outcomes and compare scenarios before filing or speaking with a professional."}},{"@type":"Question","name":"Does the site provide tax or legal advice?","acceptedAnswer":{"@type":"Answer","text":"No. The content is informational only and should be used to support research, not replace individualized professional advice."}},{"@type":"Question","name":"Why are pages interconnected so heavily?","acceptedAnswer":{"@type":"Answer","text":"Tax decisions usually affect more than one issue at once, so strong interlinking helps readers move between related guides without missing important context."}}]}</script>
@@ -298,8 +325,9 @@
     <section class="feature-section">
       <div class="section-heading">
         <span class="eyebrow">How we research</span>
-        <h2>How this site is built</h2>
+        <h2>How TaxReliefGuides researches tax topics</h2>
       </div>
+      <p style="max-width:760px; margin:0 0 24px;">When I started TaxReliefGuides, I focused on the gap between official IRS pages and the simplified summaries most readers find in search results. I cross-check every penalty rate, threshold, and program against IRS.gov and state Department of Revenue pages before publishing. I am not a CPA, EA, or tax attorney, and I do not sell tax representation. The site is editorial — its job is to translate the official rules into plain language and point readers to the next page they usually need next.</p>
       <div class="card-grid">
         <article class="topic-card">
           <span class="badge">Sources</span>
@@ -338,7 +366,7 @@
           <h2>What TaxReliefGuides is trying to do well</h2>
         </div>
         <p class="section-intro">The goal is not to sound authoritative. The goal is to help readers make a better next decision.</p>
-        <p>Tax content becomes less useful when it overpromises, hides the limitations of a program, or speaks in abstract strategy language instead of concrete steps. This site tries to do the opposite. Pages are built around what a reader needs to gather, what the IRS or state agency is actually looking at, and when a popular option usually does not fit.</p><p>That is also why some pages include visible verification markers for year-sensitive figures. If a threshold, fee, wage base, or form rule cannot be confirmed cleanly from an official source in this pass, the page should say so instead of pretending certainty.</p><p>IRS tax help becomes easier to use when readers convert the topic into a checklist and a calendar date. Tax questions feel abstract until the next filing, payment, or response deadline is attached to them. Once that happens, the topic becomes operational instead of theoretical.</p><p>It also helps to compare the best-case tax result with the most realistic result. Many filers benefit from a topic like this, but the strongest decisions come from conservative assumptions, not perfect ones. Leaving room for documentation gaps or income changes usually produces a safer plan.</p><p>IRS tax help becomes easier to use when readers convert the topic into a checklist and a calendar date. Tax questions feel abstract until the next filing, payment, or response deadline is attached to them. Once that happens, the topic becomes operational instead of theoretical.</p><p>IRS tax help becomes easier to use when readers convert the topic into a checklist and a calendar date. Tax questions feel abstract until the next filing, payment, or response deadline is attached to them. Once that happens, the topic becomes operational instead of theoretical.</p>
+        <p>Tax content becomes less useful when it overpromises, hides the limitations of a program, or speaks in abstract strategy language instead of concrete steps. This site tries to do the opposite. Pages are built around what a reader needs to gather, what the IRS or state agency is actually looking at, and when a popular option usually does not fit.</p><p>That is also why some pages include visible verification markers for year-sensitive figures. If a threshold, fee, wage base, or form rule cannot be confirmed cleanly from an official source in this pass, the page should say so instead of pretending certainty.</p><p>It also helps to compare the best-case tax result with the most realistic result. Many filers benefit from a topic like this, but the strongest decisions come from conservative assumptions, not perfect ones. Leaving room for documentation gaps or income changes usually produces a safer plan.</p><p>IRS tax help becomes easier to use when readers convert the topic into a checklist and a calendar date. Tax questions feel abstract until the next filing, payment, or response deadline is attached to them. Once that happens, the topic becomes operational instead of theoretical.</p>
         
         
         

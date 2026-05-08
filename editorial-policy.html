@@ -25,7 +25,34 @@
     <link rel="shortcut icon" href="./assets/favicon.ico">
     <meta name="theme-color" content="#12355b">
     <link rel="stylesheet" href="./styles.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>
+    <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  // Google Consent Mode v2 — defaults set to DENIED before any tag fires.
+  // Updated by main.js based on the cookie banner choice (accept/reject).
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+  // If the visitor previously accepted on this device, restore granted state immediately.
+  try {
+    var pref = (document.cookie.split('; ').find(function(c){return c.indexOf('trg_cookie_pref=')===0;})||'').split('=')[1];
+    if (pref === 'accept') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    }
+  } catch (e) {}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TaxReliefGuides","url":"https://taxreliefguides.com","logo":"https://taxreliefguides.com/assets/logo-mark.svg","email":"javiperezguides@gmail.com","sameAs":["https://taxreliefguides.com/about","https://taxreliefguides.com/how-we-research","https://taxreliefguides.com/contact"]}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Editorial Policy","description":"TaxReliefGuides editorial policy: source hierarchy, update schedule, corrections process, AI disclosure, affiliate independence, and editor contact.","datePublished":"2026-04-04","dateModified":"2026-04-23","publisher":{"@type":"Organization","name":"TaxReliefGuides","logo":{"@type":"ImageObject","url":"https://taxreliefguides.com/assets/logo-mark.svg"}},"editor":{"@type":"Person","name":"Javi Pérez","url":"https://taxreliefguides.com/about","image":"https://taxreliefguides.com/assets/javi-perez-guides.jpg","jobTitle":"Editor"},"mainEntityOfPage":"https://taxreliefguides.com/editorial-policy","image":"https://taxreliefguides.com/assets/social-cover.svg"}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://taxreliefguides.com/"},{"@type":"ListItem","position":2,"name":"Editorial Policy","item":"https://taxreliefguides.com/editorial-policy"}]}</script>
@@ -181,7 +208,7 @@
           <h2>How often guides are updated</h2>
         </div>
         <p class="section-intro">Core pillar guides are reviewed quarterly. Updates happen immediately when a material rule or figure changes.</p>
-        <p>Core pillar guides — covering IRS debt, payment plans, notices, penalties, deductions, credits, payroll taxes, and business taxes — are reviewed quarterly. Each review checks regulatory references against current IRS or state agency language, verifies that year-sensitive figures match the current tax year, confirms that source links are active and correct, and checks that the practical guidance is still the right first step for the stated problem.</p><p>Secondary guides and supporting pages are reviewed on an annual cycle unless a material change — a new IRS threshold, a revised state fee, a changed form number, a significant penalty rate adjustment — requires an earlier update. When a material change is identified, the affected page is updated as soon as practical and the reviewed date is updated to reflect the change.</p>
+        <p>Core pillar guides cover IRS debt, payment plans, notices, penalties, deductions, credits, payroll taxes, and business taxes. They are reviewed quarterly. Each review checks regulatory references against current IRS or state agency language, verifies that year-sensitive figures match the current tax year, confirms that source links are active and correct, and checks that the practical guidance is still the right first step for the stated problem.</p><p>Secondary guides and supporting pages are reviewed on an annual cycle unless a material change requires an earlier update. Material changes include a new IRS threshold, a revised state fee, a changed form number, or a significant penalty rate adjustment. When a material change is identified, the affected page is updated as soon as practical and the reviewed date is updated to reflect the change.</p>
         
         
         
@@ -193,7 +220,7 @@
           <h2>How we handle errors and reader corrections</h2>
         </div>
         <p class="section-intro">Material errors are corrected promptly, acknowledged when they affect consequential decisions, and never quietly papered over.</p>
-        <p>If you find information on this site that appears factually incorrect — a wrong threshold, an outdated fee, a broken source link, or a misleading framing — report it using the contact address at javiperezguides@gmail.com. Include the page URL, the specific issue, and the official source that supports the correction. That makes it easy to review and update quickly.</p><p>All correction requests are evaluated against the cited primary source, not the identity or affiliation of the person submitting. If the correction is confirmed, the page is updated and the reviewed date reflects the change. For material errors that could affect a reader's financial or compliance decision, we note the correction within the article where it appeared rather than updating silently.</p>
+        <p>If you find information on this site that appears factually incorrect, report it using the contact address at javiperezguides@gmail.com. Examples include a wrong threshold, an outdated fee, a broken source link, or a misleading framing. Include the page URL, the specific issue, and the official source that supports the correction. That makes it easy to review and update quickly.</p><p>All correction requests are evaluated against the cited primary source, not the identity or affiliation of the person submitting. If the correction is confirmed, the page is updated and the reviewed date reflects the change. For material errors that could affect a reader's financial or compliance decision, we note the correction within the article where it appeared rather than updating silently.</p>
         
         
         
@@ -217,7 +244,7 @@
           <h2>What TaxReliefGuides is not</h2>
         </div>
         <p class="section-intro">The site is educational. It does not provide individualized tax, legal, or financial advice.</p>
-        <p>TaxReliefGuides is not a tax firm, a law firm, a CPA practice, or a tax preparation service. It does not represent taxpayers before the IRS or any state agency. It does not prepare returns, file documents, negotiate settlements, or provide legal strategy. The editor, Javi Pérez, is not a CPA, EA, JD, or licensed tax professional.</p><p>The content is informational and should be used to support research and planning, not to replace individualized professional advice. Readers with complex situations — multiple unfiled years, active levies, disputed balances, payroll tax exposure, business trust fund issues, or litigation risk — should consult a qualified CPA, enrolled agent, or tax attorney before acting.</p>
+        <p>TaxReliefGuides is not a tax firm, a law firm, a CPA practice, or a tax preparation service. It does not represent taxpayers before the IRS or any state agency. It does not prepare returns, file documents, negotiate settlements, or provide legal strategy. The editor, Javi Pérez, is not a CPA, EA, JD, or licensed tax professional.</p><p>The content is informational and should be used to support research and planning, not to replace individualized professional advice. Readers with complex situations should consult a qualified CPA, enrolled agent, or tax attorney before acting. Complex situations include multiple unfiled years, active levies, disputed balances, payroll tax exposure, business trust fund issues, and litigation risk.</p>
         
         
         

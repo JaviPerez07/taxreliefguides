@@ -25,7 +25,34 @@
     <link rel="shortcut icon" href="../assets/favicon.ico">
     <meta name="theme-color" content="#12355b">
     <link rel="stylesheet" href="../styles.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>
+    <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  // Google Consent Mode v2 — defaults set to DENIED before any tag fires.
+  // Updated by main.js based on the cookie banner choice (accept/reject).
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+  // If the visitor previously accepted on this device, restore granted state immediately.
+  try {
+    var pref = (document.cookie.split('; ').find(function(c){return c.indexOf('trg_cookie_pref=')===0;})||'').split('=')[1];
+    if (pref === 'accept') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    }
+  } catch (e) {}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TaxReliefGuides","url":"https://taxreliefguides.com","logo":"https://taxreliefguides.com/assets/logo-mark.svg","email":"javiperezguides@gmail.com","sameAs":["https://taxreliefguides.com/about","https://taxreliefguides.com/how-we-research","https://taxreliefguides.com/contact"]}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"State Tax Relief Guides by U.S. State","description":"Compare state tax relief guides for California, Texas, Florida, New York, Pennsylvania, Illinois, Ohio, Georgia, North Carolina, and Michigan.","datePublished":"2026-04-04","dateModified":"2026-04-23","publisher":{"@type":"Organization","name":"TaxReliefGuides","logo":{"@type":"ImageObject","url":"https://taxreliefguides.com/assets/logo-mark.svg"}},"editor":{"@type":"Person","name":"Javi Pérez","url":"https://taxreliefguides.com/about","image":"https://taxreliefguides.com/assets/javi-perez-guides.jpg","jobTitle":"Editor"},"mainEntityOfPage":"https://taxreliefguides.com/states/","image":"https://taxreliefguides.com/assets/social-cover.svg"}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://taxreliefguides.com/"},{"@type":"ListItem","position":2,"name":"States","item":"https://taxreliefguides.com/states/"}]}</script>
@@ -67,7 +94,7 @@
       </ol>
     </nav>
   <h1>State Tax Relief Guides by U.S. State</h1>
-            <p class="hero-copy">undefined</p>
+            <p class="hero-copy">State tax debt is administered separately from IRS debt. Use these state guides to compare official agency programs, payment plan terms, lien procedures, and collection rules across the ten covered states.</p>
             <div class="hero-actions">
               <a class="button button-primary" href="./california-state-tax-relief">Start with California</a>
               <a class="button button-secondary" href="../pages/irs-tax-relief-guide">Read IRS relief guide</a>

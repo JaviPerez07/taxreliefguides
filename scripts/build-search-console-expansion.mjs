@@ -5,7 +5,32 @@ const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const pagesDir = path.join(root, "pages");
 const domain = "https://taxreliefguides.com";
 const modifiedDate = "2026-04-23";
-const adsenseScript = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>';
+const consentModeScript = `<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+  try {
+    var pref = (document.cookie.split('; ').find(function(c){return c.indexOf('trg_cookie_pref=')===0;})||'').split('=')[1];
+    if (pref === 'accept') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    }
+  } catch (e) {}
+</script>`;
+const adsenseScript = `${consentModeScript}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733223915347669" crossorigin="anonymous"></script>`;
 const contactEmail = "javiperezguides@gmail.com";
 const disclaimer = "This content is for informational purposes only and does not constitute tax, legal, or financial advice.";
 
