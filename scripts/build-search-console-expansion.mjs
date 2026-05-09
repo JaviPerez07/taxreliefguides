@@ -4,7 +4,7 @@ import path from "node:path";
 const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const pagesDir = path.join(root, "pages");
 const domain = "https://taxreliefguides.com";
-const modifiedDate = "2026-04-23";
+const modifiedDate = new Date().toISOString().slice(0, 10);
 const consentModeScript = `<script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -96,7 +96,7 @@ const pageSpecs = [
     slug: "payroll-tax-problems",
     category: "Payroll Tax",
     categoryHref: "../pages/payroll-tax-guide",
-    title: "Payroll Tax Problems With the IRS: How to Resolve Them",
+    title: "Payroll Tax Problems With the IRS Explained",
     h1: "How to Resolve Payroll Tax Problems With the IRS",
     description: "Resolve payroll tax problems with the IRS by fixing deposits, filings, notices, and trust fund exposure before business cash-flow stress turns into enforcement.",
     hero: "Payroll tax problems are operational, legal, and cash-flow issues at the same time. The safest resolution plan gets current first, then works backward through notices, missing quarters, and personal exposure risks.",
@@ -284,7 +284,7 @@ const pageSpecs = [
     slug: "tax-debt-relief-options",
     category: "Tax Debt",
     categoryHref: "../pages/tax-debt-guide",
-    title: "Tax Debt Relief Options and IRS Payment Plan Strategy",
+    title: "Tax Debt Relief Options & IRS Payment Plans",
     h1: "Tax Debt Relief Options: Payment Plans, Hardship, and Settlement Reality",
     description: "Compare tax debt relief options including IRS payment plans, CNC status, settlement rules, and penalty relief so you can choose the best path for your facts.",
     hero: "Tax debt relief is not one program. It is a menu of IRS paths that solve different problems depending on how much you owe, whether returns are filed, and what your budget can actually support.",
@@ -466,7 +466,7 @@ const pageSpecs = [
     slug: "tax-debt-settlement",
     category: "Tax Debt",
     categoryHref: "../pages/tax-debt-guide",
-    title: "Tax Debt Settlement Guide: Settling IRS Debt for Less",
+    title: "Tax Debt Settlement Guide for IRS Debt",
     h1: "Tax Debt Settlement: When the IRS May Accept Less Than You Owe",
     description: "Learn how tax debt settlement works through IRS offer in compromise rules, what eligibility looks like, and when settlement is realistic versus oversold.",
     hero: "Tax debt settlement is real, but it is not a coupon code for the IRS. The offer in compromise process is based on collectibility, compliance, and documentation, not on how persuasive the sales pitch sounds.",
@@ -650,7 +650,7 @@ const pageSpecs = [
     slug: "irs-cp504-notice",
     category: "IRS Notices",
     categoryHref: "../pages/irs-tax-relief-guide",
-    title: "IRS CP504 Notice Guide: Final Balance Warning Explained",
+    title: "IRS CP504 Notice: Final Balance Warning",
     h1: "IRS CP504 Notice: What It Means Before Collection Gets Worse",
     description: "IRS CP504 notice guide: why it matters, what the IRS says it may seize next, and how to respond before liens or stronger collection action follow.",
     hero: "A CP504 is more serious than a first balance-due notice. It tells you the IRS intends to levy and that ignoring the notice can push the case into a much more difficult stage.",
@@ -1429,6 +1429,14 @@ function headMarkup(page) {
     <meta property="og:description" content="${attr(page.description)}">
     <meta property="og:url" content="${canonicalFor(page.slug)}">
     <meta property="og:type" content="article">
+    <meta property="og:site_name" content="TaxReliefGuides">
+    <meta property="og:image" content="${domain}/assets/social-cover.svg">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${attr(titleSuffix(page.title))}">
+    <meta name="twitter:description" content="${attr(page.description)}">
+    <meta name="twitter:url" content="${canonicalFor(page.slug)}">
+    <meta name="twitter:image" content="${domain}/assets/social-cover.svg">
     <link rel="icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles.css">
     ${adsenseScript}
@@ -1513,14 +1521,21 @@ function cookieBanner() {
     </div>`;
 }
 
+// Human-readable "Last reviewed" label from modifiedDate.
+const expansionReviewedLabel = (() => {
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const d = new Date(modifiedDate + "T00:00:00Z");
+  return `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+})();
+
 function editorialBlock() {
   return `
-    <div class="editorial-block" style="display:flex; align-items:center; gap:14px; padding:16px 20px; border:1px solid #e5e7eb; border-radius:8px; margin:24px 0;">
-      <img src="../assets/javi-perez-guides.jpg" alt="Javi Pérez, Editor" width="56" height="56" style="border-radius:50%; flex-shrink:0;">
+    <div class="editorial-block" style="display:flex; align-items:flex-start; gap:14px; padding:16px 20px; border:1px solid #e5e7eb; border-radius:8px; margin:24px 0;">
+      <img src="../assets/javi-perez-guides.jpg" alt="Javi Pérez, Editor" width="56" height="56" loading="lazy" decoding="async" style="border-radius:50%; flex-shrink:0;">
       <div>
         <div style="font-weight:600;">Edited by <a href="../about" style="color:#2563eb;">Javi Pérez</a></div>
-        <p style="margin:4px 0 0; font-size:0.9em; color:#6b7280;">Last reviewed: April 2026 · <a href="../editorial-policy" style="color:#6b7280;">Editorial Policy</a></p>
-        <p style="margin:2px 0 0; font-size:0.85em; color:#374151;">This guide compiles information from official IRS publications and state Department of Revenue resources. Content is reviewed quarterly.</p>
+        <p style="margin:4px 0 0; font-size:0.9em; color:#6b7280;">Last reviewed: ${expansionReviewedLabel} · <a href="../editorial-policy" style="color:#6b7280;">Editorial Policy</a></p>
+        <p style="margin:6px 0 0; font-size:0.85em; color:#374151;">This guide compiles information from IRS publications, official forms, Taxpayer Advocate Service resources, and state tax agency references. It was created with AI-assisted drafting and human editorial review. Javi Pérez is not a CPA, EA, tax attorney, or financial advisor. This content is informational only and is not tax, legal, or financial advice.</p>
       </div>
     </div>`;
 }

@@ -4,7 +4,8 @@ import { stateTaxReliefConfigs } from "./state-tax-relief-data.mjs";
 
 const root = "/Users/javiperezz7/Documents/taxreliefguides";
 const domain = "https://taxreliefguides.com";
-const lastmod = "2026-04-23";
+// Site-wide lastmod for sitemap and Article schema. Update on every meaningful build.
+const lastmod = new Date().toISOString().slice(0, 10);
 const consentModeScript = `<script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -773,18 +774,25 @@ function renderSections(sections) {
     .join("");
 }
 
+// Human-readable "Last reviewed" label derived from build-time lastmod constant.
+const reviewedLabel = (() => {
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const d = new Date(lastmod + "T00:00:00Z");
+  return `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+})();
+
 function renderEditorialBlock(page) {
   const isDeep = page && page.path.includes("/");
   const imgSrc = isDeep ? `../assets/javi-perez-guides.jpg` : `./assets/javi-perez-guides.jpg`;
   const aboutHref = page ? localHref(page.path, "about.html") : "/about";
   const policyHref = page ? localHref(page.path, "editorial-policy.html") : "/editorial-policy";
   return `
-    <div class="editorial-block" style="display:flex; align-items:center; gap:14px; padding:16px 20px; border:1px solid #e5e7eb; border-radius:8px; margin:24px 0;">
-      <img src="${imgSrc}" alt="Javi Pérez, Editor" width="56" height="56" style="border-radius:50%; flex-shrink:0;">
+    <div class="editorial-block" style="display:flex; align-items:flex-start; gap:14px; padding:16px 20px; border:1px solid #e5e7eb; border-radius:8px; margin:24px 0;">
+      <img src="${imgSrc}" alt="Javi Pérez, Editor" width="56" height="56" loading="lazy" decoding="async" style="border-radius:50%; flex-shrink:0;">
       <div>
         <div style="font-weight:600;">Edited by <a href="${aboutHref}" style="color:#2563eb;">Javi Pérez</a></div>
-        <p style="margin:4px 0 0; font-size:0.9em; color:#6b7280;">Last reviewed: April 2026 · <a href="${policyHref}" style="color:#6b7280;">Editorial Policy</a></p>
-        <p style="margin:2px 0 0; font-size:0.85em; color:#374151;">This guide compiles information from official IRS publications and state Department of Revenue resources. Content is reviewed quarterly.</p>
+        <p style="margin:4px 0 0; font-size:0.9em; color:#6b7280;">Last reviewed: ${reviewedLabel} · <a href="${policyHref}" style="color:#6b7280;">Editorial Policy</a></p>
+        <p style="margin:6px 0 0; font-size:0.85em; color:#374151;">This guide compiles information from IRS publications, official forms, Taxpayer Advocate Service resources, and state tax agency references. It was created with AI-assisted drafting and human editorial review. Javi Pérez is not a CPA, EA, tax attorney, or financial advisor. This content is informational only and is not tax, legal, or financial advice.</p>
       </div>
     </div>
   `;
@@ -1166,6 +1174,18 @@ function homeLead(allPages) {
       description: "Compare gross pay, FICA, pretax deductions, and approximate take-home pay per pay period.",
       path: "pages/paycheck-tax-calculator.html",
     },
+    {
+      badge: "Calculator",
+      title: "Estimate business tax exposure",
+      description: "Model entity-level federal tax exposure for sole props, partnerships, S-corps, and LLCs before filing.",
+      path: "pages/business-tax-estimator.html",
+    },
+    {
+      badge: "Calculator",
+      title: "Compare debt settlement vs payment plan",
+      description: "See total cost of paying tax debt over time vs settling, including penalty and interest accrual.",
+      path: "pages/debt-settlement-savings-calculator.html",
+    },
   ];
 
   return `
@@ -1245,6 +1265,38 @@ function homeLead(allPages) {
         title: "IRS penalty abatement",
         description: "When to ask for first-time or reasonable-cause relief after a notice adds avoidable cost.",
         path: "pages/penalty-abatement-guide.html",
+      },
+    ])}
+    ${customCardGrid("index.html", "More tax topics worth knowing", "Adjacent issues that change strategy", [
+      {
+        badge: "Compliance risk",
+        title: "What happens if you don't pay taxes",
+        description: "Walk through the IRS escalation path before it gets more serious: penalties, liens, levies, passport revocation.",
+        path: "pages/what-happens-if-you-dont-pay-taxes.html",
+      },
+      {
+        badge: "Spouse protection",
+        title: "Innocent spouse relief",
+        description: "When a joint return creates unexpected liability, the IRS offers narrow relief paths for the non-responsible spouse.",
+        path: "pages/innocent-spouse-relief.html",
+      },
+      {
+        badge: "Business credits",
+        title: "Small business tax credits",
+        description: "Compare credits that actually move the needle for small businesses, with current eligibility and form references.",
+        path: "pages/small-business-tax-credits.html",
+      },
+      {
+        badge: "Residency planning",
+        title: "Best states for low taxes",
+        description: "Compare states by income tax, sales tax, and property burden, and what actually changes if you relocate.",
+        path: "pages/best-states-for-low-taxes.html",
+      },
+      {
+        badge: "Credits vs deductions",
+        title: "Tax credits vs tax deductions",
+        description: "Understand the dollar-for-dollar difference, eligibility rules, and which one usually saves more on your return.",
+        path: "pages/tax-credits-vs-tax-deductions.html",
       },
     ])}
     ${featureGrid("State tax relief guides", "State tax debt", statePages, (page) => page.stateData?.state ?? "State")}
@@ -1427,7 +1479,9 @@ function stateCanonical(state) {
 }
 
 function stateTitle(state) {
-  return `${state.state} State Tax Relief: Programs, Payment Plans & Debt Options | TaxReliefGuides`;
+  // Title kept under 60 chars so SERPs don't truncate.
+  // Longest state in covered set is "North Carolina" → "North Carolina State Tax Relief Guide | TaxReliefGuides" = 55 chars.
+  return `${state.state} State Tax Relief Guide | TaxReliefGuides`;
 }
 
 function stateFaqs(state) {
@@ -1522,7 +1576,7 @@ function stateHead(page) {
     "@type": "Article",
     headline: page.h1,
     description: page.description,
-    dateModified: "2026-04-23",
+    dateModified: lastmod,
     publisher: {
       "@type": "Organization",
       name: "TaxReliefGuides",
@@ -1558,7 +1612,7 @@ function stateHead(page) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${escapeHtml(page.title)}</title>
     <meta name="description" content="${escapeAttr(page.description)}">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="${page.robots || "index, follow"}">
     <link rel="canonical" href="${canonical}">
     <meta property="og:title" content="${escapeAttr(page.title)}">
     <meta property="og:description" content="${escapeAttr(page.description)}">
@@ -2802,7 +2856,7 @@ function buildRootSections(page) {
         eyebrow: "About the editor",
         title: "Meet the Editor",
         html: `<div class="editor-profile" style="display:flex; align-items:flex-start; gap:20px; margin:24px 0; flex-wrap:wrap;">
-  <img src="./assets/javi-perez-guides.jpg" alt="Javi Pérez, Editor of TaxReliefGuides" width="180" height="180" style="border-radius:50%; display:block; flex-shrink:0;">
+  <img src="./assets/javi-perez-guides.jpg" alt="Javi Pérez, Editor of TaxReliefGuides" width="180" height="180" loading="lazy" decoding="async" style="border-radius:50%; display:block; flex-shrink:0;">
   <div>
     <h3 style="margin:0 0 4px;">Javi Pérez</h3>
     <p style="font-weight:600; color:#2563eb; margin:0 0 8px;">Editor, TaxReliefGuides</p>
@@ -2832,6 +2886,23 @@ function buildRootSections(page) {
         paragraphs: [
           `That is why the site avoids fictional experts, inflated credentials, and vague promises about results. It also avoids guessing on sensitive numbers where an official source is the right standard. When a year-sensitive figure still needs verification, the page should leave a marker rather than quietly filling the gap with a convenient estimate.`,
           `Readers should expect a calm tone, official-source links, practical internal linking, and clear disclaimers. If a page feels thin, overly abstract, or out of date, that is a quality issue rather than a feature, and the goal is to keep improving those weak spots over time.`,
+        ],
+      },
+      {
+        id: "scope-limits",
+        eyebrow: "What this site is not",
+        title: "Important limits on scope and authority",
+        intro: "Before relying on anything you read here, understand what this site cannot do.",
+        list: [
+          "We are not affiliated with the IRS, the U.S. Treasury, or any state tax agency.",
+          "We do not provide tax representation before the IRS or any state revenue agency.",
+          "We do not replace a CPA, enrolled agent, tax attorney, or financial advisor.",
+          "We do not prepare or file tax returns on behalf of readers.",
+          "We do not sell tax-debt relief services, leads, or referrals to firms that do.",
+          "Readers should verify all details with IRS.gov, the relevant state revenue agency, or a qualified professional before acting.",
+        ],
+        paragraphs: [
+          `If your situation involves multiple unfiled years, an active levy or wage garnishment, payroll tax exposure, business trust-fund liability, an audit appeal, or a disputed assessment, treat the content here as background reading and engage a qualified professional before taking action.`,
         ],
       },
     ];
@@ -2872,12 +2943,20 @@ function buildRootSections(page) {
       {
         id: "ai-and-commercial",
         eyebrow: "AI and affiliate disclosure",
-        title: "AI assistance and commercial relationships",
-        intro: "AI tools assist with drafting and structuring. Every published figure is verified against a primary source before publication.",
+        title: "How this content is created",
+        intro: "Drafting may use AI tools. Every published figure passes a human editorial review against primary sources.",
         paragraphs: [
           `AI writing tools may assist with drafting, structuring, and organizing content on this site. AI-generated drafts are reviewed against official sources for every fact, threshold, and program rule that matters for a reader's decision. AI does not replace source verification, and AI output is not published as fact without a primary-source check.`,
-          `This site may earn revenue from display advertising or affiliate links. When a referral link is present and a reader clicks through and completes an action, this site may earn a commission from the third party at no cost to the reader. Commercial relationships do not determine which topics are covered, how comparisons are structured, or what conclusions are reached. Affiliate links are disclosed in the relevant page content. See the <a href="./affiliate-disclosure">Affiliate Disclosure</a> for additional detail.`,
         ],
+        list: [
+          "AI-assisted drafting may be used to organize outlines, compare source material, and improve readability.",
+          "Every published guide is reviewed by a human editor before publication.",
+          "Important figures are checked against public sources where available.",
+          "We do not publish fully automated pages without editorial review.",
+          "We update or remove content when source information changes.",
+        ],
+        html: `<h3 style="margin-top:24px;">Affiliate and revenue disclosure</h3>
+<p>This site may earn revenue from display advertising or affiliate links. When a referral link is present and a reader clicks through and completes an action, this site may earn a commission from the third party at no cost to the reader. Commercial relationships do not determine which topics are covered, how comparisons are structured, or what conclusions are reached. Affiliate links are disclosed in the relevant page content. See the <a href="./affiliate-disclosure">Affiliate Disclosure</a> for additional detail.</p>`,
       },
       {
         id: "what-we-are-not",
@@ -3384,6 +3463,8 @@ const stateHubPage = withDefaults({
   path: "states/index.html",
   badge: "State Guides",
   category: "stateHub",
+  // Noindex during AdSense review along with the individual state pages.
+  robots: "noindex, follow",
   title: "State Tax Relief Guides by U.S. State",
   titleBase: "State Tax Relief Guides by U.S. State",
   h1: "State Tax Relief Guides by U.S. State",
@@ -3488,6 +3569,11 @@ for (const state of stateTaxReliefConfigs) {
     path: `states/${state.slug}.html`,
     template: "state",
     category: "state",
+    // Noindex during AdSense review: state pages share the same template structure
+    // across 10 states with primarily official-source data. Re-evaluate for index after
+    // AdSense approval and adding state-specific decision content (worked examples,
+    // local resource maps, etc.) so each page carries differentiated value.
+    robots: "noindex, follow",
     badge: "State Guide",
     title: stateTitle(state),
     titleBase: stateTitle(state),
@@ -3535,8 +3621,22 @@ for (const page of allPages) {
   else ensureWordCount(page, allPages, 900, "support");
 }
 
+// Expansion-page slugs owned by build-search-console-expansion.mjs.
+// Included here so the main generator's sitemap stays complete even when run alone.
+// irs-payment-plan-guide is intentionally excluded (redirects to plural canonical).
+const expansionSitemapSlugs = [
+  "payroll-tax-penalties", "payroll-tax-problems", "small-business-payroll-taxes",
+  "payroll-tax-relief", "payroll-tax-calculator", "tax-debt-relief-options",
+  "irs-currently-not-collectible", "tax-debt-settlement", "back-taxes-help",
+  "irs-cp14-notice", "irs-cp504-notice", "tax-lien-vs-levy",
+  "first-time-penalty-abatement", "refundable-vs-nonrefundable-tax-credits",
+  "earned-income-tax-credit", "child-tax-credit-guide", "small-business-tax-credits",
+  "offer-in-compromise-guide", "penalty-abatement-guide", "innocent-spouse-relief",
+  "tax-lien-guide", "self-employed-tax-guide", "tax-credits-guide",
+];
+
 function buildSitemap(pages) {
-  const rows = pages
+  const mainRows = pages
     .filter((page) => page.robots === "index, follow")
     .map((page) => {
       const priority =
@@ -3554,15 +3654,32 @@ function buildSitemap(pages) {
       return `
   <url>
     <loc>${urlFor(page.path)}</loc>
-    <lastmod>${page.category === "state" || page.category === "stateHub" ? "2026-04-23" : lastmod}</lastmod>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`;
     })
     .join("");
 
+  // Filter expansion slugs that are NOT already represented in the main pages
+  // (some pillars share slugs with expansion entries; pillar wins).
+  const mainCanonicals = new Set(
+    pages.filter((p) => p.robots === "index, follow").map((p) => urlFor(p.path))
+  );
+  const expansionRows = expansionSitemapSlugs
+    .map((slug) => `${domain}/pages/${slug}`)
+    .filter((url) => !mainCanonicals.has(url))
+    .map((url) => `
+  <url>
+    <loc>${url}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`)
+    .join("");
+
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${rows}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${mainRows}${expansionRows}
 </urlset>
 `;
 }
@@ -3854,7 +3971,10 @@ async function main() {
   await fs.writeFile(path.join(root, "_redirects"), buildRedirects(allPages));
   await fs.writeFile(path.join(root, "_headers"), buildHeaders());
   const audit = auditSite(allPages, rendered);
-  await fs.writeFile(path.join(root, "walkthrough.md"), buildWalkthrough(audit, allPages));
+  // Walkthrough is an internal editorial doc — keep out of deployed root.
+  const internalDir = path.join(root, ".backups", "internal-md");
+  await fs.mkdir(internalDir, { recursive: true });
+  await fs.writeFile(path.join(internalDir, "walkthrough.md"), buildWalkthrough(audit, allPages));
   console.log(JSON.stringify({
     generatedPages: allPages.length,
     indexablePages: audit.indexablePages,
